@@ -1,0 +1,99 @@
+.rate-setting {
+  color: #000;
+  padding: 0px 15px; }
+  .rate-setting h3.sub-title {
+    border-bottom: solid 1px #bbb;
+    margin: 15px 0px 8px;
+    width: 100%; }
+    .rate-setting h3.sub-title p {
+      padding-bottom: 0px; }
+  .rate-setting div {
+    padding: 0px 5px; }
+  .rate-setting h6 {
+    border-bottom: solid 1px #a9a9a9;
+    padding: 0px;
+    margin: 30px; }
+  .rate-setting button {
+    width: 100%; }
+    .rate-setting button.active {
+      background-color: #a9a9a9;
+      border: solid 2px #6d6d6d; }
+    .rate-setting button:hover {
+      background-color: #f6a4a4;
+      border: solid 2px #ff6b6b; }
+  .rate-setting .btn {
+    border: solid 2px #a2a2a2;
+    height: 58px; }
+
+.title {
+  border-bottom: solid 1px #bbb;
+  margin: 15px 0px 8px;
+  width: 80%; }
+
+.sub-title {
+  border-bottom: solid 1px #bbb;
+  margin: 15px 0px 8px;
+  width: 100%; }
+
+#register {
+  margin-top: 0px; }
+  #register h3.sub-title {
+    margin: 0px 0px 5px;
+    padding: 2px 0px; }
+  #register h3.title {
+    margin: 10px 0px 5px; }
+  #register form div {
+    padding: 0px; }
+    #register form div.resister-infor {
+      padding-right: 10px; }
+      #register form div.resister-infor > div > div {
+        padding: 0px 5px 0px 0px; }
+        #register form div.resister-infor > div > div input {
+          width: 100%;
+          padding: 5px 10px; }
+        #register form div.resister-infor > div > div:last-child {
+          padding: 0px; }
+    #register form div h3.sub-title p {
+      display: inline;
+      padding-right: 10px; }
+      #register form div h3.sub-title p span.error {
+        position: absolute;
+        overflow-y: visible;
+        z-index: 1;
+        bottom: 12px; }
+    #register form div .error {
+      font-size: 14px;
+      font-weight: normal; }
+  #register form label {
+    padding: 5px 0px 0px;
+    margin-bottom: 0px; }
+  #register .btn-convert {
+    margin-top: 5px; }
+  #register input {
+    -webkit-appearance: textarea; }
+
+.tab-content {
+  clear: both; }
+
+.current {
+  padding: 0px 15px; }
+  .current .sub-title {
+    width: 90%;
+    margin: 10px 0px 3px; }
+  .current ul {
+    margin-top: 0px;
+    background-color: #00BFFF;
+    padding: 2.5px 5px; }
+    .current ul li {
+      display: inline-block;
+      list-style: none;
+      width: 19.3%;
+      margin: 2.5px 0px; }
+      .current ul li div {
+        border: solid 1px #a9a9a9;
+        margin-top: 0px;
+        background-color: #808080;
+        color: #fff;
+        padding: 5px; }
+
+/*# sourceMappingURL=rate-setting.css.map */

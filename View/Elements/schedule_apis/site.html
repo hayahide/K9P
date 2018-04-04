@@ -1,0 +1,215 @@
+<script>
+
+apiGeoRequests.sendScheduleReport=function(data,callback){
+
+        var obj= new this();
+        obj.setBaseURL(BASE_URL);
+        obj.setURL(this.sendScheduleReport.makeURL());
+		var params=this.ajaxBaseParams;
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+        obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+        })
+}
+
+apiGeoRequests.sendScheduleReport.makeURL=function(){
+
+        var base_url='SiteManagesScheduleReports/sendScheduleReport';
+        return base_url;
+}
+
+apiGeoRequests.scheduleReport=function(data,callback){
+
+        var obj= new this();
+        obj.setBaseURL(BASE_URL);
+        obj.setURL(this.scheduleReport.makeURL());
+		var params=this.ajaxBaseParams;
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+        obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+        })
+}
+
+apiGeoRequests.scheduleReport.makeURL=function(){
+
+        var base_url='SiteManagesScheduleReports/scheduleReport';
+        return base_url;
+}
+
+apiGeoRequests.getSiteReport=function(data,callback){
+
+		var obj= new this();
+		obj.setBaseURL(BASE_URL);
+		obj.setURL(this.getSiteReport.makeURL());
+		var params=this.ajaxBaseParams;
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+		obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+				callback.call(obj,true,res);
+		})
+}
+
+apiGeoRequests.getSiteReport.makeURL=function(){
+
+		var base_url='SiteManagesSiteScheduleReports/getSiteReport';
+		return base_url;
+}
+
+apiGeoRequests.saveSiteReport=function(data,callback){
+
+		var obj= new this();
+		obj.setBaseURL(BASE_URL);
+		obj.setURL(this.saveSiteReport.makeURL());
+		var params=this.ajaxBaseParams;
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+		obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+		})
+}
+
+apiGeoRequests.saveSiteReport.makeURL=function(){
+
+		var base_url='SiteManagesSiteScheduleReports/saveSiteReport';
+		return base_url;
+}
+
+apiGeoRequests.informationsRegist=function(data,callback){
+
+		var obj= new this();
+		obj.setBaseURL(BASE_URL);
+		obj.setURL(this.informationsRegist.makeURL());
+		var params=this.ajaxBaseParams;
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+		obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+		})
+}
+
+apiGeoRequests.informationsRegist.makeURL=function(){
+
+		var base_url='SiteManagesInformationRegists/informationsRegist';
+		return base_url;
+}
+
+apiGeoRequests.saveSchedule=function(data,callback){
+
+		var obj= new this();
+		obj.setBaseURL(BASE_URL);
+		obj.setURL(this.saveSchedule.makeURL());
+		var params=this.ajaxBaseParams;
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+		obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+		})
+}
+
+apiGeoRequests.saveSchedule.makeURL=function(){
+
+		var base_url='SiteManages/saveSchedule';
+		return base_url;
+}
+
+//■オプションの検索項目
+apiGeoRequests.getAddDateApi=function(data,callback){
+
+		var obj= new this();
+		obj.setBaseURL(BASE_URL);
+		obj.setURL(this.getAddDateApi.makeURL());
+		var params=this.ajaxBaseParams;
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+		obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+		})
+}
+
+apiGeoRequests.getAddDateApi.makeURL=function(){
+
+		var base_url='Site/getAddDateApi';
+		return base_url;
+}
+
+apiGeoRequests.getDateRange=function(data,callback){
+
+		var obj= new this();
+		obj.setBaseURL(BASE_URL);
+		obj.setURL(this.getDateRange.makeURL());
+		var params=$.extend(true,{},this.ajaxBaseParams);
+		params["loadingOff"]=((data["loadingOff"]==undefined)?false:data["loadingOff"]);
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+		obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+		})
+}
+
+apiGeoRequests.getDateRange.makeURL=function(){
+
+		var base_url='Site/getDateRange';
+		return base_url;
+}
+
+apiGeoRequests.getSubDateApi=function(data,callback){
+
+		var obj= new this();
+		obj.setBaseURL(BASE_URL);
+		obj.setURL(this.getSubDateApi.makeURL());
+		var params=this.ajaxBaseParams;
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+		obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+		})
+}
+
+apiGeoRequests.getSubDateApi.makeURL=function(){
+
+		var base_url='Site/getSubDateApi';
+		return base_url;
+}
+
+apiGeoRequests.sendScheduleReportUrl=function(data,callback){
+
+		var obj= new this();
+		obj.setBaseURL(BASE_URL);
+		obj.setURL(this.sendScheduleReportUrl.makeURL());
+		var params=this.ajaxBaseParams;
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+		obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+		})
+}
+
+apiGeoRequests.sendScheduleReportUrl.makeURL=function(){
+
+		var base_url='SiteManagesScheduleReports/sendScheduleReportUrl';
+		return base_url;
+}
+
+apiGeoRequests.checkOverLine50=function(data,callback){
+
+		var obj= new this();
+		obj.setBaseURL(BASE_URL);
+		obj.setURL(this.checkOverLine50.makeURL());
+		var params=this.ajaxBaseParams;
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+		obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+		})
+}
+
+apiGeoRequests.checkOverLine50.makeURL=function(){
+
+		var base_url='SiteManagesLineInserts/checkOverLine50';
+		return base_url;
+}
+
+</script>

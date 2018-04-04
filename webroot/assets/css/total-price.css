@@ -1,0 +1,64 @@
+.total-price {
+  color: #000;
+  padding: 0px 10px; }
+  .total-price h3 {
+    padding-bottom: 10px; }
+    .total-price h3 strong {
+      border-bottom: solid 1px #a9a9a9;
+      padding: 10px; }
+  .total-price .fixed {
+    position: relative; }
+    .total-price .fixed .style-scroll {
+      border-top: solid 2px #fff; }
+      .total-price .fixed .style-scroll .table {
+        border-spacing: 2px; }
+        .total-price .fixed .style-scroll .table > tbody {
+          width: 100%;
+          display: inherit; }
+          .total-price .fixed .style-scroll .table > tbody > tr > td {
+            padding: 0px;
+            border-top: solid 1px #fff; }
+            .total-price .fixed .style-scroll .table > tbody > tr > td:nth-child(1) {
+              width: 12%; }
+            .total-price .fixed .style-scroll .table > tbody > tr > td:nth-child(2) {
+              width: 12%; }
+            .total-price .fixed .style-scroll .table > tbody > tr > td:nth-child(3) {
+              width: 12%; }
+            .total-price .fixed .style-scroll .table > tbody > tr > td:nth-child(4) {
+              width: 45%; }
+            .total-price .fixed .style-scroll .table > tbody > tr > td > div {
+			  font-size:15px;
+			  padding-left:10px;
+			  line-height:1.9;
+              border: 1px solid #bbb;
+			  margin-top:2px;
+              min-height: 32px; }
+              .total-price .fixed .style-scroll .table > tbody > tr > td > div p {
+                min-height: 18px;
+                margin-bottom: 0px; }
+            .total-price .fixed .style-scroll .table > tbody > tr > td h4 {
+              margin: 0px;
+              padding: 5px 10px 3px 20px;
+              min-height: 18px; }
+            .total-price .fixed .style-scroll .table > tbody > tr > td h5 {
+              margin: 0px;
+              padding: 5px 0px 3px;
+              min-height: 16px;
+              border-bottom: solid 1px #a9a9a9; }
+            .total-price .fixed .style-scroll .table > tbody > tr > td.standard > div div {
+              margin-bottom: 5px; }
+            .total-price .fixed .style-scroll .table > tbody > tr > td.btn-group {
+              border-top: none; }
+              .total-price .fixed .style-scroll .table > tbody > tr > td.btn-group a.btn {
+                background-color: #c1c1c1;
+                border: solid 2px #787878; }
+                .total-price .fixed .style-scroll .table > tbody > tr > td.btn-group a.btn:hover {
+                  background-color: #f6a4a4;
+                  border: solid 2px #e57373; }
+
+@media screen and (max-width: 768px) {
+  .total-price #thead {
+    height: auto;
+    overflow: auto; } }
+
+/*# sourceMappingURL=total-price.css.map */

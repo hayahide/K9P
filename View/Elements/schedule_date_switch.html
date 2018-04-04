@@ -1,0 +1,20 @@
+<?php 
+
+	$controller=strtolower($this->params["controller"]); 
+
+?>
+<div id="time-btn" class="time-btn-pc" data-type="schedule-head-middle-line">
+    <a href="javascript:void(0)">
+		<?php $is_day=($controller=="sitedaily"); ?>
+		<span data-url="SiteDaily/index" data-type="schedule-switch-sitedaily"<?php echo (($is_day)?"class=\"current\"":""); ?>><?php echo (($is_day)?"日":"日"); ?></span>
+	</a>
+	<a href="javascript:void(0)">
+		<?php $is_week=($controller=="site"); ?>
+		<span data-url="Site/index" data-type="schedule-switch-site" <?php echo (($is_week)?"class=\"current\"":""); ?>><?php echo (($is_week)?"週":"週"); ?></span>
+	</a>
+    <a href="javascript:void(0)">
+		<?php $is_month=($controller=="sitemonthly"); ?>
+		<span data-url="SiteMonthly/index" data-type="schedule-switch-sitemonthly" <?php echo (($is_month)?"class=\"current\"":""); ?>><?php echo (($is_month)?"月":"月"); ?></span>
+	</a>
+</div><!--.time-btn-->
+

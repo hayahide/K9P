@@ -1,0 +1,4051 @@
+/* ============================== */
+/* common element */
+/* ============================== */
+@charset "UTF-8";
+
+/*~~ General style ~~*/
+.nav.navbar-nav {
+
+    float: left;
+    margin: 0 !important;
+}
+
+/* General */
+.float-list, .cf {
+    *zoom: 1;
+    overflow: hidden;
+}
+.float-list:after, .cf:after {
+    content: "";
+    display: block;
+    clear: both;
+    height: 0;
+}
+.container{min-width:970px;padding:0 0 40px;}
+.container-fluid{width:100%;padding:0;}
+
+/* form */
+form::-webkit-input-placeholder {
+    color: #C6C6C6;
+}
+form:-moz-placeholder {
+    opacity: 1;
+    color: #C6C6C6;
+}
+form::-moz-placeholder {
+    opacity: 1;
+    color: #C6C6C6;
+}
+form:-ms-input-placeholder {
+    color: #C6C6C6;
+}
+::-moz-selection {
+    color: #FFF;
+    background: rgba(31, 127, 194, 0.7);
+}
+.label:empty {
+    display: inline-block;
+}
+::selection {
+    color: #FFF;
+    background: rgba(31, 127, 194, 0.7);
+}
+.float-list li {
+    float: left;
+}
+
+/* Base */
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+html {
+    box-sizing: border-box;
+    height: 100%;
+    font-size: 62.5%;
+}
+body {
+    height: 100%;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    font-family: 'Lucida Grande', 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', 'Meiryo', 'メイリオ', 'sans-serif';
+    color: #2b2e37;
+    padding-top: 80px;
+    background: #585858;
+    min-width: 970px;
+    margin: 0 auto;
+    word-wrap:break-word;
+}
+
+/* Link settings */
+a:link, a:visited {
+    text-decoration: none;
+    color: #2b2e37;
+}
+a:hover img, a:active img, a:focus img {
+    opacity: 0.7;
+    filter: alpha(opacity=70);
+    -ms-filter: "alpha(opacity=70)";
+}
+img {
+    max-width: 100%;
+    height: auto;
+    box-sizing: content-box;
+    vertical-align: middle;
+    line-height: 1;
+}
+h1, h2, h3, h4, h5, h6 {
+    max-height: 100%;
+}
+input[type="button"], input[type="submit"], input[type="reset"], label {
+    cursor: pointer;
+}
+.dummy {
+    text-decoration: line-through !important;
+    color: #f00 !important;
+}
+.header-logo a:hover img, .footer-logo a:hover img {
+    opacity: 1;
+    filter: alpha(opacity=100);
+    -ms-filter: "alpha(opacity=100)";
+}
+
+/* Layout */
+.table {
+    display: table;
+    width: 100%;
+}
+.cell {
+    display: table-cell;
+}
+
+/*~~ Logo settings ~~*/
+h1.logo {
+
+    margin: 0px;
+    padding: 0px;
+    cursor: pointer;
+    width:220px;
+}
+
+h1.logo:hover {
+
+    opacity: 0.5 !important;
+    filter: alpha(opacity=50);
+    -ms-filter: “alpha(opacity=50)”;
+}
+
+/*~~ Header settings ~~*/
+.navbar-inverse {
+    background-color: #31393e;
+    border: none;
+    margin: 0px 0px 0px;
+    z-index: 99;
+    min-width: 980px
+}
+body#sitemonthly .navbar-inverse .navbar-nav{width:calc(100% - 190px)}
+body#sitedaily .navbar-inverse .navbar-nav{width:calc(100% - 190px)}
+body#site .navbar-inverse .navbar-nav{display:inline-block;margin:0;width:calc(100% - 190px)}
+
+body#sitedaily.mobi-layout .navbar-inverse .navbar-nav{width:calc(100% - 105px)}
+
+.navbar-inverse .navbar-nav>li {
+    float: left;
+}
+body#site .navbar-inverse .navbar-nav>li:last-child,
+body#sitemonthly .navbar-inverse .navbar-nav>li:last-child,
+body#sitedaily .navbar-inverse .navbar-nav>li:last-child{float:right;}
+
+body#site .navbar-inverse .navbar-nav>li:last-child > span,
+body#sitemonthly .navbar-inverse .navbar-nav>li:last-child > span,
+body#sitedaily .navbar-inverse .navbar-nav>li:last-child > span{padding-right:0!important;}
+
+.navbar-inverse .navbar-nav>li>a,
+.navbar-inverse .navbar-nav>li>span[data-type=header-date-range]{
+    color: #FFF;
+    display: block;
+    padding: 16px 5px 14px;
+    font-size: 9pt;
+}
+
+.navbar-inverse .navbar-nav > li > a{
+
+    border-top-left-radius:5px;
+    border-top-right-radius:5px;
+}
+.navbar-inverse .navbar-nav > li > a:hover{
+    background-color:#065a86;
+}
+.navbar-inverse .navbar-nav > .active > a{
+    background-color:#065a86!important;
+}
+.navbar-inverse .navbar-nav > .active > a:hover img {
+    opacity: 0.5;
+}
+.nav>li>a {
+
+    border-radius: 5px 5px 0 0;
+}
+
+nav .header-btn[data-type=header-print] a {
+
+    display: inline-block;
+    float: right;
+    margin: 4px 0px 0px 4px;
+    width: 38px;
+    height: 38px;
+    border-radius: 5px;
+    background: url(../../assets/img/module/icon_print.png) no-repeat center #F3F3F3;
+}
+
+nav .header-btn a[data-type=header-schedule-excel],
+nav .header-btn a[data-type=header-staff-excel]
+{
+
+    display: inline-block;
+    float: right;
+    margin: 4px 0px 0px 4px;
+    width: 38px;
+    height: 38px;
+    border-radius: 5px;
+    background: url(../../assets/img/module/icon_excel.png) no-repeat center #F3F3F3;
+}
+
+nav .header-btn a.csv-down-file{
+    background: url(../../assets/img/module/icon_csv.svg) no-repeat center #F3F3F3;
+    background-size: 60%;
+}
+
+.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+    border-color: #86bfdc;
+}
+.navbar-inverse .navbar-toggle {
+    border-color: #b7cfdc;
+}
+
+/*~~ content settings ~~*/
+.content {
+    width:100%;
+    padding:0 15px;
+    text-align: center;
+    margin:50px 0;
+}
+
+/*~~ breadcrumb setting ~~*/
+ul#breadcrumb {
+    text-align: left;
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    margin-bottom: 35px;
+}
+ul#breadcrumb li {
+    display: inline;
+}
+ul#breadcrumb li a {
+    color: #000;
+    text-decoration: underline;
+}
+ul#breadcrumb li a:link, ul#breadcrumb li a:visited {
+    color: #000;
+    text-decoration: underline;
+}
+ul#breadcrumb li a:hover, ul#breadcrumb li a:active {
+    color: #E44144;
+    text-decoration: underline;
+}
+ul#breadcrumb li:before {
+    content: ">";
+    color: #000;
+    padding: 0 12px 0 12px;
+}
+ul#breadcrumb li:first-child:before {
+    content: none;
+}
+ul#breadcrumb li:last-child a {
+    text-decoration: none;
+    color: #E44144;
+}
+
+/*~~ field-list settings ~~*/
+#field-list .form-search {
+    text-align: left;
+    overflow: hidden;
+    display: table;
+}
+#field-list form.field-search {
+    position: relative;
+    margin-bottom: 40px;
+    background-color: #f3f3f3;
+    border: thin solid #e5e5e5;
+    border-radius: 5px;
+    text-align: left;
+    display: inline-block;
+    vertical-align: middle;
+    padding: 30px;
+}
+#field-list form.field-search label {
+    color: #666
+}
+#field-list form.field-search input.datepicker {
+    background: #fff url(../img/module/calendar.png) center right 7px no-repeat;
+}
+form .form-group input.customer-date {
+    background: #fff url(../img/module/calendar.png) center right 7px no-repeat;
+}
+#field-list form.field-search .search_date {
+    display: inline-block;
+}
+#field-list form.field-search input:focus {
+    box-shadow: none
+}
+.submit-btn {
+    display: inline-block;
+    border: none;
+    color: #fff !important;
+    background-color: #d54937;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    margin-right: 0;
+    height: 34px;
+    border-radius: 4px;
+    padding: 0 20px;
+}
+.submit-btn:hover {
+    opacity: .7
+}
+.back-btn {
+    height: 34px;
+    border: 1px solid #ccc;
+    background: #f3f3f3;
+    color: #333;
+    border-radius: 4px;
+    padding: 0 20px;
+    cursor: pointer;
+}
+.back-btn:hover {
+    opacity: .7
+}
+#field-list .btn-add {
+    text-align: left;
+}
+#field-list .submit-btn.add-field {
+    margin: 0 0 35px;
+}
+#field-list .submit-btn.add-field:hover {
+    opacity: 0.5 !important;
+    filter: alpha(opacity=50);
+    -ms-filter: “alpha(opacity=50)”;
+    text-decoration: none;
+}
+#field-list form.field-search img {
+    margin-right: 40px;
+}
+#field-list table.list-wrap {
+    width: 100%;
+    margin-bottom: 40px;
+    border-collapse: inherit;
+}
+#field-list table.list-wrap.cus-tbl {
+    border-left: 1px solid #ccc
+}
+#field-list table.list-wrap tr th {
+    border-bottom: thin solid #e4d7d7;
+    padding: 20px 0px 10px;
+    font-size: 1.2rem;
+    padding-right:15px;
+}
+#field-list table.list-wrap tr td {
+    text-align: left;
+    padding: 10px 0px;
+    border-bottom: thin solid #e4d7d7;
+    font-size: 1.2rem;
+    padding-right:15px;
+}
+#field-list table.list-wrap tr th:last-child,
+#field-list table.list-wrap tr td:last-child{
+    padding:10px 0;
+}
+#field-list table.list-wrap tr td a {
+    text-decoration: underline;
+    color: #337ab7;
+}
+#field-list table.list-wrap tr td.date {
+    width: 100px;
+}
+
+
+/* max-width: 992px */
+@media only screen  and (max-width:992px) {
+    #field-list form.field-search img {
+        margin: 0 20px 10px 0;
+    }
+}
+
+/* max-width: 767px */
+@media only screen  and (max-width:767px) {
+    .nav>li>a {
+        max-width: 768px;
+        border-radius: 0px;
+    }
+}
+
+/* max-width: 750px */
+@media only screen  and (max-width:750px) {
+    #field-list form.field-search img {
+        margin-bottom: 10px;
+    }
+    #field-list table.list-wrap tr th {
+        display: none;
+    }
+    #field-list table.list-wrap tr td {
+        width: 100%;
+        display: block;
+        border: none;
+        position: relative;
+    }
+    #field-list table.list-wrap tr td:nth-child(1), #field-list table.list-wrap tr td:nth-child(2), #field-list table.list-wrap tr td:nth-child(3) {
+        width: 100%;
+    }
+    #field-list table.list-wrap tr {
+        border-bottom: thin solid #b7b6b6;
+    }
+    #field-list table.list-wrap tr td:before {
+        font-weight: bold;
+        display: inline-block;
+        width: 20%;
+        white-space: nowrap;
+    }
+    #field-list table.list-wrap tr td:nth-of-type(1):before {
+        content: "現場名 : ";
+    }
+    #field-list table.list-wrap tr td:nth-of-type(2):before {
+        content: "住所 : ";
+    }
+    #field-list table.list-wrap tr td:nth-of-type(3):before {
+        content: "日程 : ";
+    }
+}
+
+/*~~ field-add settings ~~*/
+#field-add {
+    text-align: left;
+}
+h3.page-title {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    font-size: 18px;
+    border-bottom: thin solid #e5e5e5;
+    text-align: left;
+}
+.field-item {
+    padding: 10px 0;
+}
+.field-item-label, .field-item-input {
+    float: left;
+}
+.address-wrap {
+    margin-bottom: 16px;
+}
+.address-wrap:last-child {
+    margin: 0;
+}
+.date-wrap {
+    margin-bottom: 5px;
+}
+.field-item:last-child {
+    margin-bottom: 30px;
+}
+.field-item label {
+    display: inline-block;
+    font-weight: bold;
+}
+.field-item input.datepicker {
+    width: calc(50% - 37px);
+    padding: 0px 5px;
+    background: #fff url(../img/module/calendar.png) center right 10px no-repeat;
+    display: inline-block;
+}
+.field-item input.datepicker+ span {
+    padding: 0 8px;
+}
+.field-item input.datepicker+ span.calendar-rm{
+    cursor:pointer;
+    font-size:15px;
+    vertical-align:sub;
+    padding:0;
+    color:red;
+    margin-left:20px
+}
+.register-btn {
+    display: inline-block;
+    padding:0 20px;
+    background: #f3f3f3;
+    text-align: center;
+    line-height: 30px;
+    font-weight: bold;
+    border: thin solid #e5e5e5;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+.field-item.labels {
+    margin-bottom: 30px;
+}
+.label {
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    background: pink;
+    border-radius: 5px;
+}
+.label:hover {
+    opacity: .7;
+    cursor: pointer;
+}
+.label.selected {
+    border: 2px solid #000;
+}
+.submit-btn.next {
+    margin-right: 20px;
+}
+form.field-search {
+    width: 100%;
+    margin-bottom: 40px;
+    padding: 20px;
+    background-color: #f3f3f3;
+    border: thin solid #e5e5e5;
+    border-radius: 5px;
+}
+form.field-search img {
+    margin-right: 40px;
+}
+form.field-search input[type="submit"] {
+    margin: 0;
+}
+
+/* max-width: 400px */
+@media only screen  and (min-width:320px) and (max-width:400px) {
+    .field-item textarea {
+        width: 100%;
+    }
+    .field-item input {
+        width: 100% !important;
+    }
+    .field-item select {
+        width: 100%;
+    }
+}
+/*~~ コンテンツ ~~*/
+
+.l-contents .l-main {
+    float: right;
+    width: 82%;
+}
+.l-contents .l-main .content-box {
+    width: 100%;
+    overflow: hidden;
+}
+.l-contents .l-main .content-box #schedule-btn-list-mb {
+    display: none;
+}
+.l-contents .l-main .content-box #schedule-btn-list {
+    float: left;
+    width: 40px;
+    list-style-type: none;
+    margin: 176px 3px 0px;
+	/*
+	margin: 183px 3px 0px;
+	*/
+	padding: 0px 0px 0px 0px;
+
+	/*
+	margin: 136px 3px 0px;
+    padding: 49px 0px 0px 0px;
+	*/
+    text-align: center;
+    display: block;
+    overflow: hidden;
+}
+.l-contents .l-main .content-box .daily-memo {
+    margin: 165px 0px 0px !important;
+    padding: 55px 0px 0px 0px!important;
+}
+
+@media screen and (min-width:1208px) {
+    .l-contents .l-main .content-box .daily-memo {
+        margin-top: 155px !important
+    }
+}
+.l-contents .l-main .content-box .schedule-memo-btn-list {
+    margin: 116px 0px 0px !important;
+}
+.l-contents .l-main .content-box #schedule-btn-list li {
+    list-style: none;
+    display: table;
+    background-color: #FFF;
+    border: 1px solid #887c7c;
+
+    width: 40px;
+    height: 55px;
+	margin: 6px auto 15px;
+
+	padding-top:16px;
+	font-size:1.6em;
+
+	/*
+    width: 40px;
+    height: 15px;
+	margin: 0px auto 55px;
+	*/
+    text-align: center;
+    cursor: pointer;
+}
+.l-contents .l-main .content-box .schedule-memo-btn-list li {
+    margin: 0px auto 56px !important;
+}
+.l-contents .l-main .content-box .daily-memo li {
+    margin: 0px auto 57px !important;
+}
+.l-contents .l-main .content-box #schedule-btn-list li:last-child {
+    margin-bottom: 0px;
+}
+.l-contents .l-main .content-box #s_body {
+    float: right;
+    width: -webkit-calc(100% - 50px);
+    width: -moz-calc(100% - 50px);
+    width: calc(100% - 50px);
+}
+.memo-monthly{
+    width: 50px;
+    float: left;
+    padding-top: 97px;
+}
+.memo-monthly ul.memo-row{
+    list-style: none;
+    padding: 0 3px;
+    height: 237px;
+    overflow: hidden;
+    margin-bottom: 33px;
+}
+.memo-monthly ul.memo-row li{
+    width: 100%;
+    height: 17px;
+    border: 1px solid #ccc;
+    margin-bottom: 3px;
+    background-color: #fff;
+    overflow: hidden;
+}
+.l-contents #left-block {
+    float: left;
+    width: 18%;
+    margin: 0px 0px;
+    border-radius: 5px;
+    /*border: 1px solid #e5e5e5;*/
+}
+.set-up-btn {
+    cursor: pointer;
+}
+.l-contents #left-block div#set-up .set-up-btn a {
+    color: #FFF;
+    font-weight: bold;
+    display: block;
+    height: 45px;
+    line-height: 45px;
+    position: relative;
+    background-color: #e75655;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+.l-contents #left-block div#set-up .set-up-btn a:hover {
+    text-decoration: none;
+}
+.l-contents #left-block div#set-up p {
+    font-size: 12px;
+}
+.l-contents #left-block div#set-up p span.set-span01, .l-contents #left-block div#set-up p span.set-date {
+    margin-right: 7px;
+}
+.l-contents #left-block div#set-up p span.set-span02 {
+    margin-right: 15px;
+}
+.l-contents .l-main .content-box #s_body #new-btn {
+    float: left;
+    overflow: hidden;
+    margin: 3px 10px 0;
+}
+.l-contents .l-main .content-box #s_body #new-btn .item-btn {
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+    margin-top: 5px;
+    line-height: 31px;
+    cursor: pointer;
+    border-radius: 3px;
+    background-color: #dad7d8;
+    background-repeat: no-repeat;
+    border: 1px solid #c5c4c8;
+    background-size: 25%;
+    position: relative;
+}
+
+/*~~  site  ~~*/
+.coment-groupt {
+    height: 150px;
+    overflow: auto;
+    margin-bottom: 20px
+}
+.l-contents .l-main .content-box #s_body #new-btn .item-btn span {
+    vertical-align: middle;
+    display: inline-block;
+}
+.l-contents .l-main .content-box #s_body #new-btn .btn01 {
+    float: left;
+    background-image: url(../../img/prev.png);
+    background-position: left center;
+    background-position-x: 5px;
+    padding-left: 15px;
+    position: inherit;
+}
+.l-contents .l-main .content-box #s_body #new-btn .btn02 {
+    float: right;
+    background-image: url(../../img/next.png);
+    background-position: center right;
+    background-position-x: 38px;
+    padding-right: 15px;
+    position: absolute;
+    left: 188px
+}
+div#time-btn {
+    height: 0
+}
+.time-btn-mb {
+    display: none;
+}
+div#time-btn span {
+    display: inline-block;
+    background-color: #f3f3f3;
+    padding: 3px 20px;
+    margin-right: 10px;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+div#time-btn span:hover, div#time-btn span:link, div#time-btn span:visited, div#time-btn span.current {
+    background-color: #0192dd;
+    color: #FFF;
+}
+/*~~ l-schedule ~~*/
+.l-schedule {
+    width: 100%;
+    overflow: hidden;
+}
+.l-schedule #schedule_top {
+    /*overflow: hidden;*/
+}
+.l-schedule .place {
+    margin: 0 0 8px;
+    font-weight: 800;
+}
+.l-schedule .control-arrow {
+    margin: 0 0 30px;
+}
+#schedule_btn_line {
+    position: relative;
+}
+.l-schedule .control-arrow a:hover, .l-schedule .control-arrow a:active, .l-schedule .control-arrow a:focus {
+    text-decoration: none;
+}
+.l-schedule .control-arrow .preview, .l-schedule .control-arrow .next {
+    display: block;
+    width: 110px;
+    height: 37px;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.l-schedule .control-arrow .preview:hover, .l-schedule .control-arrow .next:hover {
+    background-color: #fff;
+}
+.l-schedule .control-arrow .preview {
+    float: left;
+    padding: 5px 22px;
+    background: #f3f3f3;
+    border:1px solid #d3d3d3;
+}
+.l-schedule .control-arrow .preview span {
+    font-size: 25px;
+    margin-right: 7px;
+    vertical-align: sub
+}
+.l-schedule .control-arrow .next {
+    padding: 5px 22px;
+    background: #f3f3f3;
+    text-align: left;
+    top: 0;
+    right: 0;
+    border:1px solid #d3d3d3;
+}
+.l-schedule .control-arrow .next span {
+    font-size: 25px;
+    margin-left: 7px;
+    vertical-align: sub
+}
+.l-schedule #schedule_top_head {
+    padding-left: 1px;
+    background-color: #e5e5e5;
+    white-space: nowrap;
+    overflow: hidden;
+    background: #fff
+}
+.l-schedule .schedule_head {
+    display: inline-block;
+    text-align: center;
+    height: 65px;
+    width: 14px;
+    border-bottom: 1px solid #e5e5e5;
+    border-right: 1px solid #e5e5e5;
+    background-color: #FFF;
+    padding: 10px 0;
+}
+.l-schedule .schedule_head .sun {
+    color: #ff2e6c;
+    font-weight: bold;
+}
+.l-schedule .schedule_head .sat {
+    color: #1a8fff;
+    font-weight: bold;
+}
+.l-schedule .w-sunny, .l-schedule .w-sc, .l-schedule .w-cloudy, .l-schedule .w-rainy {
+    background-repeat: no-repeat;
+    background-position: center 30px;
+}
+
+.l-schedule #schedule_top> #schedule_top_inner {
+    /*height: 260px;*/
+    overflow: inherit;
+    padding: 0 0 0 1px;
+    white-space: nowrap;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    background: url(../../img/MS_calender_bg.png) no-repeat top 180px right 100px;
+    background-color: #fff;
+    background-size: 25%;
+}
+
+/*
+.l-schedule #schedule_top> #schedule_top_inner {
+    height: 260px;
+    overflow: inherit;
+    padding: 0 0 0 1px;
+    white-space: nowrap;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    background: url(../img/MS_calender_bg.png) no-repeat top 180px right 100px;
+    background-color: #fff;
+    background-size: 25%;
+}
+*/
+
+.schedule_inner_daily {
+    height: 289px;
+    overflow: inherit!important;
+    padding: 0;
+    white-space: nowrap;
+    overflow-x: hidden!important;
+    -webkit-overflow-scrolling: touch!important;
+    background: url(../../img/MS_calender_bg.png) no-repeat top 180px right 100px;
+    background-color: #fff;
+    background-size: 25%;
+}
+#check-around {
+    width: 1.2em;
+    height: 1.2em;
+    display: block;
+    border-radius: 50%;
+    background-color: green;
+    border: 1px solid #848484;
+    float: left;
+    margin: 3px 5px 0px 0px;
+    background-image: linear-gradient(90deg, transparent 50%, white 50%), linear-gradient(90deg, white 50%, transparent 50%);
+}
+.spin-0 {
+    background-image: linear-gradient(90deg, transparent 50%, white 50%), linear-gradient(90deg, white 50%, transparent 50%) !important;
+}
+.spin-1 {
+    background-image: linear-gradient(90deg, white 50%, transparent 50%) !important;
+}
+.spin-2 {
+    background-image: linear-gradient(270deg, transparent 50%, green 50%), linear-gradient(90deg, white 50%, transparent 50%) !important;
+}
+.spin-3 {
+    background-image: linear-gradient(180deg, transparent 50%, green 50%), linear-gradient(90deg, white 50%, transparent 50%) !important;
+}
+.spin-4 {
+    background-image: none !important;
+}
+.l-schedule .schedule_day_top {
+    display: inline-block;
+    vertical-align: top;
+    border-right: 1px solid #e5e5e5;
+}
+.l-schedule .schedule_block {
+    height: 70px;
+    min-height: 63px;
+    color: #FFF;
+    border-bottom: 1px solid #e5e5e5;
+    width: 100% !important;
+}
+.l-schedule .schedule {
+    overflow: hidden;
+    height: 100%;
+    padding: 5px 5px;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: left;
+    width: 100% !important;
+    cursor: pointer;
+    color: #333 !important;
+    line-height: 20px;
+}
+.l-schedule .schedule .checkbox {
+    margin: 0px;
+    padding: 0px;
+}
+.l-schedule .schedule span {
+    font-size: 11px;
+    font-weight: normal;
+}
+.l-schedule .side-date {
+    position: relative;
+    height: 50px;
+    padding: 15px 20px 0;
+    margin: 0;
+    font-size: 14px;
+    font-weight: 800;
+    background: #f3f3f3;
+}
+.l-schedule .side-date p.date {
+    text-align: left;
+}
+
+.l-schedule .side-date .weather {
+    position: absolute;
+    width: 50px;
+    height: 65px;
+    line-height: 65px;
+    right: 10px;
+    top: 0;
+    background-position: top 20px right 0px;
+    background-size: 100%;
+	cursor:pointer;
+}
+
+.l-schedule .site-content {
+
+    background-color: #FFF;
+	padding-top:10px;
+	padding-bottom:10px;
+    display: block;
+    text-align: left;
+}
+.schedule_remark {
+	margin-top:2%;
+    max-height: 150px;
+    overflow-y: auto;
+}
+.l-schedule .side-box {
+    padding: 0 10px 10px;
+    background-image: none;
+    background-color: #fff;
+}
+.l-schedule .side-box .place {
+
+    margin: 0 0 10px;
+    font-size: 14px;
+}
+
+.l-schedule .side-box .add {
+
+	width:100%;
+	height:1%;
+	overflow:auto;
+	margin-top:1%;
+}
+
+.l-schedule .side-box .add .left,
+.l-schedule .side-box .add .right
+{
+
+	float:left;
+	display:table;
+	padding:1%;
+	overflow:hidden;
+}
+
+.l-schedule .side-box .add .left{
+
+	width:40%;
+}
+
+.l-schedule .side-box .add .right{
+
+	width:60%;
+	background-color:rgba(0,0,0,0.1);
+	padding-left:2%;
+}
+
+.l-schedule .side-box .price_total,
+.l-schedule .side-box .price_invoice,
+.l-schedule .side-box .diposit_invoice,
+.l-schedule .side-box .room_guest_history
+{
+
+	display: block;
+	background-color:rgba(0,0,0,0.5);
+	padding:3%;
+	color:rgba(255,255,255,1);
+	text-align:center;
+	cursor:pointer;
+	font-size:1.1em;
+}
+
+.l-schedule .side-box a:hover, .l-schedule .side-box a:active, .l-schedule .side-box a:focus{
+
+    text-decoration: none;
+}
+
+.l-schedule .side-box a:hover {
+    background-color: #f6a4a4;
+}
+
+.l-schedule .side-box .price_total{
+
+	margin-top:8px;
+}
+
+.l-schedule .side-box .price_invoice,
+.l-schedule .side-box .diposit_invoice,
+.l-schedule .side-box .room_guest_history
+{
+
+	margin-top:3px;
+}
+
+.l-schedule .side-box .comment {
+    word-wrap: break-word;
+}
+.l-schedule .secondary {
+    overflow: hidden;
+}
+.l-schedule .secondary #staff-block {
+    float: left;
+    width: 40%;
+    overflow: hidden;
+}
+.l-schedule .secondary #truck-block {
+    float: right;
+    width: 55%;
+    overflow: hidden;
+}
+.l-schedule .secondary #staff-block ul.staff-list, .l-schedule .secondary #truck-block ul.truck-list {
+    text-align: left;
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+.l-schedule .secondary #staff-block ul.staff-list li, .l-schedule .secondary #truct-block ul.truck-list li {
+    text-align: left;
+    list-style: none;
+}
+.l-schedule .side-box .icon {
+    width: 100%;
+    margin: 0 0 10px;
+    font-size: 14px;
+    font-weight: 800;
+}
+.l-schedule .side-box .icon .staff {
+    position: relative;
+    padding-left: 20px;
+}
+.l-schedule .side-box .icon .staff:before {
+    content: '';
+    width: 50%;
+    background: url(../img/module/icon_staff.png) no-repeat left center;
+    background-size: 100%;
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+.l-schedule .side-box .icon .truck {
+    position: relative;
+    padding-left: 25px;
+}
+.l-schedule .side-box .icon .truck:before {
+    content: '';
+    width: 50%;
+    background: url(../img/module/icon_truck.png) no-repeat left center;
+    background-size: 100%;
+    width: 18px;
+    height: 15px;
+    position: absolute;
+    left: 0px;
+    top: 2px;
+}
+.l-schedule .side-box .staff-list li {
+    margin: 0 0 0px;
+}
+.l-schedule .side-box .staff-list li::before, .l-schedule .side-box .truck-list li::before {
+    content: "・";
+}
+
+.l-schedule .side-box .edit-btn,
+.l-schedule .side-box .checkin_out
+{
+    margin: 0 0 0px;
+}
+
+.l-schedule .side-box .edit-btn a:hover, .l-schedule .side-box .edit-btn a:active, .l-schedule .side-box .edit-btn a:focus,
+.l-schedule .side-box .checkin_out a:hover, .l-schedule .side-box .checkin_out a:active, .l-schedule .side-box .checkin_out a:focus{
+
+    text-decoration: none;
+}
+
+.l-schedule .side-box .edit-btn a,
+.l-schedule .side-box .checkin_out a 
+{
+
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #f5f5f5;
+    background: rgba(0,0,0,0.5);
+	text-align:center;
+	color:rgba(255,255,255,1);
+	font-size:1.3em;
+}
+
+.l-schedule .side-box .edit-btn a span,
+.l-schedule .side-box .checkin_out a span {
+
+    padding-right: 8px
+}
+
+.l-schedule .side-box .edit-btn a:hover,
+.l-schedule .side-box .checkin_out a:hover{
+
+    background-color: #f6a4a4;
+}
+
+.l-schedule .side-box:last-child {
+    padding-bottom: 0;
+}
+/*~~ last-update ~~*/
+.last-update {
+    display: block;
+    text-align: center;
+    background: #fff;
+    padding: 10px 0 20px
+}
+.last-update p span.set-span01, .last-update p span.set-date {
+    margin-right: 7px;
+}
+.last-update  p span.set-span02 {
+    margin-right: 15px;
+}
+/*~~ report-button ~~*/
+#left-block  aside .report-btn {
+    display: block;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+}
+#left-block  aside .report-btn p {
+    vertical-align: middle;
+    margin: 0px;
+    padding: 0px;
+}
+#left-block  aside .report-btn p a {
+    cursor: pointer;
+    text-align: center;
+    display: block;
+    color: #FFF;
+    font-weight: bold;
+    background-color: #d64937;
+    border-radius: 5px;
+    line-height: 40px;
+    width: 90%;
+    margin: 0 auto;
+}
+#left-block  aside .report-btn p a:hover {
+    text-decoration: none;
+}
+/*~~ add-site-button ~~*/
+#left-block  aside  .add-site-btn {
+    padding: 20px 10px 15px;
+    background-image: none;
+    background-color: #fff;
+}
+#left-block  aside  .add-site-btn p {
+    margin: 0px;
+    padding: 0px;
+}
+#left-block  aside  .add-site-btn p a {
+    cursor: pointer;
+    display: block;
+    height: 40px;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #f5f5f5;
+    border-radius: 5px;
+    background: #f3f3f3
+}
+#left-block  aside  .add-site-btn p a span {
+    padding-right: 8px;
+    font-size: 14px
+}
+#left-block  aside  .add-site-btn p a:hover {
+    text-decoration: none;
+    background-color: #f6a4a4;
+}
+
+/*~~ Field List Page ~~*/
+.l-contents.field-list {
+    min-width: 1240px;
+    padding: 0 40px;
+}
+.l-contents.field-list .list-wrap {
+    height: 45px;
+    line-height: 45px;
+    border-bottom: thin solid #e5e5e5;
+}
+.l-contents.field-list .list-wrap.title {
+    font-weight: bold;
+}
+.l-contents.field-list .list-wrap ul {
+}
+.l-contents.field-list .list-wrap ul li {
+    width: 250px;
+}
+.l-contents.field-list .list-wrap ul li.date {
+    width: 500px;
+}
+.l-contents.field-list .list-wrap ul li a {
+    color: #1985d9;
+    border-bottom: thin solid #1985d9;
+}
+.l-contents.field-list .list-wrap ul li a:hover {
+    text-decoration: none;
+    opacity: .7;
+}
+.l-contents.field-add {
+    min-width: 1240px;
+    padding: 0 40px;
+}
+/*~~ site_modal_top ~~*/
+.site_modal_container {
+    position: relative;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, .2);
+    border-radius: 6px;
+    outline: 0;
+    -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+    box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+    height: auto;
+	-webkit-overflow-scrolling: touch;
+}
+.site_modal_container::-webkit-scrollbar-thumb {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px
+}
+.site_modal_container::-webkit-scrollbar-track {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px
+}
+.site_modal_top {
+    width: 90%;
+    height: 150px;
+    margin: 0 auto;
+    overflow: auto;
+    padding: 0 10px;
+}
+dl.site_modal_top {
+    overflow: hidden;
+    margin: 0 auto 20px;
+    height: 120px;
+    overflow-y: scroll;
+}
+dl.site_modal_top dt {
+    float: left;
+    width: 80%;
+    font-weight: normal;
+    padding-top: 10px;
+}
+dl.site_modal_top dd {
+    padding: 0px 0px 0px 80%;
+    border-bottom: 1px solid #ddd;
+    padding: 5px 0px 5px 0px;
+}
+.change-bg {
+    background-color: #00aa00 !important;
+}
+dl.site_modal_top dd button.item-btn-sel {
+    width: 55px;
+    background-color: #8c8c8c;
+    color: #FFF !important;
+    padding-top: 5px;
+}
+.site_modal_button {
+    text-align: right;
+    margin-right: 30px;
+}
+ul#list-level {
+    overflow: hidden;
+    list-style: none;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    text-align: center;
+}
+ul#list-level li {
+    cursor: pointer;
+    width: 23px;
+    height: 23px;
+    float: left;
+    list-style: none;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.modal-footer {
+    /*text-align: left;*/
+}
+
+.btn {
+
+	text-align:center;
+	/*
+    padding: 6px 40px;
+	*/
+}
+
+.l-schedule .schedule_head span[data-type='weather'] {
+    display: inline-block;
+    height: auto;
+    width: 20%;
+    margin: 0px;
+}
+.l-schedule .schedule_head span[data-type='room-count'] {
+    display: block;
+    width: 75px;
+    margin: 5px auto;
+    border-radius: 3px;
+    background: url(../img/module/icon_staff.png) no-repeat left center;
+    background-color: #dcdcdc;
+	/*
+    padding: 2px 0px 0px 16px;
+	*/
+	padding:2%;
+    background-size: 15%;
+    background-position-x: 7px;
+    cursor: pointer
+}
+/*~~ Result-search settings ~~*/
+.customer-name {
+    text-align: left !important;
+    border-bottom: 1px solid #999 !important;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+.result-date {
+    text-align: left;
+    font-weight: bold;
+    margin-bottom: 40px;
+}
+.result-date p span {
+    margin-left: 40px;
+}
+#field-list .form-search .form-item {
+    display: table-cell;
+    float: left;
+}
+.schedule-result #field-list .form-title {
+    margin-bottom: 3px;
+    opacity: 0.7;
+    height: 18px;
+}
+.schedule-result #field-list form  div > div > div.row > div {
+    padding: 0 7px
+}
+.schedule-result #field-list form  div > div > div.row > div > .row {
+    padding: 0 7px
+}
+.schedule-result #field-list form > div.row .col-lg-12.col-md-12 {
+    padding: 15px 7px 0
+}
+.schedule-result #field-list form div.row input {
+    width: 100%;
+    margin-bottom: 9px;
+    display: inline;
+}
+.schedule-result #field-list form div.row input[type="button"] {
+    width: auto;
+    padding: 2px 40px
+}
+#field-list .form-search .form-item .form-end-date {
+    margin-right: 0px;
+}
+#field-list .form-search-btn {
+    float: right;
+    margin-top: 20px;
+}
+#field-list form .result-calendar {
+    display: table;
+}
+#field-list  form .result-calendar input {
+    display: table-cell;
+}
+#field-list form .result-calendar span {
+    display: table-cell;
+    padding: 0px 5px;
+}
+@media only screen  and (max-width:440px) {
+    #field-list form .result-calendar, #field-list form .result-calendar input, #field-list form .result-calendar span {
+        display: block;
+    }
+}
+/*~~ Months Calendar settings ~~*/
+.l-schedule #schedule_top> #schedule-container {
+    padding:0;
+    height: 810px;
+    white-space: normal;
+    background: url(../../img/MS_calender_bg.png) no-repeat bottom 50px right 100px #fff;
+    background-size: 25%;
+}
+.l-schedule #schedule_top> #schedule-container .schedule-map {
+    display: block;
+    float: left;
+    width: 7.14%;
+    height: 245px;
+    padding: 0px;
+    text-align: left;
+}
+.l-schedule #schedule_top> #schedule-container .schedule-map .schedule-head {
+    height: 35px;
+    line-height: 35px;
+    position: relative;
+    text-align: left;
+    padding: 0 3px;
+    text-align: center;
+    width: 100%;
+    overflow: hidden;
+    border-right: 1px solid #eee;
+    border-bottom: 1px solid #eee
+}
+.l-schedule #schedule_top> #schedule-container .schedule-map .schedule-head span {
+    vertical-align: middle;
+    padding: 0px;
+    letter-spacing: -1px
+}
+.l-schedule #schedule_top> #schedule-container .schedule-map .schedule-head span.saturday {
+    font-weight: bold;
+    color: #1a8fff;
+}
+.l-schedule #schedule_top> #schedule-container .schedule-map .schedule-head span.sunday {
+    font-weight: bold;
+    color: #ff2e6c;
+}
+.l-schedule #schedule_top> #schedule-container .schedule-map .schedule-parent {
+    border-right: 1px solid #eee;
+    min-height: 212px;
+}
+.l-schedule #schedule_top> #schedule-container .schedule-map .schedule-parent p {
+    font-size: 1.0rem;
+    color: #2b2e37;
+    padding: 3px 4px;
+    margin: 0px;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap;
+    height: 20px
+}
+.l-schedule #schedule_top> #schedule-container .schedule-map .schedule-parent p a {
+    color: #0091dc;
+    width: 100%;
+    text-decoration: underline;
+}
+div[data-type=schedule-popbox] {
+    width: 150px;
+    height: 200px;
+    background-color: #FFF;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    display: none;
+    padding: 5px;
+}
+.schedule-popbox .maintain-head {
+    display: block;
+    text-align: right;
+    margin-bottom: 5px;
+}
+.schedule-popbox .close {
+    font-size: 17px;
+    height: 20px;
+    float: none;
+}
+.schedule-popbox .maintain-site {
+    display: block;
+    height: 150px;
+    overflow-y: auto;
+}
+/*~~ popup form ~~*/
+.tpl_schedule_modal_site_add .field-item {
+    padding: 5px 0;
+}
+.tpl_schedule_modal_site_add .field-item:last-child {
+    margin-bottom: -20px;
+}
+#schedule-site-modal-inner .modal-body {
+    padding: 15px 15px 5px 15px;
+}
+#schedule-site-modal-inner .btn {
+    padding: 4px 30px;
+}
+/*~~ MEMO popup ~~*/
+/*#schedule-site-memo-container {
+    width: 34%;
+    height: 260px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgba(255, 255, 255, 1);
+    overflow-x: hidden;
+    overflow-y: hidden;
+}*/
+/*~~ Add Worker popup ~~*/
+#add-worker {
+    width: 43%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgba(255, 255, 255, 1);
+    overflow: hidden;
+}
+#add-worker ul.list-add-btn {
+    overflow: hidden;
+    display: table;
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
+    padding-left: 15px;
+}
+#add-worker ul.list-add-btn li {
+    list-style: none;
+    display: table-cell;
+    position: relative;
+    padding: 10px 10px 10px 0px;
+}
+#add-worker ul.list-add-btn li.date-add {
+    padding: 10px 10px 10px 15px;
+    width: 110px;
+}
+#add-worker ul.list-add-btn li.date-add:before {
+    content: "■";
+    position: absolute;
+    left: 0px;
+    top: 9px;
+}
+/*~~ Add Work Information popup ~~*/
+#schedule-site-info-container {
+    overflow-y: auto;
+    margin: 50px auto;
+}
+#schedule-site-info-container div.modal-body label {
+    float: left;
+    min-width: 90px;
+    margin: 2px 0;
+}
+#schedule-site-info-container div.modal-body input{
+    margin-right: 10px;
+}
+body.mobi-layout #schedule-site-info-container div.modal-body input{
+    width: 30px;
+    height: 30px;
+}
+body.mobi-layout .registed-workers-block input{
+    width: 30px;
+    height: 30px;
+}
+.register-btn01 {
+    background: #f3f3f3;
+    text-align: center;
+    border: thin solid #e5e5e5;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+.register-btn01:active, .register-btn01:link, .register-btn01:hover {
+    text-decoration: none;
+}
+ul.list-worker {
+    text-align: left;
+    padding: 0px;
+    margin: 0px;
+    height: 70px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin-bottom: 10px;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+}
+ul.list-worker li {
+    list-style: none;
+    display: inline;
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 5px;
+    padding: 2px 0px 0px 30px;
+    position: relative;
+}
+#schedule-worker-right .modal-body .modal-left-block .worker-block .check_all_mem {
+    padding-bottom: 5px;
+}
+.checkbox.check_all_struck {
+    margin-top: 25px;
+}
+#schedule-worker-right div.modal-body div.modal-left-block div.struck-block .checkbox.check_all_struck label {
+    width: 100% !important;
+}
+ul.list-worker li.warming {
+    color: #a94442 !important;
+    background-color: #f2dede !important;
+    border-color: #ebccd1 !important;
+}
+ul.list-worker li input[type="checkbox"] {
+    position: absolute;
+    top: 0px;
+    left: 10px;
+}
+ul.list-truct {
+    overflow: hidden;
+    text-align: left;
+    padding: 0px;
+    margin: 0px;
+    height: 80px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    margin-bottom: -15px;
+    width: 100%;
+}
+ul.list-truct li {
+    list-style: none;
+    display: inline;
+    float: left;
+    width: 33%;
+    margin-bottom: 5px;
+    padding: 2px 0px 0px 20px;
+    position: relative;
+}
+ul.list-truct li.warming {
+    color: #a94442 !important;
+    background-color: #f2dede !important;
+    border-color: #ebccd1 !important;
+}
+ul.list-truct li input[type="checkbox"] {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+#worker-wraper {
+    overflow: hidden;
+}
+#left-worker {
+    overflow-x: hidden;
+}
+#left-worker .modal-body {
+    padding: 0px;
+}
+#left-worker #modal-body-list-add-btn {
+    height: 205px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+#right-worker {
+    overflow-x: hidden;
+    display: none;
+    background-color: #dcf0fb;
+}
+#right-car {
+    overflow-x: hidden;
+    display: none;
+    background-color: #dcf0fb;
+}
+#right-level {
+    overflow-x: hidden;
+    display: none;
+    background-color: #dcf0fb;
+}
+#right-worker .modal-body, #right-car .modal-body, #right-level .modal-body {
+    min-height: 205px;
+}
+#schedule-worker-right div.modal-body div.modal-right-block div.note-block div {
+    margin-bottom: 0
+}
+#schedule-worker-right div.modal-body div.modal-right-block div.note-block div div p {
+    margin: 10px 0 1px;
+}
+#right-level .modal-body {
+    max-height: 280px;
+    overflow-y: scroll;
+}
+#right-car #list-car {
+    height: 152px;
+}
+ul#list-car {
+    height: 60px;
+    overflow: auto;
+    padding: 0;
+    list-style: none
+}
+ul#list-car::-webkit-scrollbar {
+    width: 8px
+}
+ul#list-car::-webkit-scrollbar-track {
+    border-radius: 4px
+}
+ul#list-car::-webkit-scrollbar-thumb {
+    border-radius: 4px
+}
+ul#list-car li {
+    float: left;
+    margin: 0 10px 5px
+}
+.worker-table {
+    width: 100%;
+}
+.worker-table tr th {
+    background-color: #373a3c;
+    color: #FFF;
+    border: 1px solid #ddd;
+}
+.worker-table tr td {
+    background-color: #f2f2f2;
+    border: 1px solid #ddd;
+}
+.worker-table tr td.total-col {
+    background-color: #FFF;
+}
+.car-info {
+    display: block;
+    width: 70%;
+    border: 1px solid #ddd;
+}
+.car-info h4.head-car-info {
+    color: #FFF;
+    background-color: #373a3c;
+    font-size: 1.2rem;
+    padding: 10px 0px 10px 20px;
+    margin: 0px;
+}
+.car-info .body-car-info {
+    background-color: #f2f2f2;
+    padding: 10px 0px 10px 40px;
+}
+.car-info .body-car-info ul.list-car-info {
+    margin: 0px;
+    padding: 0px;
+}
+#right-level ul#list-level {
+    overflow: hidden;
+    list-style: none;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    text-align: center;
+}
+#right-level ul#list-level li {
+    width: 25px;
+    height: 25px;
+    float: left;
+    list-style: none;
+    margin-right: 5px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+#right-level .item-memo {
+    margin-bottom: 10px;
+}
+#right-level .item-memo p {
+    margin-top: 5px;
+}
+#right-level .item-memo p span {
+    margin-left: 5px;
+    position: relative;
+    padding-left: 15px;
+}
+#right-level .item-memo p span:before {
+    content: "※";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+#schedule-worker-right .modal-body .modal-left-block .worker-block label.worker-group, #schedule-worker-right .modal-body .modal-left-block .worker-block label.member-group {
+    cursor: text;
+}
+
+/*~~ Schedule-warp ~~*/
+#schedule-wraper {
+    display: block;
+}
+#schedule-wraper #schedule-date-left {
+    display: block;
+    width: 230px;
+    height: 100%;
+    float: left;
+    min-height: 540px
+}
+#schedule-wraper #schedule-date-left ul.list-date-btn {
+    display: block;
+    margin: 0;
+    padding: 0 0 20px;
+    text-align: left;
+}
+#schedule-wraper #schedule-date-left ul.list-date-btn li.date-add {
+    margin: 0px;
+    padding: 7px 0px 7px 35px;
+    text-align: left;
+    list-style: none;
+    position: relative;
+    cursor: pointer;
+}
+#schedule-wraper #schedule-date-left ul.list-date-btn li.date-add.active {
+    background-color: #dcf0fb;
+}
+#schedule-wraper #schedule-date-left ul.list-date-btn li.date-add:before {
+    content: "■";
+    position: absolute;
+    left: 20px;
+    top: 7px;
+}
+#schedule-wraper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+#schedule-worker-right {
+    width: calc(100% - 230px);
+    height: 100%;
+    background-color: #dcf0fb;
+    display: none;
+    float: right;
+}
+#schedule-worker-right button.close{
+    position:absolute;
+    right:15px
+}
+#schedule-worker-right .modal-body {
+    overflow: hidden;
+}
+#schedule-worker-right .modal-body .modal-left-block {
+    float: left;
+    width: 50%;
+    padding-right: 10px;
+}
+#schedule-worker-right .modal-body .modal-right-block {
+    float: right;
+    width: 50%;
+    padding-left: 10px;
+}
+
+#schedule-date-left div.modal-body {
+    padding: 0;
+    height: calc(100% + 55px);
+}
+#schedule-date-left div.modal-body ul {
+    height: 100%;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+#schedule-date-left div.modal-body ul::-webkit-scrollbar,
+.worker-block ul.list-worker::-webkit-scrollbar {
+    width: 8px
+}
+#schedule-date-left div.modal-body ul::-webkit-scrollbar-track,
+.worker-block ul.list-worker::-webkit-scrollbar-track {
+    border-radius: 4px
+}
+#schedule-date-left div.modal-body ul::-webkit-scrollbar-thumb,
+.worker-block ul.list-worker::-webkit-scrollbar-thumb {
+    border-radius: 4px
+}
+#schedule-date-left .modal-header {
+    padding: 15px 0px 8px 0px;
+    margin-bottom: 12px;
+    border: none;
+}
+button#worker-close {
+    margin-right: 10px;
+}
+#schedule-date-left .modal-header h4 {
+    font-size: 12px;
+    font-weight: bold;
+    padding: 0px 15px;
+}
+#schedule-worker-right .modal-body .modal-header {
+    padding: 15px 0px 8px 0px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #afacac;
+}
+#schedule-worker-right .modal-body .modal-header h4 {
+    font-size: 12px;
+    font-weight: bold;
+}
+#schedule-worker-right div.modal-body .modal-right-block .level-block .modal-header {
+    padding: 13px 0px 8px 0px;
+    margin-bottom: 12px;
+}
+
+/*~~ Days Calendar settings ~~*/
+#day_schedule_top_head {
+    width: 100%;
+    background-color: #FFF;
+    display: table;
+    /* padding-right: 13px; */
+}
+#day_schedule_top_head .day_schedule-top-title {
+    width: 100%;
+    overflow: hidden;
+    text-align: left;
+    padding-top: 20px;
+}
+#day_schedule_top_head .day_schedule-top-title .day_schedule-date {
+    float: left;
+    width: 11.11%;
+    text-align: left;
+    padding-left: 5px;
+}
+.day_schedule-date .weather img {
+    width: 45px;
+    height: 25px;
+}
+#day_schedule_top_head .day_schedule-top-title .daily-6 {
+    color: #1a8fff;
+    font-weight: bold;
+}
+#day_schedule_top_head .day_schedule-top-title .daily-0 {
+    color: #ff2e6c;
+    font-weight: bold;
+}
+#day_schedule_top_head .day_schedule-top-title .day-schedule-worker-count {
+    display: block;
+    min-width: 80px;
+    width: 11.1111%;
+    margin: 5px auto;
+    border-radius: 3px;
+    background: url(../img/module/icon_staff.png) no-repeat 0 center;
+    background-color: #dcdcdc;
+    padding: 4px 0px 2px 4%;
+    background-size: 14px;
+    background-position-x: 18%;
+    float: left;
+    cursor: pointer;
+}
+#day_schedule_top_head .schedule-head, #schedule_top_inner .schedule-row .schedule-cell {
+    width: 11.11111%;
+}
+#day_schedule_top_head .schedule-head {
+    float: left;
+    display: table-cell;
+    padding: 8px 0;
+    border-top: 1px solid #e5e5e5;
+    border-right: 1px solid #e5e5e5;
+    height: 34px;
+    overflow: hidden
+}
+#day_schedule_top_head .schedule-head-main {
+    overflow: hidden;
+    text-align: center;
+    display: inline-block;
+    padding: 18px 0px 10px;
+    vertical-align: middle;
+}
+#day_schedule_top_head .schedule-head-main span.day-red {
+    color: #e84852;
+}
+#day_schedule_top_head .schedule-head-main .weather {
+    display: inline-block;
+    width: 20%;
+}
+#schedule_top_inner {
+    overflow: hidden;
+    background-color: #fff;
+}
+#schedule_top_inner .schedule-row {
+    width: 100%;
+    display: table;
+    overflow: hidden;
+}
+#schedule_top_inner .schedule-row, #schedule_top_inner .schedule-map {
+    height: 72px;
+    display: flex;
+}
+#schedule_top_inner .schedule-row:first-child .schedule-cell {
+    border-top: 1px solid #e5e5e5;
+    cursor: pointer;
+}
+#schedule_top_inner .schedule-row.schedule-row-not-empty .schedule-cell:first-child {
+    cursor: pointer;
+}
+#schedule_top_inner .schedule-row .schedule-cell {
+    height: 72px;
+    vertical-align: middle;
+    border-right: 1px solid #e5e5e5;
+    padding: 0px 5px 5px;
+    white-space: normal;
+    overflow: hidden;
+    position: relative;
+}
+#schedule_top_inner .schedule-row .schedule-cell span {
+    display: table-cell;
+    overflow: hidden;
+    height: 72px;
+    vertical-align: middle;
+    text-align: center;
+    width: 100px;
+}
+#schedule_top_inner .schedule-row .schedule-cell #check-around {
+    cursor: pointer;
+    margin: 2px 2px 0 -3px
+}
+#schedule_top_inner .schedule-row .schedule-cell.schedule-site-name {
+    color: #FFF;
+    width: 13.11%;
+}
+#schedule_top_inner .schedule-row .schedule-cell.chedule-site-worker {
+    width: 9.11%;
+}
+
+/*~~ contact ~~*/
+#contact h3.page-title {
+    font-weight: bold;
+}
+#contact form {
+    text-align: left;
+    width: 50%;
+}
+#contact form textarea {
+    margin-bottom: 40px;
+}
+#contact form .btn-danger {
+    margin-right: 15px;
+}
+#set-up {
+    background: #fff;
+    padding-bottom: 20px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px
+}
+@media only screen  and (max-width:991px) {
+    .l-contents #left-block div#set-up {
+        text-align: center;
+    }
+    .l-contents #left-block div#set-up .set-up-btn {
+        text-align: center;
+    }
+    #left-block  aside.l-side {
+        background-color: #FFF;
+        padding-bottom: 30px;
+    }
+    .l-schedule .secondary #truck-block {
+        width: 50%;
+    }
+    .l-schedule .side-box .edit-btn a,
+    .l-schedule .side-box .checkin_out a {
+
+        margin: 0 auto;
+        text-align: center;
+        background: none;
+        position: relative;
+        padding: 10px;
+        vertical-align: middle;
+        background: #f3f3f3
+    }
+    .l-schedule .side-box .edit-btn a span,
+	.l-schedule .side-box .checkin_out a span {
+
+        font-size: 13px;
+        padding-right: 8px
+    }
+    .l-schedule .schedule_block .schedule {
+        font-size: 10px;
+    }
+    .l-schedule .schedule span {
+        font-size: 8px;
+    }
+    .l-schedule .schedule {
+        padding: 5px 5px;
+    }
+}
+@media only screen  and (max-width:767px) {
+    .container {
+        padding: 0px 10px;
+    }
+}
+@media only screen  and (max-width:690px) {
+    .l-contents .l-main .content-box #schedule-btn-list li {
+        width: 30px;
+    }
+    .l-contents .l-main .content-box #s_body #new-btn .btn02 {
+        padding-right: 19px;
+    }
+    div#time-btn span {
+        margin-right: 5px;
+    }
+    .l-schedule .schedule_block .schedule {
+        white-space: normal;
+    }
+    .l-contents .l-main .content-box #schedule-btn-list-mb li {
+        display: table-cell;
+        list-style: none;
+        float: left;
+        background-color: #FFF;
+        border: 1px solid #887c7c;
+        height: 15px;
+        text-align: center;
+        width: 10%;
+        margin: 0px 2%;
+        padding: 0px;
+    }
+    .l-contents .l-main .content-box #schedule-btn-list-mb li {
+        width: 10%;
+        margin: 0px 2%;
+        padding: 0px;
+    }
+    .l-contents .l-main .content-box #schedule-btn-list-mb li:last-child {
+        margin-right: 0px;
+    }
+    .l-schedule .side-box .edit-btn a {
+        background: url(../img/module/icon_calender.png) no-repeat center left 28% #f3f3f3;
+    }
+}
+@media only screen  and (max-width:640px) {
+    .time-btn-mb {
+        width: 100%;
+        margin: 0px auto 20px;
+        padding: 0px;
+        display: block;
+    }
+}
+@media only screen  and (max-width:580px) {
+    .l-schedule .schedule_head {
+        display: inline-block;
+        text-align: center;
+        height: 59px;
+        width: 14px;
+        border-bottom: 1px solid #e5e5e5;
+        border-right: 1px solid #e5e5e5;
+        background-color: #FFF;
+        padding-top: 12px;
+    }
+    .l-schedule .schedule_head span[data-type='weather'] {
+        display: inline-block;
+        height: auto;
+        width: 30%;
+    }
+    .l-schedule #schedule_top_head {
+        padding-left: 1px;
+        background-color: #e5e5e5;
+        white-space: normal;
+        overflow: hidden;
+    }
+    .l-schedule .side-box .edit-btn a:before ,
+	.l-schedule .side-box .checkin_out a:before
+	{
+        content: "";
+        position: absolute;
+        top: 11px;
+        left: 10px;
+    }
+}
+@media only screen  and (max-width:550px) {
+    .l-schedule .side-box .edit-btn a {
+        background: url(../img/module/icon_calender.png) no-repeat center left 10% #f3f3f3;
+    }
+    .btn {
+        font-size: 12px;
+    }
+}
+#schedule_btn_line span.date-info {
+    font-weight: 600;
+    color: #444;
+    padding: 6px 10px;
+    font-size: large;
+}
+#loading {
+
+    position: fixed;
+    top: 50%;
+    left: 40%;
+}
+
+#loading img {
+    width: 150px;
+    height: 150px;
+}
+body.mobi-layout #schedule-wraper #schedule-date-left ul.list-date-btn li.date-add{padding-left:50px}
+body.mobi-layout #schedule-worker-right .modal-body .modal-left-block{width:100%;float:none;}
+body.mobi-layout #schedule-worker-right .modal-body .modal-right-block{width:100%;float:none;padding-left:0;margin-top:30px;}
+body.mobi-layout #schedule-wraper #schedule-date-left{min-height:830px}
+body.mobi-layout #schedule-date-left .modal-header h4,
+body.mobi-layout #schedule-worker-right .modal-body .modal-header h4,
+body.mobi-layout #schedule-wraper #schedule-date-left ul.list-date-btn li.date-add{font-size:32px}
+body.mobi-layout #schedule-worker-right div.modal-body div.modal-left-block div.worker-block span,
+body.mobi-layout #schedule-site-info-container div.modal-body label,
+body.mobi-layout ul.list-worker li,
+body.mobi-layout ul#list-car li,
+body.mobi-layout #schedule-worker-right div.modal-body div.modal-right-block div.note-block div div p{font-size:33px}
+body.mobi-layout #schedule-worker-right .modal-body .modal-content-action a.clear-all{font-size:33px}
+body.mobi-layout ul#list-level li{width:50px;height:50px}
+body.mobi-layout ul#list-level li.active:before{font-size: 30px;}
+body.mobi-layout #schedule-site-info-container{position:absolute;top:0;right:0;bottom:0;left:0;width:calc(100% - 200px);max-height:calc(100% - 100px)!important;margin-top:50px!important;margin-bottom:50px!important}
+body.mobi-layout #dataworker{height:60px;font-size:32px!important}
+body.mobi-layout #schedule-worker-right div.modal-body div.modal-right-block div.note-block div textarea{height:130px;font-size:30px}
+body.mobi-layout #schedule-worker-right div.modal-footer button.btn{font-size:35px;padding:20px 40px;}
+body.mobi-layout ul.list-worker,
+body.mobi-layout ul.list-truck{height:120px!important;-webkit-overflow-scrolling: touch;}
+body.mobi-layout ul.list-worker li{padding-left:0}
+body.mobi-layout ul.list-worker li input[type="checkbox"],
+body.mobi-layout ul.list-truck li input[type="checkbox"]{width:30px;height:30px;position:inherit;margin-right:25px}
+body.mobi-layout #schedule-worker-right div.modal-body label input[type="checkbox"]{width:30px;height:30px;margin-right:25px;position:inherit;}
+body.mobi-layout #schedule-site-modal-inner{width:calc(100% - 200px)}
+body.mobi-layout #schedule-site-modal-inner div.modal-header h4{font-size:35px}
+body.mobi-layout #schedule-site-modal-inner div.modal-body form label,
+body.mobi-layout #schedule-site-modal-inner button,
+body.mobi-layout #schedule-site-modal-inner span{font-size:37px}
+body.mobi-layout #schedule-site-modal-inner div.modal-body form input,
+body.mobi-layout #schedule-site-modal-inner div.modal-body form select{height:58px;font-size:30px;background-size:35px}
+body.mobi-layout #schedule-site-modal-inner div.modal-body form textarea{height:100px;font-size:30px}
+body.mobi-layout #schedule-site-modal-inner .register-btn{font-size:30px;padding:10px 20px;}
+body.mobi-layout .field-item input.datepicker{width:calc(50% - 70px)}
+body.mobi-layout .registed-workers-block{font-size:33px}
+body.mobi-layout #schedule-worker-right button.close{top:20px;font-size:50px;z-index:99}
+body.mobi-layout #ui-datepicker-div{position:absolute!important;}
+body.mobi-layout div.ui-datepicker{font-size:33px;}
+body.mobi-layout #schedule-site-modal-inner div.ui-datepicker span{font-size:33px}
+body.mobi-layout div#schedule-site-detail-edit-info{width:100%;height:900px}
+body.mobi-layout #schedule-site-detail-edit-info div#schedule-worker-right .modal-header h4,
+body.mobi-layout #schedule-site-detail-edit-info div#schedule-worker-right button{font-size:30px;position:inherit;}
+body.mobi-confirm #confirmOverlay #confirmBox{width:90%;left:5%;margin:0}
+body.mobi-confirm #confirmOverlay #confirmBox .warning,
+body.mobi-confirm #confirmOverlay #confirmBox .warning span{font-size:27px;}
+body.mobi-confirm #confirmOverlay #confirmBox h1,
+body.mobi-confirm #confirmOverlay #confirmBox .button,
+body.mobi-confirm #confirmOverlay #confirmBox p{font-size:25px}
+body.mobi-layout .register-checked{width:40px;}
+
+/* Edited by Edward */
+/*body.mobi-layout #schedule-all-report,*/
+body.mobi-layout .sp.site_modal_container {width:90%}
+
+/*body.mobi-layout #schedule-report .schedule_report_contents,*/
+body.mobi-layout .sp.site_modal_container .popup_schedule_contents{font-size:25px}
+
+/*body.mobi-layout #schedule-report .schedule_report_contents div,*/
+body.mobi-layout .sp.site_modal_container .schedule_contents_left,
+body.mobi-layout .sp.site_modal_container .schedule_contents_right{padding:10px 15px}
+
+/*body.mobi-layout #schedule-report .schedule_report_bottom,*/
+body.mobi-layout .sp.site_modal_container .popup_schedule_bottom{font-size:25px}
+
+/*body.mobi-layout .schedule_report_top,*/
+body.mobi-layout .popup_schedule_top{height:80%}
+
+/*body.mobi-layout .schedule_report_bottom,*/
+body.mobi-layout .popup_schedule_bottom{height:20%}
+
+/*body.mobi-layout #schedule-report .schedule_report_bottom_left,*/
+/*body.mobi-layout #schedule-report .schedule_report_bottom_right,*/
+body.mobi-layout .sp.site_modal_container .popup_schedule_bottom_left,
+body.mobi-layout .sp.site_modal_container .popup_schedule_bottom_right{height:65px;}
+
+/*body.mobi-layout #schedule-report .schedule_report_bottom,*/
+body.mobi-layout .sp.site_modal_container .popup_schedule_bottom{padding-bottom:80px}
+/* End of Edward */
+body.mobi-layout #inquiry_conf{width:90%}
+body.mobi-layout #inquiry_conf .inquiry_head,
+body.mobi-layout #inquiry_conf .inquiry_btns{height:100px;font-size:25px}
+body.mobi-layout #inquiry_conf .inquiry_head_message{height:calc(100% - 200px);font-size:25px}
+body.mobi-layout #inquiry_conf .inquiry_head .inquiry_head_left,
+body.mobi-layout #inquiry_conf .inquiry_head .inquiry_head_right,
+body.mobi-layout #inquiry_conf .inquiry_btns .inquiry_head_left_btn,
+body.mobi-layout #inquiry_conf .inquiry_btns .inquiry_head_right_btn{padding:33px 0;}
+body.mobi-layout #schedule-worker-right .modal-body .modal-header{display:inline-block;width:100%;margin-top:30px}
+
+body.mobi-layout .ui-widget-header a.ui-datepicker-next{background: url("../img/module/chevron-sign-to-right.png") no-repeat center; height: 100%}
+body.mobi-layout .ui-widget-header a.ui-datepicker-prev{background: url("../img/module/chevron-sign-left.png") no-repeat center; height: 100%}
+
+body.mobi-layout .ui-widget-header .ui-icon.ui-icon-circle-triangle-e { display: none;}
+body.mobi-layout .ui-widget-header .ui-icon.ui-icon-circle-triangle-w { display: none;}
+
+
+body.mobi-layout .ui-datepicker .ui-datepicker-prev span,body.mobi-layout .ui-datepicker .ui-datepicker-next span {left:35%; top:42%}
+body.mobi-layout .ui-icon {width: 32px; height:32px;}
+
+/* remodal content. */
+.remodal .remodal-room-available{
+
+	width:100%;
+	height:1%;
+	border-bottom:1px rgba(0,0,0,0.1) solid;
+	background-color:rgba(255,255,255,1);
+	overflow:auto;
+	color:rgba(0,0,0,0.9);
+}
+
+.remodal .remodal-room-available-roomnum,
+.remodal .remodal-room-available-roomtype,
+.remodal .remodal-room-available-roomsituation,
+.remodal .remodal-room-available-roomsituation-remark{
+
+	float:left;
+	padding-left:1%;
+	font-size:1.1em;
+}
+
+.remodal .remodal-room-available-roomnum{
+
+	width:10%;
+}
+
+.remodal .remodal-room-available-roomtype{
+
+	width:20%;
+}
+
+.remodal .remodal-room-available-roomsituation{
+
+	width:15%;
+}
+
+.remodal .remodal-room-available-roomsituation-remark{
+
+	width:55%;
+}
+
+.remodal .remodal-room-num-search{
+
+	width:100%;
+	margin-top:1%;
+	height:1%;
+	overflow:auto;
+}
+
+.remodal .remodal-room-type{
+
+	width:20%;
+	font-size:1.1em;
+	text-align:left;
+	padding:1%;
+	background-color:rgba(0,0,0,0.1);
+	float:left;
+}
+
+.remodal .remodal-room-num{
+
+	width:79%;
+	height:1%;
+	float:left;
+	overflow:auto;
+	margin-left:1%;
+}
+
+.remodal .remodal-room-num .remodal-room-num-search-block{
+
+	padding:2%;
+	float:left;
+	color:rgba(255,255,255,1);
+	background-color:rgba(0,0,0,0.5);
+	margin-right:1%;
+	cursor:pointer;
+}
+
+.remodal .remodal-room-type-search-parent{
+
+	width:100%;
+	height:1%;
+	overflow:auto;
+}
+
+.remodal .remodal-room-type-search-block{
+
+	padding:2%;
+	float:left;
+	min-width:1%;
+	background-color:rgba(0,0,0,0.7);
+	margin-left:1%;
+	margin-top:1%;
+	cursor:pointer;
+}
+/* remodal content. */
+
+.room_search_types{
+
+	width:96%;
+	height:1%;
+	overflow:auto;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.room_search_types .purchase_search,
+.room_search_types .booking_search
+{
+
+    display: block;
+	background-color:rgba(0,0,0,0.5);
+	color:rgba(255,255,255,1);
+	text-align:center;
+	font-size:1.1em;
+	cursor:pointer;
+	text-align:center;
+	padding-top:3%;
+	padding-bottom:3%;
+	width:100%;
+	border:1px rgba(0,0,0,0.0) solid;
+}
+
+.room_search_types .booking_search{
+
+	margin-bottom:1px;
+}
+
+.room_search_types .purchase_cancel{
+
+    display: block;
+	background-color:rgba(0,0,0,0.5);
+	color:rgba(255,255,255,1);
+	text-align:center;
+	font-size:1.1em;
+	cursor:pointer;
+	text-align:center;
+	padding-top:3%;
+	padding-bottom:3%;
+	width:100%;
+	border:1px rgba(0,0,0,0.0) solid;
+}
+
+.room_search_types .room_search_types_left,
+.room_search_types .room_search_types_right
+{
+
+    display: block;
+	float:left;
+	background-color:rgba(0,0,0,0.5);
+	color:rgba(255,255,255,1);
+	text-align:center;
+	font-size:1.1em;
+	cursor:pointer;
+	text-align:center;
+	padding-top:3%;
+	padding-bottom:3%;
+	width:49%;
+	border:1px rgba(0,0,0,0.0) solid;
+}
+
+.reservation_search{
+
+	width:96%;
+	height:1%;
+	overflow:auto;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:5px;
+	background-color:rgba(0,0,0,0.5);
+	color:rgba(255,255,255,1);
+	padding-top:3%;
+	padding-bottom:3%;
+	font-size:1.1em;
+	cursor:pointer;
+	display:block;
+}
+
+.room_search_types a:hover, .room_search_types a:active, .room_search_types a:focus,
+.reservation_search:hover, .reservation_search:active, .reservation_search:focus
+{
+
+	text-decoration: none;
+}
+
+.room_search_types .room_search_types_right{
+
+	margin-left:2%;
+}
+
+.room_search_types a:hover,
+.reservation_search:hover
+{
+    background-color: #f6a4a4;
+	color:rgba(255,255,255,1);
+}
+
+.room_search_types .room_search_types_cancel_color{
+
+	color:rgba(0,0,0,0.8) !important;
+	background-color:rgba(0,0,0,0.1) !important;
+	font-weight:bold;
+	border:1px rgba(0,0,0,0.3) solid !important;
+}
+
+.schedule_remark .coment .comment_title{
+
+	font-weight:bold
+}
+
+.schedule_remark .comment_content{
+
+	background-color:rgba(0,0,0,0.2);
+	padding:5%;
+	color:rgba(0,0,0,1);
+}
+
+.remodal .remodal_set_reservation{
+
+	width:100%;
+	max-height:350px;
+	overflow:auto;
+	background-color:rgba(255,255,255,1);
+	padding-bottom:2%;
+}
+
+.remodal .remodal_set_reservation .remodal_set_reservation_left,
+.remodal .remodal_set_reservation .remodal_set_reservation_right{
+
+	float:left;
+	height:1%;
+}
+
+.remodal .remodal_set_reservation .remodal_set_reservation_left{
+
+	width:68%;
+}
+
+.remodal .remodal_set_reservation .remodal_set_reservation_right{
+
+	width:32%;
+}
+
+.remodal .remodal_set_reservation .remodal_set_reservation_block{
+
+	height:1%;
+	overflow:hidden;
+	color:rgba(0,0,0,0.8);
+
+	width:96%;
+
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:10px;
+}
+
+.remodal .remodal_set_reservation .remodal_set_reservation_block .remodal_set_reservation_block_titie{
+
+	font-weight:bold;
+	font-size:1.8em;
+	text-align:left;
+	padding-top:5px;
+	border-bottom:1px rgba(0,0,0,0.1) solid;
+}
+
+.remodal .remodal_set_reservation .remodal_set_reservation_block .remodal_set_reservation_content_block{
+
+	width:100%;
+	height:1%;
+	margin-top:5px;
+	overflow:hidden;
+}
+
+.remodal .remodal_set_reservation .remodal_set_reservation_block .remodal_set_reservation_contents{
+
+	float:left;
+	width:32%;
+	height:30px;
+}
+
+.remodal .remodal_set_reservation .remodal_set_reservation_block .remodal_set_reservation_names{
+
+	height:55px !important;
+}
+
+.remodal .remodal_set_reservation .remodal_set_reservation_block .remodal_set_reservation_calendar{
+
+	width:100%;
+	height:1%;
+}
+
+.remodal .remodal_set_reservation .remodal_set_reservation_contents .remodal_set_reservation_contents_top{
+
+	width:100%;
+	height:1%;
+	padding-top:2%;
+	padding-bottom:2%;
+}
+
+.remodal .remodal_set_reservation .remodal_set_reservation_contents .remodal_set_reservation_contents_bottom{
+
+	width:100%;
+	height:40px;
+	padding-bottom:1%;
+	padding-left:1%;
+}
+
+.remodal .remodal_set_reservation .remodal_set_reservation_contents .remodal_color_bottom{
+
+	height:1%;
+	overflow:auto;
+}
+
+.remodal .remodal_set_reservation .guest_name,
+.remodal .remodal_set_reservation .tell_num,
+.remodal .remodal_set_reservation .mail
+{
+
+	width:100%;
+	height:30px;
+}
+
+.remodal .remodal_set_reservation .label_class{
+
+	width:100%;
+	padding-top:1%;
+	font-size:1.1em;
+	padding-left:1%;
+	background-color:rgba(0,0,0,0.2);
+}
+
+.remodal .remodal_set_reservation .remodal_set_reservation_block .tel_search_button,
+.remodal .remodal_set_reservation .remodal_set_reservation_block .tel_email_button,
+.remodal .remodal_set_reservation .remodal_set_reservation_block .more_schedule_button
+{
+    cursor: pointer;
+    display: block;
+	text-align:center;
+	background-color:rgba(0,0,0,0.7);
+	color:rgba(255,255,255,1);
+	height:100%;
+	padding-top:2.5%;
+	font-size:1.1em;
+}
+
+.remodal .remodal_set_reservation .remodal_set_reservation_block .more_schedule_button{
+
+	width:40%;
+	height:1%;
+	padding:1.6%;
+	font-size:1.2em;
+}
+
+.remodal .remodal_set_reservation .remodal_set_reservation_block a:hover, .remodal .remodal_set_reservation_block a:active, .remodal .remodal_set_reservation_block a:focus{
+
+	text-decoration: none;
+}
+
+.remodal .remodal_set_reservation .remodal_set_reservation_block a:hover{
+
+	background-color: #f6a4a4;
+}
+
+.remodal .remodal_set_reservation .remodal_set_reservation_block select{
+
+	width:100%;
+	height:30px;
+	font-size:1.2em;
+}
+
+.remodal .remodal_set_reservation .remodal_set_reservation_block .calendar_start,
+.remodal .remodal_set_reservation .remodal_set_reservation_block .calendar_end
+{
+
+	display:inline !important;
+	width:40%;
+	height:30px !important;
+}
+
+.remodal .remodal_set_reservation .remodal_color_bottom .color{
+
+	display:block;
+	cursor:pointer;
+	width:40px;
+	height:40px;
+	background-color:red;
+	float:left;
+	margin-right:4px;
+	margin-bottom:4px;
+	border:1px rgba(0,0,0,0.2) solid;
+}
+
+.remodal .remodal_set_reservation .remodal_color_bottom .color.active{
+
+	border:4px rgba(0,0,0,0.9) solid;
+}
+
+.remodal .remodal_set_reservation .remodal_color_bottom a:hover, .remodal .remodal_color_bottom a:active, .remodal .remodal_color_bottom a:focus{
+
+	text-decoration: none;
+}
+
+.remodal .remodal_set_reservation .remodal_color_bottom a:hover{
+
+	background-color: #f6a4a4;
+}
+
+.remodal .remodal_set_reservation textarea{
+
+	width:100%;
+	height:50px;
+}
+
+.room-situation-block,
+.credit-situation-block,
+.outputpayment-situation-block,
+.extraorder-situation-block,
+.diposit-situation-block,
+.attendance-situation-block,
+.balance-situation-block,
+.diposit-main-block{
+
+	width:98%;
+	height:1%;
+	overflow:auto;
+	margin-left:auto;
+	margin-right:auto;
+	background-color:rgba(255,255,255,1);
+	color:rgba(0,0,0,0.8);
+	padding-left:5%;
+	padding-top:30px;
+	padding-bottom:30px;
+}
+
+.room-situation-block .room-situation-title,
+.credit-situation-block .credit-situation-title,
+.outputpayment-situation-block .outputpayment-situation-title,
+.outputpayment-situation-block .agent-situation-title,
+.attendance-situation-block .outputpayment-situation-title,
+.balance-situation-block .outputpayment-situation-title,
+.deposit-situation-block .outputpayment-situation-title,
+.extraorder-situation-block .extraorder-situation-title,
+.extraorder-situation-block .agent-situation-title,
+.attendance-situation-block .extraorder-situation-title,
+.balance-situation-block .extraorder-situation-title,
+.deposit-situation-block .extraorder-situation-title,
+.diposit-main-block .diposit-situation-title{
+
+	width:70%;
+	height:1%;
+	padding-top:5px;
+	padding-bottom:2px;
+	border-bottom:1px #ccc solid;
+	font-size:1.6em;
+	font-weight:bold;
+}
+
+.room-situation-block .room-situation-menu-title,
+.credit-situation-block .credit-situation-menu-title,
+.credit-situation-block .credit-situation-menu-title{
+
+	width:100%;
+	height:1%;
+	overflow:auto;
+}
+
+.room-situation-block .room-situation-menu-title-left,
+.room-situation-block .room-situation-menu-title-right,
+.credit-situation-block .credit-situation-menu-title-left,
+.credit-situation-block .credit-situation-menu-title-right{
+
+	float:left;
+	width:22%;
+	font-size:1.8em;
+}
+
+.room-situation-block .room-situation-menu-title-left,
+.credit-situation-block .credit-situation-menu-title-left{
+
+	padding-top:10px;
+	padding-left:3%;
+}
+
+.room-situation-block .room-situation-menu-title-right,
+.credit-situation-block .credit-situation-menu-title-right{
+
+	padding-top:10px;
+	padding-left:1%;
+}
+
+.room-situation-block .room-situation-informations{
+
+	width:96%;
+	overflow:auto;
+	max-height:320px;
+	padding-left:6%;
+	padding-top:5px;
+}
+
+.room-situation-block .room-situation-informations .room-situation-informations-child,
+.credit-situation-block .credit-situation-informations .credit-situation-informations-child,
+.outputpayment-situation-block .outputpayment-situation-informations .outputpayment-situation-informations-child,
+.outputpayment-situation-block .agent-situation-informations .agent-situation-informations-child,
+.extraorder-situation-block .extraorder-situation-informations .extraorder-situation-informations-child,
+.diposit-main-block .diposit-situation-informations .diposit-situation-informations-child,
+.extraorder-situation-block .agent-situation-informations .agent-situation-informations-child,
+.attendance-situation-block .attendance-situation-informations .attendance-situation-informations-child,
+.balance-situation-block .balance-situation-informations .balance-situation-informations-child,
+.deposit-situation-block .deposit-situation-informations .deposit-situation-informations-child{
+
+	width:100%;
+	overflow:auto;
+	height:1%;
+	margin-bottom:6px;
+}
+
+.extraorder_top,
+.diposit_top{
+
+	width:100%;
+	overflow:auto;
+	height:1%;
+	padding-top:5px;
+}
+
+.diposit-main-block .box-first,
+.diposit-main-block .box-second,
+.diposit-main-block .box-third,
+.diposit-main-block .box-fourth,
+.diposit-main-block .box-fifth,
+.diposit-main-block .box-sixth,
+.diposit-main-block .box-seventh{
+
+	float:left;
+	height:35px;
+	font-size:1em;
+	margin-left:1%;
+	overflow:hidden;
+	padding:2px;
+}
+
+.diposit-main-block .box-first{
+
+	width:16%;
+}
+
+.diposit-main-block .box-first select{
+
+	width:100%;
+	height:100%;
+}
+
+.diposit-main-block .box-second{
+
+	width:10%;
+}
+
+.diposit-main-block .box-second input{
+
+	width:100%;
+	height:100%;
+}
+
+.diposit-main-block .box-third{
+
+	width:10%;
+}
+
+.diposit-main-block .box-third select{
+
+	width:100%;
+	height:100%;
+}
+
+.diposit-main-block .box-fourth{
+
+	width:10%;
+	text-align:center;
+	line-height:3;
+}
+
+.diposit-main-block .box-sixth input{
+
+	width:100%;
+	height:100%;
+}
+
+.diposit-main-block .box-fifth{
+
+	width:15%;
+	line-height:3;
+}
+
+.diposit-main-block .box-sixth{
+
+	width:25%;
+}
+
+.diposit-main-block .box-seventh{
+
+	width:5%;
+	line-height:3;
+	line-height:3;
+}
+
+.diposit-main-block .box-seventh button{
+
+	width:100%;
+	height:100%;
+}
+
+.extraorder-situation-block .box-first,
+.extraorder-situation-block .box-second,
+.extraorder-situation-block .box-third,
+.extraorder-situation-block .box-fourth,
+.extraorder-situation-block .box-fifth,
+.extraorder-situation-block .box-sixth,
+.extraorder-situation-block .box-seventh,
+.extraorder-situation-block .box-eighth{
+
+	float:left;
+	height:35px;
+	font-size:1em;
+	margin-left:1%;
+	overflow:hidden;
+	padding:2px;
+}
+
+.extraorder-situation-block .box-first{
+
+	width:9%;
+}
+
+.extraorder-situation-block select{
+
+	width:100%;
+	height:100%;
+}
+
+.extraorder-situation-block .box-second{
+
+	width:9%;
+}
+
+.extraorder-situation-block .box-third{
+
+	width:28%;
+}
+
+.extraorder-situation-block .box-fourth{
+
+	width:6%;
+}
+
+.extraorder-situation-block .box-fifth{
+
+	width:5%;
+}
+
+.extraorder-situation-block .box-fifth input{
+
+	width:100%;
+	height:100%;
+}
+
+.extraorder-situation-block .box-sixth{
+
+	width:5%;
+	line-height:2.6;
+	text-align:center;
+	font-size:1.2em;
+}
+
+.extraorder-situation-block .box-seventh{
+
+	width:20%;
+}
+
+.extraorder-situation-block .box-eighth{
+
+	width:5%;
+	line-height:3;
+}
+
+.extraorder-situation-block .box-eighth button{
+
+	width:100%;
+	height:100%;
+}
+
+.extraorder-situation-block .box-seventh input{
+
+	width:100%;
+	height:100%;
+}
+
+.credit-situation-block .box-first,
+.credit-situation-block .box-second,
+.credit-situation-block .box-third,
+.credit-situation-block .box-fourth,
+.credit-situation-block .box-fifth,
+.credit-situation-block .box-sixth,
+.credit-situation-block .box-seven,
+.credit-situation-block .box-eighth{
+
+	float:left;
+	height:30px;
+	font-size:1em;
+	margin-left:1%;
+	overflow:hidden;
+}
+
+.credit-situation-block .box-first{
+
+	width:12%;
+	text-align:center;
+	margin-left:0%;
+	line-height:2;
+}
+
+.credit-situation-block .box-first select{
+
+	width:100%;
+	height:100%;
+}
+
+.credit-situation-block .box-second{
+
+	text-align:center;
+		line-height:2.6;
+	font-size:1.2em;
+	width:5%;
+}
+
+.credit-situation-block .box-third{
+
+	text-align:center;
+	width:5%;
+}
+
+.credit-situation-block .box-third input{
+
+	width:100%;
+	height:100%;
+}
+
+.credit-situation-block .box-fourth{
+
+	text-align:center;
+	width:10%;
+}
+
+.credit-situation-block .box-fourth select{
+
+	width:100%;
+	height:100%;
+}
+
+.credit-situation-block .box-fifth{
+
+	text-align:center;
+	line-height:2.6;
+	font-size:1.2em;
+	width:10%;
+}
+
+.credit-situation-block .box-sixth{
+
+	text-align:center;
+	line-height:2.6;
+	font-size:1.2em;
+	width:10%;
+}
+
+.credit-situation-block .box-seven{
+
+	text-align:center;
+	width:32%;
+}
+
+.credit-situation-block .box-seven input{
+
+	width:100%;
+	height:100%;
+}
+
+.credit-situation-block .box-eighth{
+
+	text-align:center;
+	width:8%;
+}
+
+.credit-situation-block .box-eighth button{
+
+	width:100%;
+	height:100%;
+}
+
+.credit-situation-block .credit-situation-informations,
+.outputpayment-situation-block .outputpayment-situation-informations,
+.outputpayment-situation-block .agent-situation-informations,
+.extraorder-situation-block .extraorder-situation-informations,
+.diposit-main-block .diposit-situation-informations,
+.extraorder-situation-block .agent-situation-informations,
+.attendance-situation-block .attendance-situation-informations,
+.balance-situation-block .balance-situation-informations,
+.deposit-situation-block .deposit-situation-informations{
+
+	width:96%;
+	overflow:auto;
+	max-height:320px;
+	padding-left:1%;
+	padding-top:10px;
+}
+
+.attendance-situation-block .attendance-situation-title{
+
+	font-size:1.8em;
+	line-height:1.4;
+}
+
+.balance-situation-block .balance-situation-informations{
+
+	height:300px;
+	padding-left:0%;
+}
+
+.room-situation-block .box-first,
+.room-situation-block .box-second,
+.room-situation-block .box-third,
+.room-situation-block .box-fourth{
+
+	float:left;
+	height:36px;
+	font-size:1.4em;
+	overflow:hidden;
+}
+
+.room-situation-block .box-first{
+
+	width:15%;
+	text-align:center;
+}
+
+.room-situation-block .box-second{
+
+	margin-left:7%;
+	text-align:left;
+	width:20%;
+}
+
+.room-situation-block .box-first,
+.room-situation-block .box-second{
+
+	padding-top:7px;
+	border-bottom:1px #ccc solid;
+}
+
+.room-situation-block .box-third{
+
+	width:31%;
+	margin-left:4%;
+}
+
+.room-situation-block .box-third select{
+
+	width:100%;
+	height:100%;
+}
+
+.room-situation-block .box-fourth{
+
+	width:20%;
+	margin-left:2%;
+}
+
+.room-situation-block .box-fourth a{
+
+	display:block;
+	text-align:center;
+	width:100%;
+	height:100%;
+	background-color:rgba(0,0,0,0.5);
+	font-size:1.2em;
+	padding-top:5px;
+	color:rgba(255,255,255,1);
+}
+
+.room-situation-block a:hover, .room-situation-block a:active, .room-situation-block a:focus,
+.credit-situation-block a:hover, .credit-situation-block a:active, .credit-situation-block a:focus{
+
+	text-decoration: none;
+}
+
+.room-situation-block a:hover,
+.credit-situation-block a:hover
+{
+    background-color: #f6a4a4;
+	color:rgba(255,255,255,1);
+}
+
+div[data-type=price-info] #priceCheck{
+
+	overflow:auto;
+	max-height:300px;
+}
+
+div[data-type=price-info] #priceCheck .list-title-block{
+
+	width:100%;
+	height:1%;
+	overflow:auto;
+	border-bottom:5px #ccc solid;
+	padding-top:5px;
+	padding-bottom:5px;
+}
+
+div[data-type=price-info] #priceCheck .list-title-block .list-title-block-left,
+div[data-type=price-info] #priceCheck .list-title-block .list-title-block-right{
+
+	float:left;
+	overflow:auto;
+}
+
+div[data-type=price-info] #priceCheck .list-title-block .list-title-block-left{
+
+	padding-right:4%;
+	font-size:2em;
+}
+
+div[data-type=price-info] #priceCheck .list-title-block .list-title-block-right{
+
+	font-size:2em;
+}
+
+div[data-type=price-info] #priceCheck .content-block{
+
+	width:96%;
+	margin-left:auto;
+	margin-right:auto;
+	min-height:1%;
+	overflow:auto;
+}
+
+div[data-type=price-info] #priceCheck .content-price-block{
+
+	width:100%;
+	height:1%;
+	overflow:auto;
+	padding-left:5%;
+	padding-top:1%;
+	padding-bottom:1%;
+	border:1px rgba(0,0,0,0.5) solid;
+}
+
+div[data-type=price-info] #priceCheck .box{
+
+	width:15%;
+	height:50px;
+	margin-right:1%;
+	margin-top:5px;
+	float:left;
+	border:1px #ccc solid;
+	background-color:rgba(255,255,255,1);
+}
+
+div[data-type=price-info] #priceCheck .content-price-block .box:last-child{
+
+	margin-right:0%;
+}
+
+div[data-type=price-info] #priceCheck .box .date{
+
+	width:100%;
+	height:20px;
+	text-align:left;
+	padding-left:1%;
+	font-size:1em;
+}
+
+div[data-type=price-info] #priceCheck .box .date .date-center{
+
+	width:90%;
+	border-bottom:1px #ccc solid;
+	margin-left:auto;
+	margin-right:auto;
+	height:100%;
+	padding-top:3px;
+}
+
+div[data-type=price-info] #priceCheck .box .price{
+
+	width:100%;
+	height:30px;
+	text-align:center;
+	font-size:2em;
+	font-weight:bold;
+}
+
+.payment_top{
+
+	width:100%;
+	overflow:auto;
+	height:1%;
+	padding-top:5px;
+}
+
+.payment_top .box-first,
+.payment_top .box-second,
+.payment_top .box-third,
+.payment_top .box-fourth,
+.payment_top .box-fifth,
+.payment_top .box-sixth,
+.payment_top .box-seventh{
+
+	float:left;
+	height:30px;
+	margin-left:1%;
+}
+
+.payment_top .box-first{
+
+	width:15%;
+	margin-left:0%;
+}
+
+.payment_top .box-first input[type=text],
+.payment_top .box-second input[type=text],
+.payment_top .box-third input[type=number],
+.payment_top .box-fourth select,
+.payment_top .box-fifth input[type=text]{
+
+	width:100%;
+	height:100%;
+}
+
+.payment_top .box-second{
+
+	width:15%;
+}
+
+.payment_top .box-third{
+
+	width:10%;
+}
+
+.payment_top .box-fourth{
+
+	width:10%;
+}
+
+.payment_top .box-fifth{
+
+	width:30%;
+}
+
+.payment_top .box-sixth{
+
+	width:9%;
+	text-align:center;
+	line-height:2.2;
+}
+
+.payment_top .box-seventh{
+
+	width:5%;
+	text-align:center;
+}
+
+.payment_top .box-fifth input[type=checkbox]{
+
+	margin-top:8px;
+}
+
+.payment_top .box-fifth button{
+
+	margin-top:5px;
+}
+
+.outputpayment-situation-block .outputpayment-calendar,
+.extraorder-situation-block .extraorder-calendar,
+.attendance-situation-block .attendance-calendar,
+.balance-situation-block .balance-calendar,
+.deposit-situation-block .deposit-calendar{
+
+	width:100%;
+	height:30px;
+	margin-top:10px;
+}
+
+.deposit-situation-block .deposit-situation-title{
+
+	font-size:2em;
+}
+
+.deposit-situation-block .deposit-calendar{
+
+	font-size:1.4em;
+	width:60%;
+	border-bottom:1px #ccc solid;
+}
+
+.ng_style{
+
+	background-color:red;
+}
+
+.attendance-situation-block .box-first,
+.attendance-situation-block .box-second,
+.attendance-situation-block .box-third,
+.attendance-situation-block .box-fourth,
+.attendance-situation-block .box-fifth,
+.attendance-situation-block .box-sixth,
+.attendance-situation-block .box-seventh{
+
+	float:left;
+	height:30px;
+	overflow:hidden;
+}
+
+.attendance-situation-block .box-first{
+
+	width:10%;
+	font-size:1.5em;
+	line-height:2;
+}
+
+.attendance-situation-block .box-second{
+
+	width:35%;
+	text-align:center;
+}
+
+.attendance-situation-block .box-second select{
+
+	width:20%;
+	height:100%;
+}
+
+.attendance-situation-block .box-third{
+
+	width:6%;
+	font-size:1.5em;
+	line-height:2;
+	text-align:center;
+}
+
+.attendance-situation-block .box-fourth{
+
+	width:10%;
+}
+
+.attendance-situation-block .box-fourth input[type=number]{
+
+	width:100%;
+	height:100%;
+}
+
+.attendance-situation-block .box-fifth{
+
+	width:6%;
+	font-size:1.5em;
+	line-height:2;
+	text-align:center;
+}
+
+.attendance-situation-block .box-sixth{
+
+	width:21%;
+}
+
+.attendance-situation-block .box-sixth input[type=text]{
+
+	width:100%;
+	height:100%;
+}
+
+.attendance-situation-block .box-seventh{
+
+	width:4%;
+	text-align:center;
+}
+
+.deposit-situation-block .box-first,
+.deposit-situation-block .box-second,
+.deposit-situation-block .box-third,
+.deposit-situation-block .box-fourth
+{
+
+	float:left;
+	height:30px;
+}
+
+.deposit-situation-block .box-first{
+
+	width:10%;
+}
+
+.deposit-situation-block .box-first input[type=number]{
+
+	width:100%;
+	height:100%;
+}
+
+.deposit-situation-block .box-second{
+
+	width:10%;
+	text-align:center;
+	font-size:1.5em;
+	line-height:2;
+}
+
+.deposit-situation-block .box-third{
+
+	width:67%;
+}
+
+.deposit-situation-block .box-third input[type=text]{
+
+	width:100%;
+	height:100%;
+}
+
+.deposit-situation-block .box-fourth{
+
+	width:10%;
+	text-align:center;
+}
+
+.balance-situation-informations-left,
+.balance-situation-informations-right{
+
+	float:left;
+	width:49%;
+	height:100%;
+	overflow:hidden;
+}
+
+.balance-situation-informations-right{
+
+	margin-left:2%;
+}
+
+.balance-situation-informations-left{
+
+}
+
+.balance-situation-informations-left .balance-situation-informations-left-top,
+.balance-situation-informations-right .balance-situation-informations-right-top{
+
+	padding-top:10px;
+	padding-left:10px;
+	line-height:2;
+	height:15%;
+	font-size:1.6em;
+	border-bottom:1px #ccc solid;
+}
+
+.balance-situation-informations-left .balance-situation-informations-left-container,
+.balance-situation-informations-right .balance-situation-informations-right-container{
+ 
+	margin-top:5%;
+	max-height:80%;
+	overflow:hidden;
+	width:94%;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.balance-situation-informations-left .balance-situation-informations-left-container-add,
+.balance-situation-informations-right .balance-situation-informations-right-container-add{
+
+	height:15%;
+	width:100%;
+	overflow:hidden;
+}
+
+.balance-situation-informations-left .balance-situation-informations-first-cell,
+.balance-situation-informations-left .balance-situation-informations-second-cell,
+.balance-situation-informations-left .balance-situation-informations-third-cell,
+.balance-situation-informations-right .balance-situation-informations-first-cell,
+.balance-situation-informations-right .balance-situation-informations-second-cell,
+.balance-situation-informations-right .balance-situation-informations-third-cell{
+
+	float:left;
+	height:100%;
+	border-bottom:1px rgba(0,0,0,0.1) solid;
+}
+
+.balance-situation-informations-left .balance-situation-informations-first-cell,
+.balance-situation-informations-right .balance-situation-informations-first-cell{
+
+	width:32%;
+	font-size:1.4em;
+}
+
+.balance-situation-informations-left .balance-situation-informations-second-cell,
+.balance-situation-informations-right .balance-situation-informations-second-cell{
+
+	margin-left:1%;
+	width:32%;
+	text-align:center;
+	font-size:1.4em;
+}
+
+.balance-situation-informations-left .balance-situation-informations-third-cell,
+.balance-situation-informations-right .balance-situation-informations-third-cell{
+
+	margin-left:1%;
+	width:34%;
+	border-bottom:0px;
+}
+
+.balance-situation-informations-left .balance-situation-informations-third-cell input[type=number],
+.balance-situation-informations-right .balance-situation-informations-third-cell input[type=number]{
+
+	width :100%;
+	min-height:100%;
+}
+
+.balance-situation-informations-left .balance-situation-informations-left-container-list,
+.balance-situation-informations-right .balance-situation-informations-right-container-list{
+
+	width:100%;
+	height:200px;
+	overflow:auto;
+	margin-top:10px;
+}
+
+.balance-situation-informations-left .balance-situation-informations-container-row,
+.balance-situation-informations-right .balance-situation-informations-container-row{
+
+	width:100%;
+	height:30px;
+	margin-top:5px;
+	overflow:hidden;
+}
+
+.balance-situation-informations-left .balance-situation-informations-container-first-row,
+.balance-situation-informations-left .balance-situation-informations-container-second-row,
+.balance-situation-informations-left .balance-situation-informations-container-third-row,
+.balance-situation-informations-right .balance-situation-informations-container-first-row,
+.balance-situation-informations-right .balance-situation-informations-container-second-row,
+.balance-situation-informations-right .balance-situation-informations-container-third-row{
+
+	float:left;
+	height:100%;
+	border-bottom:1px rgba(0,0,0,0.1) solid;
+	line-height:2;
+	font-size:1.4em;
+}
+
+.balance-situation-informations-left .balance-situation-informations-container-first-row,
+.balance-situation-informations-right .balance-situation-informations-container-first-row{
+
+	width:45%;
+}
+
+.balance-situation-informations-left .balance-situation-informations-container-second-row,
+.balance-situation-informations-right .balance-situation-informations-container-second-row{
+
+	width:23%;
+	margin-left:1%;
+	text-align:center;
+}
+
+.balance-situation-informations-left .balance-situation-informations-container-third-row,
+.balance-situation-informations-right .balance-situation-informations-container-third-row{
+
+	width:30%;
+	margin-left:1%;
+	text-align:center;
+}
+
+.daily_report_calendar_block{
+
+	width:80%;
+	margin-left:auto;
+	margin-right:auto;
+	height:1%;
+}
+
+.daily_report_calendar_block_top{
+
+	width:100%;
+	height:30px;
+	line-height:3;
+	font-size:1.2em;
+}
+
+.daily_report_calendar_block_bottom{
+
+	width:100%;
+	height:30px;
+	overflow:auto;
+}
+
+.daily_report_calendar_block_bottom input[type=text]{
+
+	width:100%;
+	height:100%;
+}
+
+
+.daily_report_calendar_block_bottom select[data-type=monthly-year],
+.daily_report_calendar_block_bottom select[data-type=monthly-month],
+.daily_report_calendar_block_bottom button
+{
+
+	float:left;
+	width:32% !important;
+	height:30px;
+	display:block;
+	margin-left:2%;
+}
+
+.daily_report_calendar_block_bottom select[data-type=monthly-year]{
+
+	margin-left:0%;
+}
+
+.checkoutafter_totalprice_top{
+
+	width:100%;
+	height:124px;
+	overflow:auto;
+}
+
+.checkoutafter_totalprice_top .checkoutafter_totalprice_inner{
+
+	width:100%;
+	height:30px;
+}
+
+.checkoutafter_totalprice_inner .checkoutafter_totalprice_inner_right,
+.checkoutafter_totalprice_inner .checkoutafter_totalprice_inner_left{
+
+	float:left;
+	width:49%;
+	height:100%;
+	line-height:3.0;
+	border-bottom:1px #ccc solid;
+}
+
+.checkoutafter_totalprice_inner .checkoutafter_totalprice_inner_left{
+
+	width:70%;
+}
+
+.checkoutafter_totalprice_inner .checkoutafter_totalprice_inner_right{
+
+	width:28%;
+	margin-left:2%;
+	text-align:center;
+}
+
+.check-history{
+
+	width:100%;
+	overflow:hidden;
+	height:25px;
+	margin-top:5px;
+}
+
+.check-history .check-history-id,
+.check-history .check-history-in,
+.check-history .check-history-out{
+
+	float:left;
+	height:100%;
+	line-height:2.2;
+	font-size:1.1em;
+}
+
+.check-history .check-history-id{
+
+	width:8%;
+	text-align:left;
+}
+
+.check-history .check-history-in,
+.check-history .check-history-out{
+
+	width:45%;
+	text-align:center;
+	margin-left:1%;
+	border-bottom:1px #ccc solid;
+}
+
+.agent-situation-informations .agent-set-container,
+.agent-situation-informations .agent-set-remark-container{
+
+	width:100%;
+	height:1%;
+	overflow:auto;
+	margin-top:10px;
+}
+
+.agent-situation-informations .agent-set-container-left,
+.agent-situation-informations .agent-set-container-right{
+
+	float:left;
+	height:1%;
+	width:49%;
+}
+
+.agent-situation-informations .agent-set-container-right{
+
+	margin-left:2%;
+}
+
+.agent-situation-informations .agent-item{
+
+	margin-bottom:5px;
+	width:100%;
+	height:30px;
+	overflow:auto;
+}
+
+.agent-situation-informations .agent-item-left,
+.agent-situation-informations .agent-item-right{
+
+	float:left;
+	height:100%;
+}
+
+.agent-situation-informations .agent-item-left{
+
+	width:35%;
+	font-size:1.2em;
+	line-height:2.3;
+	text-align:left;
+}
+
+.agent-situation-informations .agent-item-right{
+
+	width:65%;
+	padding:2px;
+}
+
+.agent-situation-informations .agent-item-right input[type=text]{
+
+	width:100%;
+	height:100%;
+}
+
+.agent-situation-informations .agent-item-right select{
+
+	width:100%;
+	height:100%;
+}
+
+.agent-set-remark-container .agent-set-remark-container_left,
+.agent-set-remark-container .agent-set-remark-container_right{
+
+	float:left;
+	height:120px;
+}
+
+.agent-set-remark-container .agent-set-remark-container_left{
+
+	width:12%;
+}
+
+.agent-set-remark-container .agent-set-remark-container_right{
+
+	width:88%;
+	padding:2px;
+}
+
+.agent-set-remark-container .agent-set-remark-container_right textarea{
+
+	width:100%;
+	height:100%;
+}
+
+.extraorder_group{
+
+	width:100%;
+	height:1%;
+	padding-bottom:5px;
+}
+
+.extraorder_group .extraorder_group_title{
+
+	width:60%;
+	border-bottom:1px #ccc solid;
+	padding-bottom:4px;
+	line-height:1.8;
+	height:28px;
+	font-size:1.6em;
+}
+
+.payment-select{
+
+	width:90%;
+	margin-left:auto;
+	margin-right:auto;
+	overflow:auto;
+	margin-top:10px;
+}
+
+.payment-select-left{
+
+	width:40%;
+	text-align:center;
+	line-height:2;
+	font-size:1.6em;
+	border-bottom:1px #ccc solid;
+}
+
+.payment-select-right{
+
+	width:60%;
+	line-height:2;
+}
+
+.payment-select-left,
+.payment-select-right{
+
+	float:left;
+}
+
+.payment-select-right select{
+
+	height:30px;
+	width:100%;
+}
+
+.payment-button{
+
+	width:80%;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:15px;
+}
+
+.payment-button button{
+
+	font-size:1.6em;
+}
+
+div[data-type=situation-labels]{
+
+	width:50%;
+	position:absolute;
+	width:100%;
+}
+
+div[data-type=situation-labels] div.situation-label-parent{
+
+	margin-left:auto;
+	width:70%;
+	height:100%;
+	overflow:auto;
+}
+
+div.situation-label-parent div.situation-label{
+
+	float:left;
+	margin-left:1%;
+	font-size:1.1em;
+	font-weight:bold;
+	height:100%;
+	background-color:yellow;
+}
+
+#unavailable_setting  button{
+
+	display:block;
+	float:left;
+	width:49%;
+	height:30px;
+	line-height:2;
+	margin-left:auto;
+}
+
+#unavailable_setting .situation-unavailable-top{
+
+	width:96%;
+	margin-left:auto;
+	margin-right:auto;
+	height:1%;
+	overflow:auto;
+}
+
+#unavailable_setting .roomdetail{
+
+	padding:4px;
+	font-size:1.5em;
+}
+
+#unavailable_setting .calendar{
+
+	margin-top:5px;
+	padding:4px;
+}
+
+#unavailable_setting .reason{
+
+	margin-top:5px;
+	padding:4px;
+}
+
+#unavailable_setting .remarks{
+
+	margin-top:5px;
+}
+
+#unavailable_setting .remarks textarea{
+
+	width:100%;
+	height:40px;
+}
+
+#unavailable_setting .calendar .calendar-left,
+#unavailable_setting .calendar .calendar-right,
+#unavailable_setting .reason .calendar-left,
+#unavailable_setting .reason .calendar-right{
+
+	float:left;
+	height:30px;
+}
+
+#unavailable_setting .reason select{
+
+	width:100%;
+	height:100%;
+}
+
+#unavailable_setting .calendar .calendar-left,
+#unavailable_setting .reason .calendar-left{
+
+	width:30%;
+	line-height:2.1;
+	font-size:1.4em;
+}
+
+#unavailable_setting .calendar .calendar-right,
+#unavailable_setting .reason .calendar-right{
+
+	width:70%;
+}
+
+#unavailable_setting .calendar .calendar-right input[type=text]{
+
+	height:100%;
+	width:45%;
+}
+extraorder-situation-block

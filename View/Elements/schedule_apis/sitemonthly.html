@@ -1,0 +1,80 @@
+<script>
+
+//■オプションの検索項目
+apiGeoRequests.getAddDateApi=function(data,callback){
+
+		var obj= new this();
+		obj.setBaseURL(BASE_URL);
+		obj.setURL(this.getAddDateApi.makeURL());
+		var params=this.ajaxBaseParams;
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+		obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+		})
+}
+
+apiGeoRequests.getAddDateApi.makeURL=function(){
+
+		var base_url='SiteMonthly/getAddDateApi';
+		return base_url;
+}
+
+apiGeoRequests.getDateRange=function(data,callback){
+
+		var obj= new this();
+		obj.setBaseURL(BASE_URL);
+		obj.setURL(this.getDateRange.makeURL());
+		var params=this.ajaxBaseParams;
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+		obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+		})
+}
+
+apiGeoRequests.getDateRange.makeURL=function(){
+
+		var base_url='SiteMonthly/getDateRange';
+		return base_url;
+}
+
+apiGeoRequests.getSubDateApi=function(data,callback){
+
+		var obj= new this();
+		obj.setBaseURL(BASE_URL);
+		obj.setURL(this.getSubDateApi.makeURL());
+		var params=this.ajaxBaseParams;
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+		obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+		});
+}
+
+apiGeoRequests.getSubDateApi.makeURL=function(){
+
+		var base_url='SiteMonthly/getSubDateApi';
+		return base_url;
+}
+
+apiGeoRequests.informationsRegist=function(data,callback){
+
+		var obj= new this();
+		obj.setBaseURL(BASE_URL);
+		obj.setURL(this.informationsRegist.makeURL());
+		var params=this.ajaxBaseParams;
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+		obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+		})
+}
+
+apiGeoRequests.informationsRegist.makeURL=function(){
+
+		var base_url='SiteMonthlyManagesInformationRegists/informationsRegist';
+		return base_url;
+}
+
+</script>

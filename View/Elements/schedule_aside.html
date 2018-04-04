@@ -1,0 +1,1976 @@
+<aside class="l-side"></aside>
+
+<script>
+
+if(isSp()){
+
+		  var body=$("body");
+			  body.on("touchend",function(e){
+
+			  var target=$(e.target);
+			  var tagName=target.prop("tagName").toLowerCase();
+			  var type=target.attr("data-type");
+			  var id=target.attr("id");
+			  var allowTags =["a","button","input","textarea","select"];
+			  var allowTypes=["schedule-bg-color",
+							  "schedule-add-worker",
+							  "schedule-worker-all-label",
+							  "schedule-assign-same-data-label",
+							  "schedule-assign-same-data",
+							  "schedule-clear-worker-all-label",
+							  "schedule-truck-all-label",
+							  "schedule-add-truck",
+							  "schedule-report-send",
+							  "schedule-report-cancel"];
+
+			  if(allowTypes.indexOf(type)>-1)   return;
+			  if(allowTags.indexOf(tagName)>-1) return;
+			  if(target.parents("div[id=\"confirmOverlay\"]").size()>0) return;
+			  if(id!=undefined && /^ui-id-\d+$/.test(id)) return; // autoComplete
+
+			  <?php $controller=strtolower($this->params["controller"]);?>
+			  <?php if($controller=="site"){?>
+			  if(target.parents("div[data-type=\"schedule-report\"]").size()>0) return;
+			  if(target.parents("div[data-type=\"schedule-report-clipboard\"]").size()>0) return;
+			  <?php } ?>
+
+			  e.preventDefault();
+		});
+}
+
+var getCustomerInformations=function(callback){
+
+		var customer_list=cacheData().get(CACHE_CUSTOMER_INFORMATIONS);
+		if(customer_list!=undefined && Object.keys(customer_list).length>0){
+
+				callback(true,customer_list);
+				return;
+		}
+
+		var params={}
+		params["v"]=API_VERSION;
+		apiGeoRequests.getCustomerInformations(params,function(status,res){
+
+				if(!res["status"].isOk()){
+
+						callback(false);
+						return;
+				}
+
+				var informations=res["data"]["informations"];
+				cacheData().set(CACHE_CUSTOMER_INFORMATIONS,informations);
+				callback(true,informations);
+		});
+}
+
+var autoCompleteCustomer=function(values){
+
+		var site_customer=this;
+		var focus=function(value){
+
+				value=(value==undefined)?"":value;
+				site_customer.data("first_value",value);
+				if(!value) site_customer.attr("data-customer-id","");
+		}
+
+		site_customer.autocomplete({
+
+				source:values,
+				autoFocus:true,
+				delay:200,
+				minLength:1,
+				select:function(e,ui){
+
+						var customer_id=ui["item"]["id"];
+						site_customer.attr("data-customer-id",customer_id);
+				},
+				open:function(){},
+				search:function(e,ui){ focus(); },
+				focus:function(e,ui){ focus(ui["item"]); }
+		});
+
+		site_customer.off("focusin").on("focusin",function(){ focus(); });
+		site_customer.off("focusout").on("focusout",function(){
+
+				var data=$(this).data("first_value");
+				if(!data || !("value" in data)) return;
+				if(1>site_customer.val().trim())  return;
+				var value=data["value"];
+				var customer_id=data["id"];
+				site_customer.val(value);
+				site_customer.attr("data-customer-id",customer_id);
+		});
+}
+
+var compactDateHistories=function(history){
+
+		var histories={};
+		for(var i in history){
+
+				if(!history.hasOwnProperty(i)) continue;
+				var date=Number(history[i]).splitYmd();
+				var y=parseInt(date[0]);
+				var m=parseInt(date[1]);
+				var d=parseInt(date[2]);
+				if(!(y in histories)) histories[y]={};
+				if(!(m in histories[y])) histories[y][m]=[];
+				histories[y][m].push(d);
+		}
+
+		return histories;
+}
+
+var autoKanaExchange=function(target,is_katakana){
+
+		var elem=this;
+
+		var body=$("body");
+		var i=loading(body);
+		i.show();
+
+		var js=document.location.protocol+BASE_URL+"assets/js/jquery.autoKana.js";
+		is_katakana=((is_katakana==undefined)?false:is_katakana);
+		loadScript(js,function(){
+
+				i.hide();
+
+				elem.autoKana(target,{
+
+						"katakana":is_katakana
+				});
+		});
+}
+
+var updateToInchageMessage=function(informations,callback){
+
+		window["action_lastmodified"].empty();
+		lastModifiedInformationUpdate({
+
+				"first_name"      :informations["first_name"],
+				"last_modified_ms":informations["last_edit_ms"]
+
+		},function(html){
+
+				var p=html.parent().children("p[data-type=\""+INCHAGE_P+"\"]");
+				if(1>p.size()){
+
+						if($.isFunction(callback)) callback();
+						return;
+				}
+
+				var site_ids=changeBgScheduleAssignSite.getFrontCacheObject(target_view_worker_id);
+				var instance=TPL.getInstance(["schedule_incharge_to_hide","schedule_incharge_to_view"]);
+				var is_enable=(changeBgScheduleAssignSite.isNoset(site_ids)?false:true);
+				var tpl=instance["get_schedule_incharge_to_"+(is_enable?"hide":"view")];
+				p.html($(tpl));
+				if($.isFunction(callback)) callback();
+		});
+}
+
+// edit last modified informations.
+var lastModifiedInformationUpdate=function(informations,callback){
+
+		var elem=window["action_lastmodified"];
+		var instance=TPL.getInstance("schedule_modified_information_top");
+		var ms=parseInt(informations["last_modified_ms"]);
+		var name=(!!informations["first_name"]?informations["first_name"]:"&nbsp;");
+		var ymd ="&nbsp;";
+		var his ="&nbsp;";
+
+		if(ms>0){
+
+				var date=new Date(ms);
+				ymd=date.getYmdByMs();
+				var year =ymd[0];
+				var month=ymd[1].ridFirstZero();
+				var day  =ymd[2].ridFirstZero();
+				ymd=year+"年"+month+"月"+day+"日";
+				his=date.getHisByMs();
+				his.pop();
+				var hour=his[0].ridFirstZero();
+				var minutes=his[1];
+				his=hour+":"+minutes;
+		}
+
+		var html=instance.replaceTPL(instance.get_schedule_modified_information_top,{
+
+				"date":ymd,
+				"time":his,
+				"name":name
+		});
+
+		html=$(html);
+		elem.append(html);
+		if(!$.isFunction(callback)) return;
+		html.ready(function(){
+
+				callback(html);
+		});
+}
+
+// edit last modified informations.
+var lastModifiedInformationUpdateParSite=function(informations,callback){
+
+		var elem=this;
+
+		if(1>Object.keys(informations).length){
+
+				elem.empty();
+				if($.isFunction(callback)) callback();
+				return;
+		}
+
+		var instance=TPL.getInstance("schedule_modified_information_bottom");
+		var ms=parseInt(informations["last_modified_ms"]);
+		var name=(!!informations["first_name"]?informations["first_name"]:"&nbsp;");
+		var ymd ="&nbsp;";
+		var his ="&nbsp;";
+
+		if(ms>0){
+
+				var date=new Date(ms);
+				ymd=date.getYmdByMs();
+				var year =ymd[0];
+				var month=ymd[1].ridFirstZero();
+				var day  =ymd[2].ridFirstZero();
+				ymd=year+"年"+month+"月"+day+"日";
+				his=date.getHisByMs();
+				his.pop();
+				var hour=his[0].ridFirstZero();
+				var minutes=his[1];
+				his=hour+":"+minutes;
+		}
+
+		var html=instance.replaceTPL(instance.get_schedule_modified_information_bottom,{
+
+				"date":ymd,
+				"time":his,
+				"name":name
+		});
+
+		html=$(html);
+		elem.append(html);
+		if(!$.isFunction(callback)) return;
+		html.ready(function(){
+
+				callback();
+		});
+}
+
+var addColorList=function(color_ids,color_list,callback){
+
+		var elem=this;
+		if(1>color_ids.length){
+
+				if($.isFunction(callback)) callback();
+				return;
+		}
+
+		var fn=arguments.callee;
+		var color_id  =color_ids.shift();
+		var color_code=color_list[color_id];
+		var instance=TPL.getInstance("schedule_bg_color");
+		var tpl=instance.replaceTPL(instance.get_schedule_bg_color,{
+
+				"color_id":color_id,
+				"color"   :color_code
+		});
+
+		var html=$(tpl);
+		elem.append(html);
+		html.ready(function(){
+
+				fn.call(elem,color_ids,color_list,callback);
+		});
+}
+
+var whiteColorStyle=function(){
+
+		var span=$("<span data-type=\"schedule-bg-color-white\">").text("なし");
+
+		span.css({
+
+				"font-size":"9px",
+				"line-height":"2",
+				"-webkit-transform":"scale(0.5)",
+				"-moz-transform"   :"scale(0.5)",
+				"-ms-transform"    :"scale(0.5)",
+				"-o-transform"     :"scale(0.5)",
+				"transform"        :"scale(0.5)"
+		});
+
+		if(isSp()){
+
+				span.css('font-size', '23px');
+		}
+
+		this.css({"border":"1px #ccc solid"});
+		this.html(span);
+}
+
+var modalWindowEditSiteDetail=function(options,callback){
+
+		var elem=this;
+		var remark_titles=options["remark_titles"];
+		var site_id      =options["site_id"];
+		modalWindow.call(elem,function(data){
+
+				var __makeRemarks=function(type){
+
+						var titles=remark_titles[type];
+						var instance=TPL.getInstance("schedule_remarks");
+						var html=instance.get_schedule_remarks;
+
+						var textreas="";
+						var index=1;
+						for(var i in titles){
+
+								textreas+=instance.replaceTPL(html,{
+
+										"index":index++,
+										"title":titles[i]
+								});
+						}
+
+						return textreas;
+				}
+
+				var overlay=this;
+				var tpl_name=((isSmart())?"schedule_modal_site_add_sp":"schedule_modal_site_add");
+				var instance=TPL.getInstance(tpl_name);
+				var textareas=__makeRemarks("site");
+				var tpl =instance.replaceTPL(instance["get_"+tpl_name],{
+
+						"site_id"        :((!!site_id)?site_id:0)+"",
+						"remarks_layouts":textareas,
+						"title":((!!site_id)?"編集":"追加")
+				});
+
+				var ch=data["ch"];
+				var cw=data["cw"];
+				var html=$(tpl);
+				overlay.append(html);
+				html.ready(function(){
+
+						setCenterHight.call(html,ch,cw);
+
+						callback.call(overlay,html,{
+								"position":{"ch":ch,"cw":cw},
+						});
+				});
+		});
+}
+
+var modalWindowEditSiteDetailHtmls=function(options,callback){
+
+		var elem=this;
+		modalWindowEditSiteDetail.call(elem,options,function(html,options){
+
+				callback.call(this,html,options,{
+
+						"site_name"    :html.find("input[data-type=\"data-site-name\"]"),
+						"site_name_kana":html.find("input[data-type=\"data-site-name-kana\"]"),
+						"site_customer":html.find("input[data-type=\"data-customer\"]"),
+						"site_address" :html.find("input[data-type=\"data-address\"]"),
+						"site_remarks" :html.find("textarea[data-type=\"data-remarks1\"]"),
+						"site_ninku"   :html.find("input[data-type=\"data-ninku\"]"),
+						"site_pref"    :html.find("select[data-type=\"data-pref\"]"),
+						"site_area"    :html.find("select[data-type=\"data-area\"]"),
+						"site_incharge":html.find("select[data-type=\"data-incharge\"]"),
+						"site_color"   :html.find("ul[data-type=\"data-color-list\"]"),
+						"site_close"   :html.find("button[data-dismiss=\"modal\"]"),
+						"site_calendar":html.find("div[data-type=\"data-calendar\"]"),
+						"site_ninku_flag":html.find("input[data-type=\"site-ninku-flag\"]"),
+						"schedule_add_btn":html.find("[data-type=\"schedule-add-btn\"]"),
+						"schedule_submit_btn":html.find("button[data-type=\"site-post-btn\"]")
+				});
+		});
+}
+
+var modalWindowEditSiteDetailHtmlsInitialSet=function(options,callback){
+
+		var elem=this;
+		var date =options["date"];
+		var prefs=options["prefs"];
+		var incharges=options["incharges"];
+		var color_list=options["color_list"];
+		modalWindowEditSiteDetailHtmls.call(elem,options,function(html,options,htmls){
+
+				var overlay=this;
+				var position=options["position"];
+				var site_pref    =htmls["site_pref"];
+				var site_incharge=htmls["site_incharge"];
+				var site_color   =htmls["site_color"];
+				var calendar     =htmls["site_calendar"];
+
+				setCalendar.call(calendar,{},function(){
+
+						var ymd=Number(date).splitYmd();
+						var start_date=ymd.join("-");
+						calendar.find("input[data-type=\"calendar-start\"]").val(start_date);
+				});
+
+				setMenu.call(site_pref,prefs,function(){
+
+						addColorList.call(site_color,Object.keys(color_list),color_list,function(){
+
+								var colors=site_color.children("li[data-type=\"schedule-bg-color\"]");
+								// colors.eq(0).css("opacity","0.2");
+								colors.eq(0).addClass('active');
+								var white_color=colors.filter("[data-color=\"#ffffff\"]");
+								whiteColorStyle.call(white_color);
+
+								overlay.setDocumentCache([colors.eq(0).attr("data-color-id")],"color_id");
+
+								htmls["site_colors"]=colors;
+								if($.isFunction(callback)) callback.call(overlay,htmls);
+						});
+				});
+
+				setMenu.call(site_incharge,incharges,function(){});
+		});
+}
+
+var modalWindowEditSiteDetailEvents=function(options,callbacks,callback){
+
+		var elem=this;
+		var date        =options["date"];
+		var remark_titles=options["remark_titles"];
+		var site_id     =options["site_id"];
+		var color_list  =options["color_list"];
+		var prefs       =options["prefs"];
+		var incharges   =options["incharges"];
+		var error_color =options["field_error_c_code"];
+		var success_color=options["field_success_c_code"];
+		var user_id      =options["user_id"];
+		var is_site_edit=(site_id!=undefined);
+
+		modalWindowEditSiteDetailHtmlsInitialSet.call(elem,{
+
+				"date"         :date,
+				"remark_titles":remark_titles,
+				"site_id"      :site_id,
+				"prefs"        :prefs,
+				"incharges"    :incharges,
+				"color_list"   :color_list
+
+		},function(htmls){
+
+				var overlay=this;
+				var site_name    =htmls["site_name"];
+				var site_name_kana=htmls["site_name_kana"];
+				var site_customer=htmls["site_customer"];
+				var site_address =htmls["site_address"];
+				var site_remarks =htmls["site_remarks"];
+				var site_ninku   =htmls["site_ninku"];
+				var site_pref    =htmls["site_pref"];
+				var site_incharge=htmls["site_incharge"];
+				var site_area    =htmls["site_area"];
+				var site_color   =htmls["site_color"];
+				var close        =htmls["site_close"];
+				var calendar     =htmls["site_calendar"];
+				var schedule_add_btn   =htmls["schedule_add_btn"];
+				var schedule_submit_btn=htmls["schedule_submit_btn"];
+				var colors      =htmls["site_colors"];
+				var site_ninku_flag=htmls["site_ninku_flag"];
+
+				var __viewError=function(method){
+
+						var elem=this;
+						var box_parent=elem.parents("div[data-type=\"box-parent\"]");
+						var span=box_parent.find("span[data-type=\"schedule-error-message\"]");
+						span.empty();
+						var title=box_parent.find("label").text().trim();
+						method.call(span,title);
+						span.show();
+						return span;
+				}
+
+				var emptyMessage=function(title){
+
+						var span=this;
+						span.text(title+"が未入力です.");
+				}
+
+				var missEditAddress=function(title){
+
+						var span=this;
+						span.text("市町村区以下の入力値に不備がある様です");
+				}
+
+				var missEditSchedule=function(title){
+
+						var span=this;
+						span.text("こちらの項目に不備がある様です.");
+				}
+
+				var modal=overlay.find("div[data-type=\"schedule-site-modal-inner\"]");
+				var clickEnd=deviceClickEventEnd();
+
+				if(isSp()){
+
+						var start="touchstart";
+						modal.one(start,function(e){
+
+								var self=$(this);
+								self.data("e",e);
+								self.one(e.type,arguments.callee);
+						});
+				}
+
+				modal.one(clickEnd,function(e){
+
+						var self=$(this);
+						var target=$(e.target);
+						var type=target.attr("data-type");
+						var TYPE_CLOSE="overlay-close";
+						var SITE_POST_BTN="site-post-btn";
+						var SCHEDULE_BG_COLOR="schedule-bg-color";
+						var SCHEDULE_BG_COLOR_WHITE="schedule-bg-color-white";
+						var SCHEDULE_ADD_BTN="schedule-add-btn";
+						var SCHEDULE_CLOSE="overlay-close";
+						var SCHEDULE_POST_BTN="site-post-btn";
+						var CALENDAR_PARENT="data-calendar";
+						var CALENDAR_REMOVE="calendar-remove";
+						var CALENDAR="calendar";
+						var fn=arguments.callee;
+						var SCHEDULE_NINKU_FLAG="site-ninku-flag";
+						var SCHEDULE_NINKU_FLAG_LABEL="site-ninku-flag-label";
+
+						if(isSp()){
+
+								var start_event=self.data("e");
+								if(isDiffPageXY(start_event,e,ALLOW_MOVE_TOUCH_POINT)){
+
+										self.one(e.type,fn);
+										return;
+								}
+						}
+
+					   if([SCHEDULE_NINKU_FLAG_LABEL,SCHEDULE_NINKU_FLAG].indexOf(type)>-1){
+
+								if(!isSp()){
+
+										self.one(e.type,fn);
+										return;
+								}
+
+								if(type==SCHEDULE_NINKU_FLAG_LABEL) target=target.parent().children("input[data-type=\""+SCHEDULE_NINKU_FLAG+"\"]");
+								var is_checked=target.is(":checked");
+								target.prop("checked",(is_checked?false:true));
+								self.one(e.type,fn);
+								return;
+						}
+
+						if(type==CALENDAR_REMOVE){
+
+								var data_calendar=target.parents("div[data-type=\""+CALENDAR_PARENT+"\"]");
+								var current_calendar_num=data_calendar.children("div[data-type=\""+CALENDAR+"\"]").size();
+								var target_calendar=target.parents("div[data-type=\""+CALENDAR+"\"]");
+
+								var start=target_calendar.find("input[data-type=\"calendar-start\"]");
+								var end=target_calendar.find("input[data-type=\"calendar-end\"]");
+								var start_val=start.val().trim();
+								var end_val=end.val().trim();
+								if(1>start_val.length && 1>end_val.length){
+
+										target_calendar.remove();
+										self.one(e.type,fn);
+										return;
+								}
+
+								var is_disabled_start=start.prop("disabled");
+								var is_disabled_end  =end.prop("disabled");
+								start.prop("disabled",(is_disabled_start?false:true)).css("opacity",(is_disabled_start?"1.0":"0.2"));
+								end.prop("disabled",(is_disabled_end?false:true)).css("opacity",(is_disabled_end?"1.0":"0.2"));
+								target.html((is_disabled_end?"&times;":"&#9711;"));
+								self.one(e.type,fn);
+								return;
+						}
+
+						if(type==SITE_POST_BTN){
+
+								var values={};
+								var errors=[];
+
+								//refresh
+								var spans=target.parents("div[data-type=\"schedule-site-modal-inner\"]").find("span[data-type=\"schedule-error-message\"]");
+								spans.hide().empty();
+
+								//site
+								var site=site_name.val().trim();
+								if(1>site.length){
+
+										errors.push(site_name);
+										__viewError.call(site_name,emptyMessage);
+								}
+
+								values["site_name"]=site;
+								var site=site_name_kana.val().trim();
+								values["site_name_kana"]=site;
+
+								//customer
+								var customer=site_customer.val().trim();
+								//if(!customer) errors.push(site_customer);
+								values["site_customer"]=customer;
+								values["site_customer_id"]=site_customer.attr("data-customer-id");
+
+								//pref
+								var is_area_complete=true;
+								var pref=site_pref.val();
+								if(!pref) is_area_complete=false;
+								values["site_pref"]=pref;
+
+								//area
+								var area=site_area.val();
+								if(!area) is_area_complete=false;
+								values["site_area"]=area;
+
+								//address
+								var address=site_address.val().trim();
+								if(1>address.length) is_area_complete=false;
+								values["site_address"]=address;
+
+								values["site_ninku_flag"]=(site_ninku_flag.is(":checked")?1:0);
+
+								//power num
+								var power_num=Math.max(Number(site_ninku.val().trim()),0);
+								values["site_power_num"]=power_num;
+
+								//remarks
+								var remarks_value=site_remarks.val().trim();
+								values["site_remarks"] =remarks_value;
+
+								//color_id
+								var color_id=overlay.getDocumentCache("color_id")[0];
+								values["site_color_id"]=color_id;
+
+								//incharge
+								var incharge=site_incharge.val();
+								values["site_incharge"]=incharge;
+
+								//calendar.
+								var now=new Date().getTime();
+								var c=calendar.children("div[data-type=\"calendar\"]");
+
+								var schedule_dates=[];
+								values["site_schedules"]={};
+								c.each(function(i){
+
+										var target=$(this);
+										var input_s=target.children("input[data-type=\"calendar-start\"]");
+										var input_e=target.children("input[data-type=\"calendar-end\"]");
+										if(input_s.prop("disabled") || input_e.prop("disabled")) return;
+
+										var start_time=input_s.val().trim();
+										var end_time  =input_e.val().trim();
+										var start_time_length=start_time.length;
+										var end_time_length=end_time.length;
+
+										var regexp=/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/;
+										var s_match=start_time.match(regexp);
+										var e_match=end_time.match(regexp);
+										if(start_time_length>0 && !s_match) errors.push(input_s);
+										if(end_time_length>0 && !e_match)   errors.push(input_e);
+
+										//check for format of date.
+										start_time=start_time.replaceDateFormat();
+										end_time  =end_time.replaceDateFormat();
+										var __s_date=new Date(start_time);
+										var __e_date=new Date(end_time);
+										var __s_time=__s_date.getTime();
+										var __e_time=__e_date.getTime();
+
+										if(!__s_time && !!__e_time){
+
+												__s_time=__e_time;
+												__s_date=__e_date;
+										}
+
+										if(!!__s_time && !__e_time){
+
+												__e_time=__s_time;
+												__e_date=__s_date;
+										}
+
+										if(!__s_time && !__e_time) return;
+
+										if(__s_time>__e_time){
+
+												errors.push(input_e);
+												return;
+										}
+
+										if(Object.keys(values["site_schedules"]).length>0){
+
+												for(var i in values["site_schedules"]){
+
+														if(!values["site_schedules"].hasOwnProperty(i)) continue;
+
+														var __stime=values["site_schedules"][i]["start_time"].replaceDateFormat();
+														var __etime=values["site_schedules"][i]["end_time"].replaceDateFormat();
+														__astime=new Date(start_time).getTime();
+														__aetime=new Date(end_time).getTime();
+														__bstime=new Date(__stime).getTime();
+														__betime=new Date(__etime).getTime();
+
+														// check start_date if between.
+														if(__astime>=__bstime && __betime >= __astime) errors.push(input_s);
+
+														// check end_date if between.
+														if(__aetime>=__bstime && __betime >= __aetime) errors.push(input_e);
+												}
+										}
+
+										var __i=Object.keys(values["site_schedules"]).length;
+										var start_ymd=new Date(__s_time).getYmdByMs().join("/");
+										var end_ymd  =new Date(__e_time).getYmdByMs().join("/");
+										values["site_schedules"][__i]={};
+										values["site_schedules"][__i]["start_time"]   =start_ymd;
+										values["site_schedules"][__i]["end_time"]     =end_ymd;
+										values["site_schedules"][__i]["start_time_ms"]=__s_time;
+										values["site_schedules"][__i]["end_time_ms"]  =__e_time;
+
+										//■全日程(all days).
+										schedule_dates=schedule_dates.concat(__s_date.getDateRange(__e_date));
+								});
+
+								if(1>Object.keys(values["site_schedules"]).length){
+
+										var input_starts=c.children("input[data-type=\"calendar-start\"]");
+										var input_ends  =c.children("input[data-type=\"calendar-end\"]");
+										errors=errors.concat(input_starts.toArray());
+										errors=errors.concat(input_ends.toArray());
+										__viewError.call(c,missEditSchedule);
+								}
+
+								// clear error's color.
+								overlay.find("input,select,textarea").css("background-color",success_color);
+
+								// change color for bg
+								for(var i in errors){
+
+										if(!errors.hasOwnProperty(i)) continue;
+										$(errors[i]).css("background-color",error_color);
+								}
+
+								if(errors.length>0){
+
+										self.one(e.type,fn);
+										callbacks["onScheduleSubmit"].call(overlay,false,{"status":1});
+										return;
+								}
+
+								var complete=function(){
+
+										schedule_dates=$.unique(schedule_dates);
+										schedule_dates.sort();
+
+										values["user_id"]  =user_id;
+										values["site_id"]  =site_id;
+										values["status"]   =0;
+										values["schedule_dates"]=schedule_dates;
+										self.one(e.type,fn);
+
+										//■削除日の確認
+										var previous_cache_dates=calendar.getDocumentCache("schedule_dates")[0];
+
+										//■new days registed.
+										if(previous_cache_dates==undefined){
+
+												callbacks["onScheduleSubmit"].call(overlay,true,values);
+												return;
+										}
+
+										var previous_dates=previous_cache_dates.split(",");
+										if(!!is_site_edit && (previous_dates.join("")!=schedule_dates.join(""))){
+
+												var remove_dates=[];
+												for(var i in previous_dates){
+
+														if(!previous_dates.hasOwnProperty(i)) continue;
+														if(0>schedule_dates.indexOf(parseInt(previous_dates[i]))){
+
+																remove_dates.push(previous_dates[i]);
+																continue;
+														}
+												}
+
+												if(1>remove_dates.length){
+
+														callbacks["onScheduleSubmit"].call(overlay,true,values);
+														return;
+												}
+
+												var main_title="現場情報登録";
+												var title     ="◯&nbsp;<b>"+site+"</b>";
+												var __uiAlertViewMessage=function(remove_dates){
+
+														var ymd=remove_dates[0];
+														var ymd_ary=Number(ymd).splitYmd();
+														var year =ymd_ary[0];
+														var month=ymd_ary[1].ridFirstZero();
+														var day  =ymd_ary[2].ridFirstZero();
+														var remove_first_date=year+"年"+month+"月"+day+"日";
+														var remove_date_num=remove_dates.length;
+														var message="";
+
+														switch(true){
+
+																case(remove_date_num==1):
+																message+="<b>【"+remove_first_date+"】</b>の予定(設定済Staff及び他)が削除されますが宜しいですか？<br /><br />";
+																message+="<span style='color:red;'>※実行後は取り消し出来ません</span>";
+														break;
+																case(remove_date_num>1):
+																message+="<b>【"+remove_first_date+"】</b>の予定(設定済Staff及び他)と";
+																message+="他"+(remove_date_num-1)+"件の予定が削除されますが宜しいですか？<br /><br />";
+																message+="<span style='color:red;'>※実行後は取り消し出来ません</span>";
+														break;
+														}
+
+														return message;
+												}
+
+												var params={};
+												params["main_title"]=main_title;
+												params["title"]=title;
+												params["message"]=__uiAlertViewMessage(remove_dates);
+												params["yes"]=function(){
+
+														callbacks["onScheduleSubmit"].call(overlay,true,values);
+												};
+
+												params["no"]=function(){
+
+														callbacks["onScheduleSubmit"].call(overlay,false,{"status":3});
+												}
+												params["close"]=params["no"];
+												uiAlert(params);
+												return;
+										}
+
+										callbacks["onScheduleSubmit"].call(overlay,true,values);
+								}
+
+								complete();
+								return;
+						}
+
+						if(type==SCHEDULE_CLOSE){
+
+								var calendars=calendar.children("div[data-type=\"calendar\"]");
+								calendars.children("input").datepicker("hide");
+								callbacks["onScheduleSubmit"].call(overlay,false,{"status":2});
+								return;
+						}
+
+						if(type==SCHEDULE_BG_COLOR_WHITE){
+
+								var li=target.parent();
+								callbacks["onColorSelected"].call(overlay,li,colors);
+								self.one(e.type,fn);
+								return;
+						}
+
+						if(type==SCHEDULE_BG_COLOR){
+
+								callbacks["onColorSelected"].call(overlay,target,colors);
+								self.one(e.type,fn);
+								return;
+						}
+
+						if(type==SCHEDULE_ADD_BTN){
+
+								callbacks["onScheduleCalendarPressed"].call(target,calendar,function(is_error){
+
+										if(is_error){
+
+												self.one(e.type,fn);
+												return;
+										}
+
+										setCalendar.call(calendar,{},function(){
+
+												self.one(e.type,fn);
+										});
+								});
+								return;
+						}
+
+						self.one(e.type,fn);
+				})
+
+				site_pref.on("change",function(){
+
+						var target=$(this);
+						var pref_id=target.val();
+						callbacks["onPrefChanged"].call(target,site_area,pref_id);
+				});
+
+				callback.call(overlay,htmls);
+		});
+}
+
+var getCalendarFormatDates=function(schedule_dates){
+
+		var group_id=0;
+		var schedule_groups={};
+		for(var i in schedule_dates){
+
+				if(!schedule_dates.hasOwnProperty(i)) continue;
+				var schedule_date=schedule_dates[i];
+				if(!schedule_groups[group_id]){
+
+						schedule_groups[group_id]={};
+						schedule_groups[group_id]["start_value"]=schedule_date;
+						schedule_groups[group_id]["end_value"]  =schedule_date;
+						continue;
+				}
+
+				var check_date=Number(schedule_groups[group_id]["end_value"]).addMinutesZero();
+				var date=new Date(check_date);
+				date.setDate(date.getDate()+1);
+				var ymd=date.getYmdByMs().join("");
+				if(ymd==schedule_dates[i]){
+
+						schedule_groups[group_id]["end_value"]=ymd;
+						continue;
+				}
+
+				group_id++;
+				schedule_groups[group_id]={};
+				schedule_groups[group_id]["start_value"]=schedule_date;
+				schedule_groups[group_id]["end_value"]  =schedule_date;
+		}
+
+		return schedule_groups;
+}
+
+var actionSiteSideEditBtn=function(callback){
+
+		var elem=this;
+		var clickEnd=deviceClickEventEnd();
+		elem.one(clickEnd,function(e){
+
+				var target=$(this);
+				var fn=arguments.callee;
+				var site_id=target.attr("data-site-id");
+				var date   =target.attr("data-ymd");
+				callback.call(target,e,{
+
+						"date"   :date,
+						"site_id":site_id
+				});
+				return false;
+		});
+}
+
+//■edit date in side menu.
+var replaceSideScheduleDate=function(ms,callback){
+
+		var target=this;
+		var instance=TPL.getInstance(["schedule_site_date","schedule_site_date_img"]);
+		var ms_date=new Date(ms);
+		var ymd_ary=ms_date.getYmdByMs();
+		var ymd=ymd_ary.join("-");
+		var week=ms_date.getWeek();
+		var img_path=!!weather_informations[ymd]?WEATHER_IMG_DIR+weather_informations[ymd]:false;
+		var is_img=!!img_path?true:false;
+		var date_html=instance.replaceTPL(instance.get_schedule_site_date,{
+
+				"site_month"    :(ms_date.getMonth()+1),
+				"site_day"      :ms_date.getDate(),
+				"site_week"     :week,
+				"img_path"      :is_img?img_path:""
+		});
+
+		date_html=$(date_html);
+
+		if(is_img){
+
+				var img_tpl=instance.replaceTPL(instance.get_schedule_site_date_img,{"img_path":img_path });
+				var img_html=$(img_tpl);
+				date_html.find("span[data-type=\"weather\"]").append(img_html);
+		}
+
+		target.append(date_html);
+		date_html.ready(function(){
+
+				if(!img_path) date_html.find("img").remove();
+				if($.isFunction(callback)) callback.call(target,date_html);
+		});
+}
+
+//■edit side menu when nothing target date.
+var replaceSideScheduleEmpty=function(date,callback){
+
+		var elem=this;
+		var instance=TPL.getInstance("schedule_site_detail_empty");
+		var main_html=instance.get_schedule_site_detail_empty;
+
+		main_html=$(main_html);
+		elem.empty().append(main_html);
+
+		//■edit date detail in side menu.
+		var target=main_html.find("div[data-type=\"schedule-site-date\"]");
+		var __date=new Date(Number(date).addMinutesZero()).getTime();
+		replaceSideScheduleDate.call(target,__date,function(html){
+
+				if($.isFunction(callback)) callback.call(target,html);
+		});
+}
+
+//■weather
+var getWeatherImgPath=function(date){
+
+		var schedule_head=this;
+		var weather_img_path="";
+		var head=schedule_head.children("div[data-time=\""+date+"\"]");
+		var weather=head.find("span[data-type=\"weather\"]");
+		var weater_img=weather.find("img");
+		if(weater_img.size()>0) weather_img_path=weater_img.attr("src");
+		return weather_img_path;
+}
+
+var ninkuTpl=function(ninku_count,max_ninku_count){
+
+		var instance=TPL.getInstance(["schedule_ninku_values",
+									  "schedule_ninku_red_values"]);
+
+		var ninku_tpl_name="get_schedule_ninku"+(((parseInt(ninku_count)>parseInt(max_ninku_count)))?"_red":"")+"_values";
+		var tpl=instance.replaceTPL(instance[ninku_tpl_name],{
+
+				"get_power_num" :ninku_count+"",
+				"need_power_num":max_ninku_count+"",
+		});
+
+		return tpl;
+}
+
+//■edit side menu.
+var replaceSideSchedule=function(information,remark_titles,ninku_count,callback){
+
+		var elem=this;
+		var instance=TPL.getInstance(["schedule_site_worker",
+									  "schedule_site_detail",
+									  "schedule_ninku_values",
+									  "schedule_ninku_red_values"]);
+
+		var tpl =instance.get_schedule_site_detail;
+		var site_name   =!!information["site_detail"]["name"]?information["site_detail"]["name"]:"未設定";
+		var customer_name=!!information["customer"]["name"]?information["customer"]["name"]:"未設定";
+		var site_pref   =!!information["location"]["pref"]?information["location"]["pref"]:"&nbsp;";
+		var site_town   =!!information["location"]["town"]?information["location"]["town"]:"&nbsp;";
+		var site_address=!!information["location"]["address"]?information["location"]["address"]:"&nbsp;";
+		var site_remarks=!!information["site_detail"]["remarks"]?information["site_detail"]["remarks"]:"&nbsp;";
+		var schedule_remarks1=!!information["schedule"]["remarks"]?information["schedule"]["remarks"]:"&nbsp;";
+		var schedule_remarks2=!!information["schedule"]["remarks2"]?information["schedule"]["remarks2"]:"&nbsp;";
+		var schedule_remarks3=!!information["schedule"]["remarks3"]?information["schedule"]["remarks3"]:"&nbsp;";
+		var truck_reserved_num=information["truck"]["reserved"].length;
+		var start_month_prefix=information["schedule"]["start_month_prefix"];
+		var start_day=information["schedule"]["start_day"];
+		var start_date_ymd=start_month_prefix+start_day;
+		var ninku_tpl=ninkuTpl(ninku_count,information["site_detail"]["power_num"]);
+		site_address=nl2br(site_address);
+		var main_html=instance.replaceTPL(tpl,{
+
+				"site_id"       :information["site_detail"]["id"],
+				"schedule_id"   :information["schedule"]["id"],
+				"site_name"     :site_name,
+				"site_pref"     :site_pref,
+				"site_town"     :site_town,
+				"site_address"  :site_address,
+				"site_remarks"  :site_remarks,
+				"site_remark_title":remark_titles["site"]["remarks1"],
+				"site_customer" :customer_name,
+				"schedule_id"   :information["schedule"]["id"],
+				"schedule_remark_title1":remark_titles["schedule"]["remarks1"],
+				"schedule_remark_title2":remark_titles["schedule"]["remarks2"],
+				"schedule_remark_title3":remark_titles["schedule"]["remarks3"],
+				"schedule_remarks1":schedule_remarks1,
+				"schedule_remarks2":schedule_remarks2,
+				"schedule_remarks3":schedule_remarks3,
+				"get_truck_num" :truck_reserved_num+"",
+				"ninku_value"   :ninku_tpl,
+				"ymd"           :start_date_ymd
+		});
+
+		main_html=$(main_html);
+		elem.empty().append(main_html);
+		main_html.ready(function(){
+
+				if($.isFunction(callback)) callback.call(elem,main_html);
+		});
+}
+
+var addSideTruck=function(trucks,callback){
+
+		var elem=this;
+		if(1>trucks.length){
+
+				if($.isFunction(callback)) callback();
+				return;
+		}
+
+		var fn=arguments.callee;
+		var truck=trucks.shift();
+		var instance=TPL.getInstance("schedule_side_truck");
+		var html=instance.replaceTPL(instance.get_schedule_side_truck,{
+
+				"truck":truck["name"]
+		});
+
+		var html=$(html);
+		elem.append(html);
+		html.ready(function(){
+
+				fn.call(elem,trucks,callback);
+		});
+}
+
+var addSideWorker=function(workers,callback){
+
+		var elem=this;
+		if(1>workers.length){
+
+				if($.isFunction(callback)) callback();
+				return;
+		}
+		var fn=arguments.callee;
+		var worker=workers.shift();
+		var instance=TPL.getInstance(["schedule_side_worker","schedule_side_worker_leader"]);
+		var firstname=worker["first_name"];
+		var nickname =worker["nickname"];
+		var view_name=((nickname.length>0)?nickname:firstname);
+		var is_leader=parseInt(worker["leader_flg"])>0;
+		var worker_tpl=(is_leader?instance.get_schedule_side_worker_leader:instance.get_schedule_side_worker);
+		var worker_color = worker_colors[worker["color_flg"]];
+		
+		var html=instance.replaceTPL(worker_tpl,{
+
+				"worker":view_name,
+				"worker_color": worker_color,
+		});
+
+		var html=$(html);
+		elem.append(html);
+		html.ready(function(){
+
+				fn.call(elem,workers,callback);
+		});
+}
+
+var addActionButton=function(status,callback){
+
+		var elem=this;
+		var instance=TPL.getInstance(["schedule_action_start_btn","schedule_action_save_btn"]);
+		var html=instance["get_schedule_action_"+(!!status?"save":"start")+"_btn"];
+
+		html=$(html);
+		elem.empty().append(html);
+		if(!$.isFunction(callback)) return;
+		html.ready(function(){
+				callback(html);
+		});
+}
+
+var updateNinkuCacheValues=function(ninku_situations){
+
+		var site_ids=Object.keys(ninku_situations);
+		var __fn=function(site_ids){
+
+				if(1>site_ids.length) return;
+				var site_id=site_ids.shift();
+				var site_ninku_situations=!!ninku_situations[site_id]?ninku_situations[site_id]:{};
+				var current_ninku_situations=cacheData().get(CACHE_SITE_NINKU_VALUE);
+				var current_site_ninku_situations=!!current_ninku_situations[site_id]?current_ninku_situations[site_id]:{};
+				$.extend(current_site_ninku_situations,site_ninku_situations);
+				cacheData().get(CACHE_SITE_NINKU_VALUE)[site_id]=current_site_ninku_situations;
+				arguments.callee(site_ids);
+		}
+
+		__fn(site_ids);
+}
+
+var leftSideContentMoveToViewerPosition=function(){
+
+		var __window=$(window);
+		var l_contents=window["body"].find("div[data-type=\""+TYPE_SCHEDULE_L_CONTENTS+"\"]");
+		var max_bottom_point=l_contents.offset().top+l_contents.height();
+
+		var left_side=window["schedule_left_side"];
+		var scroll_point=__window.scrollTop();
+		left_side.css({"top":Math.max(scroll_point,0)+"px"});
+
+		var scroll_value_bottom=__window.height()+scroll_point;
+		var offset=left_side.offset();
+		var offset_top=offset.top;
+		var offset_bottom=offset_top+left_side.height();
+
+		if(max_bottom_point>=offset_bottom) return;
+		var diff=offset_bottom-max_bottom_point;
+		scroll_point-=diff;
+		left_side.css("top",Math.max(scroll_point,0)+"px");
+}
+
+var getSelectedWorkers=function(schedule_id,site_group,site_group_workers){
+
+		var worker_add=this;
+		var ul=worker_add.children("ul[data-type=\"schedule-workers\"][data-schedule-id=\""+schedule_id+"\"]");
+
+		var checkboxies=ul.find("input[type=checkbox][data-type=\"schedule-worker-checkbox\"]");
+		var checks=checkboxies.filter(":checked");
+		var worker_informations={};
+		if(1>checks.size()) return worker_informations;
+
+		var worker_informations={};
+		checks.each(function(){
+
+				var checkbox=$(this);
+				var group_id=checkbox.parent().attr("data-group-id");
+				var color_flg = checkbox.parent().attr("data-color-flg") || 1;
+				// TODO console.log(checkbox.parent());
+				if(worker_informations[group_id]==undefined){
+
+						worker_informations[group_id]={};
+						worker_informations[group_id]["group"]=site_group[group_id];
+						worker_informations[group_id]["workers"]=[];
+				}
+
+				var worker_id=checkbox.val();
+				var workers=site_group_workers[group_id];
+				var worker=workers[worker_id];
+				worker_informations[group_id]["workers"].push({
+
+						"schedule_id":schedule_id,
+						"worker_id" :worker["id"],
+						"nickname"  :worker["nickname"],
+						"first_name":worker["first_name"],
+						"last_name" :worker["last_name"], 
+						"color_flg" :color_flg
+				});
+		});
+
+		return worker_informations;
+}
+
+var addWorkerCheckHistory=function(worker_checklist,group_ids,leader_info,index){
+
+		if(1>group_ids.length){
+
+				return;
+		}
+
+		index=(index==undefined)?0:index;
+		var worker_registed_history=this;
+		var group_id=group_ids.shift();
+		var instance=TPL.getInstance(["schedule_registed_worker_list","schedule_registed_workers"]);
+		var information=worker_checklist[group_id];
+		var tpl=instance.replaceTPL(instance.get_schedule_registed_worker_list,{
+
+				"group_name":information["group"],
+				"group_id"	:group_id,
+		});
+
+		var html=$(tpl);
+		var fn=arguments.callee;
+		var target=html.children("div[data-type=\"registed-workers-list\"]");
+
+		worker_registed_history.append(html);
+		html.ready(function(){
+
+				var workers=information["workers"];
+				var fragment=document.createDocumentFragment();
+				var tpl=instance.get_schedule_registed_workers;
+				var timestamp=new Date().getTime();
+				for(var i in workers){
+
+						if(!workers.hasOwnProperty(i)) continue;
+						var worker=workers[i];
+						var schedule_id=worker["schedule_id"];
+						var is_leader_flg=(leader_info[schedule_id][worker["worker_id"]]==undefined?"0":leader_info[schedule_id][worker["worker_id"]]);
+						var is_leader=(is_leader_flg>0)?true:false;
+						var label_key=(timestamp+"_"+index++);
+
+						//check leader color
+						var worker_color = worker_colors[worker["color_flg"]];
+						if( is_leader ) {
+							worker_color = "red";
+						} 
+						
+						var __tpl=instance.replaceTPL(tpl,{
+
+								"worker_id" :worker["worker_id"],
+								"first_name":worker["first_name"],
+								"last_name" :worker["last_name"],
+								"nickname"  :worker["nickname"],
+								"label_key" :label_key, 
+								"color_flg" :worker["color_flg"], 
+								"worker_color": worker_color
+						});
+
+						var __html=$(__tpl);
+						if( is_leader ) 
+						{
+							__html.find("input[type=checkbox]").prop("checked",is_leader);
+						}
+						fragment.appendChild(__html.get(0));
+				}
+
+				target.append(fragment);
+				html.ready(function(){
+
+						fn.call(worker_registed_history,worker_checklist,group_ids,leader_info,index);
+				});
+		});
+}
+
+var beforeunLoadEvent=function(){
+
+		var event="beforeunload";
+		$(window).off(event).bind(event,function(){
+
+				return "編集中のものがある場合、保存されません";
+		});
+}
+
+</script>
+
+<script id="tpl_schedule_bg_color" type="text/tmpl">
+<li data-type="schedule-bg-color" style="background-color:<<color>>;" data-color="<<color>>" data-color-id="<<color_id>>"></li>
+</script>
+
+<script id="tpl_select_option" type="text/tmpl">
+<option value="<<key>>"><<value>></option>
+</script>
+
+<script id="tpl_select_option_selected" type="text/tmpl">
+<option value="<<key>>" selected><<value>></option>
+</script>
+
+<script id="tpl_schedule_calendar" type="text/tmpl">
+<div class="date-wrap" data-type="calendar">
+	<input class="datepicker form-control" type="text" name="" value="<<start_value>>" data-type="calendar-start" readonly/>
+	<span>～</span>
+	<input class="datepicker form-control" type="text" name="" value="<<end_value>>" data-type="calendar-end" readonly/>
+	<span class="calendar-rm" data-type="calendar-remove">&times;</span>
+</div>
+</script>
+
+<script id="tpl_schedule_remarks" type="text/tmpl">
+<div class="field-item cf">
+	<div class="field-item-label"><label for=""><<title>></label></div>
+	<div class="field-item-input"><textarea name="name" data-type="data-remarks<<index>>" class="form-control"></textarea></div>
+</div>
+</script>
+
+<style type="text/css">
+	#schedule-site-modal-inner .field-item-input{width:100%}
+</style>
+
+<script id="tpl_schedule_modal_site_add" type="text/tmpl">
+<div id="schedule-site-modal-inner" data-type="schedule-site-modal-inner" class="site_modal_container modal-content modal-sm" data-site-add-id="<<site_id>>">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" data-type="overlay-close">&times;</button>
+		<h4 class="modal-title">現場<<title>></h4>
+	</div>
+	<div class="modal-body">
+		 <form class="tpl_schedule_modal_site_add" action="" method="post">
+			<div class="field-item cf" data-type="box-parent">
+				<div class="field-item-label"><label for="">現場名&nbsp;<span class="data-require">※</span>&nbsp;<span style="display:none;" class='error-message' data-type="schedule-error-message"></span></label></div>
+				<div class="field-item-input"><input type="text" name="" data-id="0" value="" data-type="data-site-name" class="form-control"></div>
+			</div>
+			<div class="field-item cf" data-type="box-parent">
+				<div class="field-item-label"><label for="">現場名(ふりがな)<span style="display:none;" class='error-message' data-type="schedule-error-message"></span></label></div>
+				<div class="field-item-input"><input type="text" name="" data-id="1" value="" data-type="data-site-name-kana" class="form-control"></div>
+			</div>
+			<div class="field-item cf" data-type="box-parent">
+				<div class="field-item-label"><label for="">顧客名</label></div>
+				<div class="field-item-input"><input type="text" name="dataCustomer" data-customer-id="0" value="" data-type="data-customer" placeholder="顧客名" class="form-control"></div>
+			</div>
+			<div class="field-item cf" data-type="box-parent">
+				<div class="field-item-label"><label for="address">住所&nbsp;<span style="display:none;" class='error-message' data-type="schedule-error-message"></span></label></div>
+				<div class="field-item-input">
+					<div class="address-wrap">
+						<select name="dataPref" value="" data-type="data-pref" class="form-control">
+							<option value="0">都道府県</option>
+						</select>
+					</div>
+					<div class="address-wrap">
+					   <select name="dataArea" value="" data-type="data-area" class="form-control">
+							<option value="0">市町区村</option>
+					   </select>
+					</div>
+					<div class="address-wrap"><input type="text" name="name" value="" placeholder="番地、ビル名" data-type="data-address" class="form-control"></div>
+				</div>
+			</div>
+			<<remarks_layouts>>
+			<div class="field-item cf">
+				<div class="field-item-label"><label for="">総人工</label></div>
+				<div class="field-item-input"><input type="number" min="0" max="1000" name="name" value="" data-type="data-ninku" class="form-control"></div>
+			</div>
+			<div class="field-item cf" data-type="box-parent">
+				<div class="field-item-label"><label for="address">担当者&nbsp;<span style="display:none;" class='error-message' data-type="schedule-error-message"></span></label></div>
+				<div class="field-item-input">
+					<div class="address-wrap">
+						<select name="dataInchage" value="" data-type="data-incharge" class="form-control">
+							<option value="0">未設定</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="field-item cf" data-type="box-parent">
+				<div class="field-item-label"><label for="">日程&nbsp;<span class="data-require">※</span>&nbsp;<span style="display:none;" class='error-message' data-type="schedule-error-message"></span></label></div>
+				<div class="field-item-input" data-type="data-calendar">
+
+					<div class="field-item cf" style="margin-bottom: -5px">
+						<label style="margin-bottom: 0" for="site-ninku-flag">この現場を人工集計の対象とする</label><br>
+						<input type="checkbox" data-type="site-ninku-flag" id="site-ninku-flag" class="register-checked">
+					</div>
+
+					<a href="#" class="register-btn" data-type="schedule-add-btn" onclick="return false;">日程を更に追加する</a>
+				</div>
+			</div>
+			<div class="field-item cf">
+				<div class="form-group">
+					<label>ラベル</label>
+					<ul id="list-level" data-type="data-color-list"></ul>
+					<div data-type="data-color"></div>
+				</div>
+			</div>
+		</form>
+	</div><!--modal-body-->
+	<div class="modal-footer">
+		<button type="button" class="btn btn-danger" data-type="site-post-btn">送信する</button>
+		<button type="button" class="btn btn-default" data-type="overlay-close" data-dismiss="modal">Close</button>
+	</div>
+</div>
+</script>
+
+<script id="tpl_schedule_site_worker" type="text/tmpl">
+<li><<worker>></li>
+</script>
+
+<script id="tpl_schedule_site_date_img" type="text/tmpl">
+<img src="<<img_path>>" data-type="weather-img">
+</script>
+
+<script id="tpl_schedule_site_date" type="text/tmpl">
+<div>
+<p class="date"><<site_month>>/<<site_day>>(<<site_week>>)</p>
+<span class="weather w-sunny" data-type="weather" style=cursor:pointer;"></span>
+</div>
+</script>
+
+<script id="tpl_schedule_side_worker" type="text/tmpl">
+<p style="color:<<worker_color>>;">・<<worker>></p>
+</script>
+
+<script id="tpl_schedule_side_worker_leader" type="text/tmpl">
+<p style="color:red;">・<<worker>></p>
+</script>
+
+<script id="tpl_schedule_side_truck" type="text/tmpl">
+<p>・<<truck>></p>
+</script>
+
+<script id="tpl_schedule_site_detail_empty" type="text/tmpl">
+<div data-type="schedule-site-box">
+	<div class="side-date" data-type="schedule-site-date"></div>
+</div>
+</script>
+
+<script id="tpl_schedule_site_detail" type="text/tmpl">
+<div data-type="schedule-site-box" data-site-id="<<site_id>>" data-time="<<ymd>>" data-schedule-id="<<schedule_id>>">
+	<div class="side-date" data-type="schedule-site-date"></div>
+
+	<?php $controller=strtolower($this->params['controller']);?>
+	<?php if(in_array($controller,array("site"))) :  ?>
+		<div class="row btn-on-side btn-on-side-first">
+			<div class="btn-chg-date preview pull-left" data-type="schedule-week-btn-left"><span data-type="schedule-week-btn-left-span" class="fa fa-angle-double-left"></span> 前の週</div>
+			<div class="btn-chg-date next pull-right" data-type="schedule-week-btn-right">次の週 <span data-type="schedule-week-btn-right-span" class="fa fa-angle-double-right"></span></div>
+		</div>
+	<?php endif; ?>
+	<?php if(in_array($controller,array("site","sitedaily"))) : ?>
+		<div class="row btn-on-side">
+			<div class="btn-chg-date preview pull-left" data-type="schedule-btn-left"><span data-type="schedule-btn-left-span" class="fa fa-angle-left"></span> 前の日</div>
+			<div class="btn-chg-date next pull-right" data-type="schedule-btn-right">次の日 <span data-type="schedule-btn-right-span" class="fa fa-angle-right"></span></div>
+		</div>
+	<?php endif; ?>
+
+	<div class="site-content">
+		<div class="side-box primary">
+			<p class="place"><<site_name>></p>
+			<p class="add">顧客名：<<site_customer>></p>
+			<p class="add"><<site_pref>><<site_town>><<site_address>></p>
+			<p class="add"><img src="assets/img/gmap.png" style="width:30px;cursor:pointer;" data-type="schedule-gmap" class="gmap-focus"></p>
+			<div class="schedule_remark">
+				<p class="coment"><<site_remark_title>>：<<site_remarks>></p>
+				<p class="coment"><<schedule_remark_title1>>：<<schedule_remarks1>></p>
+				<p class="coment"><<schedule_remark_title2>>：<<schedule_remarks2>></p>
+				<p class="coment"><<schedule_remark_title3>>：<<schedule_remarks3>></p>
+			</div>
+			</div>
+		</div>
+		<!-- / .side-box primary -->
+		<div class="side-box secondary">
+			<div id="staff-block">
+				<div class="icon" data-type="side-ninku"><<ninku_value>></div>
+				<ul class="staff-list" data-type="side-worker"></ul>
+			</div><!--/#staff-block-->
+			<div id="truck-block">
+				<div class="icon"><span class="cell truck" data-type="side-truck-num"><<get_truck_num>></span></div>
+				<ul class="truck-list" data-type="side-truck"></ul>
+			</div><!--/#truck-block-->
+		</div>
+		<div class="add-site-btn">
+			<p class="p-add-site-btn">
+				<a href="#" onclick="return false;" data-type="schedule-site-edit-workers-btn"><span class="fa fa-plus-circle"></span>追加情報を登録する</a>
+			</p>
+		</div><!--/.add-site-btn-->
+		<!-- / .side-box secondary -->
+		<div class="side-box tertiary">
+			<p class="edit-btn">
+				<a href="#" onclick="return false;" data-type="schedule-site-edit-btn" data-site-id="<<site_id>>"><span class="fa fa-calendar-o"></span>現場情報詳細</a>
+			</p>
+		</div><!-- / .side-box tertiary -->
+		<div class="last-update">
+			<div data-type="schedule-modified-parsite-information"></div><!--schedule-modified-information-->
+		</div><!--last-update-->
+
+	</div><!--site-content-->
+</div><!--schedule-site-box-->
+</script>
+
+<script id="tpl_schedule_ninku_values" type="text/tmpl">
+<span class="cell staff"><<get_power_num>>/<<need_power_num>></span>
+</script>
+
+<script id="tpl_schedule_ninku_red_values" type="text/tmpl">
+<span class="cell staff" style="font-weight:bold;color:red;"><<get_power_num>>/<<need_power_num>></span>
+</script>
+
+<script id="tpl_schedule_incharge_to_view" type="text/tmpl">
+<a href="#" style="padding-bottom:20px;padding-top:20px;" onclick="return false;" data-type="schedule-site-incharge-a" data-on="NO" class="incharge-user-yes"><span class="set-span02" data-type="schedule-site-incharge-span">担当以外の現場を隠す</span></a>
+</script>
+
+<script id="tpl_schedule_incharge_to_hide" type="text/tmpl">
+<a href="#" style="padding-bottom:20px;padding-top:20px;" onclick="return false;" data-type="schedule-site-incharge-a" data-on="YES" class="incharge-user-yes"><span class="set-span02" data-type="schedule-site-incharge-span">担当外の現場も表示</span></a>
+</script>
+
+<?php $is_management=in_array($authority,array("master","sub_master","senior","sub1_master")); ?>
+<script id="tpl_schedule_modified_information_top" type="text/tmpl">
+	<p class="set-title01"><span class="set-span01">最終更新時間</span><span class="set-date"><<date>></span><span class="set-time"><<time>></span></p>
+	<p class="set-title02"><span class="set-span02">最終更新</span><span class="set-name"><<name>></span></p>
+	<?php if($is_management){ ?>
+	<p class="set-title02" data-type="schedule-site-incharge-p"></p>
+	<?php } ?>
+</script>
+
+<script id="tpl_schedule_modified_information_bottom" type="text/tmpl">
+	<p class="set-title01"><span class="set-span01">最終更新時間</span><span class="set-date"><<date>></span><span class="set-time"><<time>></span></p>
+	<p class="set-title02"><span class="set-span02">最終更新</span><span class="set-name"><<name>></span></p>
+</script>
+
+<style>
+
+div[data-type=schedule-select-workers]{
+	width:20%;
+	height:80%;
+	background-color:blue;
+	position:absolute;
+	top:50px;
+	left:600px;
+	z-index:1;
+}
+
+</style>
+
+
+<script id="tpl_schedule_add_informations" type="text/tmpl">
+<div id="schedule-site-info-container" data-type="schedule-site-info-container" class="site_modal_container modal-content modal-lg" style="position:relative;height:calc(100% - 100px);max-height:546px">
+	<!-- <div data-type="schedule-select-workers"></div> -->
+	<div id="schedule-wraper">
+		<div id="schedule-date-left">
+			<div class="modal-header" data-type="schedule-site-info"></div><!--/.modal-header-->
+			<div class="modal-body" data-type="schedule-site-date">
+				<ul class="list-date-btn" data-type="schedule-site-date-list"></ul>
+			</div><!--/.modal-body-->
+		</div><!--/#schedule-date-left-->
+		<div id="schedule-worker-right" style="display:inline-table;">
+			<div class="modal-body">
+				<button type="button" data-type="cancel" class="close" data-dismiss="modal">&times;</button>
+				<div class="modal-left-block">
+					<div class="worker-block">
+						 <div class="modal-header">
+							<h4 class="modal-title">スタッフを登録する</h4>
+						</div><!--/.modal-header-->
+						<div class="form-group">
+						  <label for="dataworker">グループ選択</label>
+						  <select class="form-control" id="dataworker" data-type="schedule-worker-group"></select>
+						</div>
+						<div class="form-group" data-type="schedule-top-workers">
+							<span>メンバー選択</span>
+							<div class="checkbox check_all_mem">
+							  <label data-type="schedule-worker-all-label"><input type="checkbox" value="" data-type="schedule-worker-all" onclick="return false;">すべてメンバー選択</label>
+							</div>
+						</div>
+					</div><!--/.worker-block-->
+					<div class="modal-content-action">
+						<a data-type="schedule-clear-worker-all-label" href="#"class="clear-all" onclick="return false;">全てクリア</a>
+					</div>
+					<div class="modal-header">
+						<h4 class="modal-title">選択済み作業員<span class="pull-right">責任者</span></h4>
+					</div>
+					<div class="registed-workers-block" data-type="registed-workers-block"></div>
+
+				</div><!--/.modal-left-block-->
+				<div class="modal-right-block">
+					<div class="struck-block">
+						<div class="form-group" data-type="schedule-top-trucks">
+							<div class="modal-header">
+								<h4 id="level-close" class="modal-title">配車選択</h4>
+							</div><!--/.modal-header-->
+							<!-- UL TRUCK -->
+							<div class="checkbox check_all_struck">
+							  <label data-type="schedule-truck-all-label"><input type="checkbox" value="" data-type="schedule-truck-all" onclick="return false;">すべて配車選択</label>
+							</div>
+						</div>
+					</div><!--/.struck-block-->
+
+					<div class="level-block">
+						<div class="form-group" data-type="schedule-top-colors">
+							<div class="modal-header">
+								<h4 class="modal-title">ラベルを登録する</h4>
+							</div><!--/.modal-header-->
+							<!-- UL COLOR -->
+						</div>
+					</div><!--/.level-block-->
+					<div class="note-block">
+						<div class="form-group" data-type="schedule-top-remarks">
+							<!--<label>備考を登録する</label>-->
+							<div class="modal-header">
+								<h4 class="modal-title">備考を登録する</h4>
+							</div><!--/.modal-header-->
+							<!-- REMARKS TEXTARE -->
+						</div>
+					</div><!--/.note-block-->
+					<div class="assign-same-all">
+						<label data-type="schedule-assign-same-data-label" style="float: none;"><input type="checkbox" value="" data-type="schedule-assign-same-data" onclick="return false;">同日以降の日付に適用</label>
+					</div>
+				</div><!--/.modal-right-block-->
+			</div><!--/.modal-body-->
+			<div class="modal-footer text-right">
+				<button type="button" class="btn btn-default" data-type="cancel" data-dismiss="modal">閉じる</button>
+				<button type="button" class="btn btn-danger" data-type="site-regist-info-btn">追加する</button>
+			</div><!--/.modal-footer-->
+		</div><!--schedule-worker-right-->
+	</div><!--schedule-wraper-->
+</div><!--/#schedule-site-info-container-->
+</script>
+
+<script id="tpl_schedule_registed_worker_list" type="text/tmpl">
+<div data-type="registed-worker-content" data-worker-group-id="<<group_id>>" style="min-height:1%;clear:both;width:100%;float:left;">
+	<div data-type="registed-workers-group-name"><<group_name>></div>
+	<div data-type="registed-workers-list"></div>
+</div>
+</script>
+
+<script id="tpl_schedule_registed_workers" type="text/tmpl">
+<div data-type="registed-worker-name" data-worker-id="<<worker_id>>" style="width:100%;">
+	<div data-type="registed-worker-name-left" style="float:left;width:20%;">&nbsp;</div>
+	<div data-type="registed-worker-name-right" style="float:left;width:80%;border-bottom:1px solid #ccc;margin-bottom: 5px">
+		<label data-type="registed-worker-leader-label" style="color:<<worker_color>>" data-color-flg="<<color_flg>>" for="registed_worker_checkbox"><<first_name>>&nbsp;<<last_name>>(<<nickname>>)</label>
+		<input id="registed_worker_checkbox_<<label_key>>" class="pull-right" type="checkbox" data-type="registed-worker-leader" onclick="return false;">
+	</div>
+</div>
+</script>
+
+<script id="tpl_schedule_add_date_schedule_active" type="text/tmpl">
+<li class="date-add active" data-time="<<time>>" data-type="schedule-date-btn" data-active="YES" data-schedule-id="<<schedule_id>>"><<month>>/<<day>></li>
+</script>
+
+<script id="tpl_schedule_add_date_schedule_unactive" type="text/tmpl">
+<li class="date-add" data-time="<<time>>" data-type="schedule-date-btn" data-active="NO" data-schedule-id="<<schedule_id>>"><<month>>/<<day>></li>
+</script>
+
+<script id="tpl_schedule_site_info" type="text/tmpl">
+<h4 class="modal-title"><<site>>（<<area>>）に情報を追加する</h4>
+</script>
+
+<script id="tpl_schedule_add_ul_worker" type="text/tmpl">
+<ul class="list-worker" data-type="schedule-workers" data-schedule-id="<<schedule_id>>" data-time="<<schedule_ymd>>"style="display:none;"></ul>
+</script>
+
+<script id="tpl_schedule_add_li_worker" type="text/tmpl">
+<li data-type="schedule-add-worker" style="display:none;" data-group-id="<<group_id>>" data-worker-id="<<worker_id>>">
+	<input type="checkbox" name="data_worker" value="<<worker_id>>" data-type="schedule-worker-checkbox" onclick="return false;"><<name>>
+</li>
+</script>
+
+<script id="tpl_schedule_add_ul_truck" type="text/tmpl">
+<ul class="list-truck" id="list-car" data-type="schedule-trucks" data-schedule-id="<<schedule_id>>" data-time="<<schedule_ymd>>" style="display:none;"></ul>
+</script>
+
+<script id="tpl_schedule_add_li_truck" type="text/tmpl">
+<li data-type="schedule-add-truck" data-truck-id="<<truck_id>>">
+	<input type="checkbox" name="data_worker" value="<<truck_id>>" data-type="schedule-truck-checkbox" onclick="return false;"><<name>>
+</li>
+</script>
+
+<script id="tpl_schedule_add_ul_color" type="text/tmpl">
+<ul id="list-level" data-type="data-color-list" data-schedule-id="<<schedule_id>>" data-time="<<schedule_ms>>" style="display:none;"></ul>
+</script>
+
+<script id="tpl_schedule_add_li_color" type="text/tmpl">
+<li data-type="schedule-bg-color" style="background-color:<<color>>;" data-color="<<color>>" data-color-id="<<color_id>>"></li>
+</script>
+
+<script id="tpl_schedule_add_textarea_remarks" type="text/tmpl">
+<div class="item-memo" data-schedule-id="<<schedule_id>>" data-type="schedule-remarks" style="display:none;">
+	<p><<title>><br/><span>※表示を変更できます</span></p>
+	<textarea class="form-control" rows="2"></textarea>
+</div>
+</script>
+
+<script id="tpl_schedule_action_start_btn" type="text/tmpl">
+<a data-type="action-start" href="#" onclick="return false;">段取をする</a>
+</script>
+
+<script id="tpl_schedule_action_save_btn" type="text/tmpl">
+<a data-type="action-save" href="#" onclick="return false;">段取を保存する</a>
+</script>
+
+<script id="tpl_schedule_side_memo" type="text/tmpl">
+<div class="modal-dialog modal-sm">
+	<div id="schedule-site-memo-container" data-type="schedule-site-memo-container" class="site_modal_container modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" data-type="memo-close-btn">&times;</button>
+			<h4 class="modal-title">MEMO</h4>
+		</div>
+		<div class="modal-body">
+			<div class="form-group">
+				<textarea class="form-control" rows="3" data-type="schedule-memo-textarea"></textarea>
+			</div>
+		</div>
+		<div class="modal-footer" data-type="memo-btns">
+			<button type="button" class="btn submit-btn pull-right" data-type="memo-post-btn">送信する</button>
+			<button type="button" class="btn back-btn pull-right back" data-dismiss="modal" data-type="memo-close-btn">Close</button>
+		</div>
+	</div>
+</div>
+
+</script>
+
+<style>
+
+div[data-type=google-map-close]{
+	position:absolute;
+	top:0px;
+	left:0px;
+	z-index:1;
+	background-color:red;
+	width:10%;
+	height:15%;
+}
+
+div[data-type=google-map-container]{
+	width:100%;
+	height:calc(100% - 34px);
+}
+
+</style>
+
+<script id="tpl_schedule_gmap_layout" type="text/tmpl">
+<div data-type="schedule-google-map" class="gmap-container">
+	<div class="row-fluid">
+		<span class="btn-map btn-map-close" data-type="schedule-gmap-close" style="display:none;">Close</span>
+		<span class="btn-map btn-map-gmap" data-type="schedule-gmap-open" style="display:none;">Google map</span>
+	</div>
+	<div data-type="google-map-container"></div>
+</div>
+</script>
+
+<script id="tpl_schedule_memo_li" type="text/tmpl">
+<li data-memo-id="<<memo_id>>" data-type="schedule-memo-li" style="overflow:hidden;"><<value>></li>
+</script>
+
+<?php /* for smart phone */ ?>
+<script id="tpl_schedule_add_informations_sp" type="text/tmpl">
+<div id="schedule-site-info-container" data-sp-scroll="YES" data-type="schedule-site-info-container" class="site_modal_container modal-content modal-lg" style="position:relative;height:calc(100% - 100px);max-height:546px">
+	<!-- <div data-type="schedule-select-workers"></div> -->
+	<div id="schedule-wraper">
+		<div id="schedule-date-left">
+			<div class="modal-header" data-type="schedule-site-info"></div><!--/.modal-header-->
+			<div class="modal-body" data-type="schedule-site-date">
+				<ul class="list-date-btn" data-type="schedule-site-date-list"></ul>
+			</div><!--/.modal-body-->
+		</div><!--/#schedule-date-left-->
+		<div id="schedule-worker-right" style="display:inline-table;">
+								<button type="button" data-type="cancel" class="close" data-dismiss="modal">&times;</button>
+			<div class="modal-body">
+				<div class="modal-left-block">
+					<div class="worker-block">
+						 <div class="modal-header">
+							<h4 class="modal-title">スタッフを登録する</h4>
+						</div><!--/.modal-header-->
+						<div class="form-group">
+						  <label for="dataworker">グループ選択</label>
+						  <select class="form-control" id="dataworker" data-type="schedule-worker-group"></select>
+						</div>
+						<div class="form-group" data-type="schedule-top-workers">
+							<span>メンバー選択</span>
+							<div class="checkbox check_all_mem">
+							  <label data-type="schedule-worker-all-label"><input type="checkbox" value="" data-type="schedule-worker-all" onclick="return false;">すべてメンバー選択</label>
+							</div>
+						</div>
+					</div><!--/.worker-block-->
+					<div class="modal-content-action">
+						<a data-type="schedule-clear-worker-all-label" href="#"class="clear-all" onclick="return false;">全てクリア</a>
+					</div>
+					<div class="modal-header">
+						<h4 class="modal-title">選択済み作業員<span class="pull-right">責任者</span></h4>
+					</div>
+					<div class="registed-workers-block" data-type="registed-workers-block"></div>
+
+				</div><!--/.modal-left-block-->
+				<div class="modal-right-block">
+					<div class="struck-block">
+						<div class="form-group" data-type="schedule-top-trucks">
+							<div class="modal-header">
+								<h4 id="level-close" class="modal-title">配車選択</h4>
+							</div><!--/.modal-header-->
+							<!-- UL TRUCK -->
+							<div class="checkbox check_all_struck">
+							  <label data-type="schedule-truck-all-label"><input type="checkbox" value="" data-type="schedule-truck-all" onclick="return false;">すべて配車選択</label>
+							</div>
+						</div>
+					</div><!--/.struck-block-->
+
+					<div class="level-block">
+						<div class="form-group" data-type="schedule-top-colors">
+							<div class="modal-header">
+								<h4 class="modal-title">ラベルを登録する</h4>
+							</div><!--/.modal-header-->
+							<!-- UL COLOR -->
+						</div>
+					</div><!--/.level-block-->
+					<div class="note-block">
+						<div class="form-group" data-type="schedule-top-remarks">
+							<!--<label>備考を登録する</label>-->
+							<div class="modal-header">
+								<h4 class="modal-title">備考を登録する</h4>
+							</div><!--/.modal-header-->
+							<!-- REMARKS TEXTARE -->
+						</div>
+					</div><!--/.note-block-->
+					<div class="assign-same-all">
+						<label data-type="schedule-assign-same-data-label" style="float: none;"><input type="checkbox" value="" data-type="schedule-assign-same-data" onclick="return false;">同日以降の日付に適用</label>
+					</div>
+				</div><!--/.modal-right-block-->
+			</div><!--/.modal-body-->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-type="site-regist-info-btn">追加する</button>
+				<button type="button" class="btn btn-default" data-type="cancel" data-dismiss="modal">閉じる</button>
+			</div><!--/.modal-footer-->
+		</div><!--schedule-worker-right-->
+	</div><!--schedule-wraper-->
+</div><!--/#schedule-site-info-container-->
+</script>
+
+<?php /* for smart phone */ ?>
+<script id="tpl_schedule_modal_site_add_sp" type="text/tmpl">
+<div id="schedule-site-modal-inner" data-sp-scroll="YES" data-type="schedule-site-modal-inner" class="site_modal_container modal-content modal-sm" data-site-add-id="<<site_id>>">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" data-type="overlay-close">&times;</button>
+		<h4 class="modal-title">現場<<title>></h4>
+	</div>
+	<div class="modal-body">
+		 <form class="tpl_schedule_modal_site_add" action="" method="post">
+			<div class="field-item cf" data-type="box-parent">
+				<div class="field-item-label"><label for="">現場名&nbsp;<span class="data-require">※</span>&nbsp;<span style="display:none;" class='error-message' data-type="schedule-error-message"></span></label></div>
+				<div class="field-item-input"><input type="text" name="" data-id="0" value="" data-type="data-site-name" class="form-control"></div>
+			</div>
+			<div class="field-item cf" data-type="box-parent">
+				<div class="field-item-label"><label for="">現場名(ふりがな)&nbsp;<span style="display:none;" class="data-require">※</span>&nbsp;<span style="display:none;" class='error-message' data-type="schedule-error-message"></span></label></div>
+				<div class="field-item-input"><input type="text" name="" data-id="1" value="" data-type="data-site-name-kana" class="form-control"></div>
+			</div>
+			<div class="field-item cf" data-type="box-parent">
+				<div class="field-item-label"><label for="">顧客名</label></div>
+				<div class="field-item-input"><input type="text" name="dataCustomer" data-customer-id="0" value="" data-type="data-customer" placeholder="顧客名" class="form-control"></div>
+			</div>
+			<div class="field-item cf" data-type="box-parent">
+				<div class="field-item-label"><label for="address">住所&nbsp;<span style="display:none;" class='error-message' data-type="schedule-error-message"></span></label></div>
+				<div class="field-item-input">
+					<div class="address-wrap">
+						<select name="dataPref" value="" data-type="data-pref" class="form-control">
+							<option value="0">都道府県</option>
+						</select>
+					</div>
+					<div class="address-wrap">
+					   <select name="dataArea" value="" data-type="data-area" class="form-control">
+							<option value="0">市町区村</option>
+					   </select>
+					</div>
+					<div class="address-wrap"><input type="text" name="name" value="" placeholder="番地、ビル名" data-type="data-address" class="form-control"></div>
+				</div>
+			</div>
+			<<remarks_layouts>>
+			<div class="field-item cf">
+				<div class="field-item-label"><label for="">総人工</label></div>
+				<div class="field-item-input"><input type="number" max="1000" min="0" name="name" value="" data-type="data-ninku" class="form-control"></div>
+			</div>
+			<div class="field-item cf" data-type="box-parent">
+				<div class="field-item-label"><label for="address">担当者&nbsp;<span style="display:none;" class='error-message' data-type="schedule-error-message"></span></label></div>
+				<div class="field-item-input">
+					<div class="address-wrap">
+						<select name="dataInchage" value="" data-type="data-incharge" class="form-control">
+							<option value="0">未設定</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="field-item cf" data-type="box-parent">
+				<div class="field-item-label"><label for="">日程&nbsp;<span class="data-require">※</span>&nbsp;<span style="display:none;" class='error-message' data-type="schedule-error-message"></span></label></div>
+				<div class="field-item-input" data-type="data-calendar">
+					<div class="field-item cf" style="margin-bottom: -5px">
+
+						<label style="margin-bottom: 0" for="site-ninku-flag" data-type="site-ninku-flag-label">この現場を人工集計の対象とする</label><br>
+						<input type="checkbox" name="site-ninku-flag" data-type="site-ninku-flag" class="register-checked" onclick="return false;">
+
+					</div>
+					<a href="#" class="register-btn" data-type="schedule-add-btn" onclick="return false;">日程を更に追加する</a>
+				</div>
+			</div>
+			<div class="field-item cf">
+				<div class="form-group">
+					<label>ラベル</label>
+					<ul id="list-level" data-type="data-color-list"></ul>
+					<div data-type="data-color"></div>
+				</div>
+			</div>
+		</form>
+	</div><!--modal-body-->
+	<div class="modal-footer">
+		<button type="button" class="btn btn-danger" data-type="site-post-btn">送信する</button>
+		<button type="button" class="btn btn-default" data-type="overlay-close" data-dismiss="modal">Close</button>
+	</div>
+</div>
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		if(isSp()){
+			$('body').addClass('mobi-layout');
+			// $('body').on('focusin', 'input.datepicker', function(event) {
+			// 	window.scrollTo(0, 0);
+   //      		document.body.scrollTop = 0;
+			// 	$('#ui-datepicker-div').appendTo('#schedule-site-modal-inner').css({
+			// 		'position': 'absolute!important',
+			// 		// 'left': $(this).position().left,
+			// 		'top': parseInt( $(this).position().top ) - 408
+			// 	});
+			// });
+		}
+	});
+</script>

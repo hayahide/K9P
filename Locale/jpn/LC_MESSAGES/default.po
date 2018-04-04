@@ -1,0 +1,23 @@
+msgid "normal"
+msgstr "一般"
+
+msgid "sub_master"
+msgstr "サブマスター"
+
+msgid "sub1_master"
+msgstr "スケジュール管理のみ"
+
+msgid "master"
+msgstr "管理者"
+
+msgid "man"
+msgstr "男性"
+
+msgid "woman"
+msgstr "女性"
+
+msgid "senior"
+msgstr "シニア"
+
+msgid "hoge";
+msgstr "ほげほげ";

@@ -1,0 +1,709 @@
+@charset "UTF-8";
+
+/* General */
+
+.float-list, .cf {
+    *zoom: 1;
+}
+
+.float-list:after, .cf:after {
+    content: "";
+    display: block;
+    clear: both;
+    height: 0;
+}
+
+form::-webkit-input-placeholder {
+    color: #C6C6C6;
+}
+
+form:-moz-placeholder {
+    opacity: 1;
+    color: #C6C6C6;
+}
+
+form::-moz-placeholder {
+    opacity: 1;
+    color: #C6C6C6;
+}
+
+form:-ms-input-placeholder {
+    color: #C6C6C6;
+}
+
+::-moz-selection {
+    color: #FFF;
+    background: rgba(31, 127, 194, 0.7);
+}
+
+::selection {
+    color: #FFF;
+    background: rgba(31, 127, 194, 0.7);
+}
+
+.float-list li {
+    float: left;
+}
+
+
+/* Base */
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+html {
+    box-sizing: border-box;
+    height: 100%;
+    font-size: 62.5%;
+}
+
+body {
+    height: 100%;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    font-family: 'Lucida Grande', 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', 'Meiryo', 'メイリオ', 'sans-serif';
+    color: #2b2e37;
+}
+
+a:link, a:visited {
+    text-decoration: none;
+    color: #2b2e37;
+}
+
+a:hover, a:active, a:focus {
+    text-decoration: underline;
+}
+
+a:hover img, a:active img, a:focus img {
+    opacity: 0.7;
+    filter: alpha(opacity=70);
+    -ms-filter: "alpha(opacity=70)";
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    box-sizing: content-box;
+    vertical-align: middle;
+    line-height: 1;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    max-height: 100%;
+}
+
+input[type="button"], input[type="submit"], input[type="reset"], label {
+    cursor: pointer;
+}
+
+.dummy {
+    text-decoration: line-through !important;
+    color: #f00 !important;
+}
+
+.header-logo a:hover img, .footer-logo a:hover img {
+    opacity: 1;
+    filter: alpha(opacity=100);
+    -ms-filter: "alpha(opacity=100)";
+}
+
+
+/* Layout */
+
+
+/*==============================
+共通要素
+==============================*/
+
+.table {
+    display: table;
+    width: 100%;
+}
+
+.cell {
+    display: table-cell;
+}
+
+
+/*==============================
+ヘッダー
+==============================*/
+
+.l-header {
+    /*min-height: 65px;*/
+    min-width: 960px;
+    padding: 6px 0 0;
+    margin: 0 0 40px;
+    /*background: #2B2E37;*/
+}
+
+.l-header .header-logo {
+    float: left;
+    padding: 18px 50px 18px 48px;
+}
+
+.l-header .l-nav {
+    float: left;
+    display: table;
+    vertical-align: top;
+}
+
+.l-header .l-nav li {
+    display: table-cell;
+    text-align: center;
+    border-radius: 5px 5px 0 0;
+}
+
+.l-header .l-nav li a {
+    display: block;
+    max-width: 186px;
+    padding: 19px 13% 23px;
+}
+
+.l-header .l-nav li.current {
+    background: #FFF;
+}
+
+.l-header .l-nav li:hover:not(.current) {
+    background-color: #393d49;
+}
+
+.l-header .l-nav a:hover img {
+    opacity: 1;
+}
+
+.l-header .header-btn a {
+    display: inline-block;
+    float: right;
+    margin: 9px 40px 0 10px;
+    width: 38px;
+    height: 38px;
+    border-radius: 5px;
+    background: url(../img/module/icon_print.png) no-repeat center #F3F3F3;
+}
+
+.l-header .header-btn a:hover {
+    background-color: #fff;
+}
+
+
+/*==============================
+コンテンツ
+==============================*/
+
+.l-contents .l-main {
+    float: right;
+    margin: 0 0 0 -295px;
+    width: 100%;
+}
+
+.l-contents .l-main .content-box {
+    padding: 0 40px 0 22%;
+    width: 100%;
+    min-width: 945px;
+}
+
+.l-contents .l-side {
+    float: left;
+    width: 15.8%;
+    margin: 0 40px;
+    border-radius: 5px;
+    border: 1px solid #e5e5e5;
+}
+
+
+/*l-schedule
+==============================*/
+
+.l-schedule {
+    /*天気マークここから*/
+    /*天気マークここまで*/
+    /*サイド*/
+}
+
+.l-schedule #schedule_top {
+    overflow: hidden;
+}
+
+.l-schedule .w-sunny {
+    background-image: url(../img/module/weather_sunny.png);
+}
+
+.l-schedule .w-sc {
+    background-image: url(../img/module/weather_slightlycloudy-.png);
+}
+
+.l-schedule .w-cloudy {
+    background-image: url(../img/module/weather_cloudy.png);
+}
+
+.l-schedule .w-rainy {
+    background-image: url(../img/module/weather_rainy.png);
+}
+
+.l-schedule .place {
+    margin: 0 0 8px;
+    font-weight: 800;
+}
+
+.l-schedule .control-arrow {
+    margin: 0 0 30px;
+}
+
+.l-schedule .control-arrow a:hover, .l-schedule .control-arrow a:active, .l-schedule .control-arrow a:focus {
+    text-decoration: none;
+}
+
+.l-schedule .control-arrow .preview, .l-schedule .control-arrow .next {
+    display: block;
+    width: 110px;
+    height: 40px;
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.l-schedule .control-arrow .preview:hover, .l-schedule .control-arrow .next:hover {
+    background-color: #fff;
+}
+
+.l-schedule .control-arrow .preview {
+    float: left;
+    padding: 12px 0 0 40px;
+    background: url(../img/module/arrow_left.png) no-repeat 20px center #f3f3f3;
+}
+
+.l-schedule .control-arrow .next {
+    float: right;
+    padding: 12px 0 0 25px;
+    background: url(../img/module/arrow_right.png) no-repeat 80px center #f3f3f3;
+}
+
+.l-schedule #schedule_top_head {
+    padding: 0 0 0 1px;
+    background-color: #e5e5e5;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.l-schedule .schedule_head {
+    display: inline-block;
+    text-align: center;
+    height: 40px;
+    width: 14;
+    min-width: 87px;
+    border-bottom: 1px solid #e5e5e5;
+    border-right: 1px solid #e5e5e5;
+    background-color: #FFF;
+}
+
+.l-schedule .schedule_head .sun {
+    color: #d54937;
+}
+
+.l-schedule .schedule_head .sat {
+    color: #2f4fb0;
+}
+
+.l-schedule .w-sunny, .l-schedule .w-sc, .l-schedule .w-cloudy, .l-schedule .w-rainy {
+    background-repeat: no-repeat;
+    background-position: center 30px;
+}
+
+.l-schedule #schedule_top> #schedule_top_inner {
+    padding: 0 0 0 1px;
+    height: 75vh;
+    white-space: nowrap;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    background: #e5e5e5;
+}
+
+.l-schedule .schedule_day_top {
+    display: inline-block;
+    width: 9.15vw;
+    min-width: 87px;
+    vertical-align: top;
+    border-right: 1px solid #e5e5e5;
+    /*border-bottom: 1px solid #e5e5e5;*/
+    background: #FFF;
+}
+
+.l-schedule .schedule_block {
+    height: 7.5vh;
+    min-height: 63px;
+    color: #FFF;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.l-schedule .schedule {
+    overflow: hidden;
+    height: 7.5vh;
+    min-height: 63px;
+    padding: 18px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.l-schedule .schedule span {
+    font-size: 11px;
+    font-weight: normal;
+}
+
+.l-schedule .side-date {
+    position: relative;
+    height: 65px;
+    padding: 25px 20px 0;
+    margin: 0 0 20px;
+    font-size: 14px;
+    font-weight: 800;
+    background: #f3f3f3;
+}
+
+.l-schedule .side-date .weather {
+    position: absolute;
+    width: 50px;
+    height: 65px;
+    right: 0;
+    top: 0;
+    background-position: left 20px;
+}
+
+.l-schedule .side-box {
+    padding: 0 20px 35px;
+}
+
+.l-schedule .side-box .place {
+    margin: 0 0 15px;
+    font-size: 14px;
+}
+
+.l-schedule .side-box .add {
+    margin: 0 0 15px;
+}
+
+.l-schedule .side-box .comment {
+    word-wrap: break-word;
+}
+
+.l-schedule .side-box .icon {
+    width: 100%;
+    margin: 0 0 20px;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.l-schedule .side-box .icon .staff {
+    width: 50%;
+    padding: 3px 0 0 27px;
+    background: url(../img/module/icon_staff.png) no-repeat left top;
+}
+
+.l-schedule .side-box .icon .truck {
+    width: 50%;
+    padding: 3px 0 0 30px;
+    background: url(../img/module/icon_truck.png) no-repeat left 6px;
+}
+
+.l-schedule .side-box .staff-list li {
+    margin: 0 0 3px;
+}
+
+.l-schedule .side-box .staff-list li::before {
+    content: "・";
+}
+
+.l-schedule .side-box .edit-btn {
+    margin: 0 0 20px;
+}
+
+.l-schedule .side-box .edit-btn a:hover, .l-schedule .side-box .edit-btn a:active, .l-schedule .side-box .edit-btn a:focus {
+    text-decoration: none;
+}
+
+.l-schedule .side-box .edit-btn a {
+    display: block;
+    height: 40px;
+    width: 100%;
+    padding: 10px 0 0 45px;
+    border: 1px solid #f5f5f5;
+    border-radius: 5px;
+    background: url(../img/module/icon_calender.png) no-repeat 20px center #f3f3f3;
+}
+
+.l-schedule .side-box .edit-btn a:hover {
+    background-color: #fff;
+}
+
+.l-schedule .side-box:last-child {
+    padding-bottom: 0;
+}
+
+
+/*Login Page*/
+
+.login-page {
+    width: 100%;
+    height: 100%;
+    background-color: #f2f2f2;
+}
+
+
+.login h1 {
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.login form {
+    background-color: #fff;
+    padding: 40px;
+    font-size: 14px;
+    text-align: left;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .13);
+}
+
+.login form p {
+    font-size: 12px;
+}
+
+.login form label {
+    font-size: 14px;
+}
+
+.login form input {
+    width: 100%;
+    height: 40px;
+    margin: 10px 0 25px;
+}
+
+.login form input[type="password"] {
+    margin-bottom: 40px;
+}
+
+.login form input[type="submit"] {
+    margin: 0 0 30px;
+    background-color: #1985d9;
+    border: none;
+    color: #fff;
+    font-weight: bold;
+}
+
+.login .forgot-password a {
+    color: #1985d9;
+    border-bottom: thin solid #1985d9;
+}
+
+.login .forgot-password a:hover {
+    text-decoration: none;
+    opacity: .7;
+}
+
+
+/*Field List Page*/
+
+.l-contents.field-list {
+    min-width: 1240px;
+    padding: 0 40px;
+}
+
+form.field-search {
+    width: 790px;
+    margin-bottom: 40px;
+    padding: 20px;
+    background-color: #f3f3f3;
+    border: thin solid #e5e5e5;
+    border-radius: 5px;
+}
+
+form.field-search img {
+    margin-right: 40px;
+}
+
+form.field-search input {
+    height: 28px;
+    margin-right: 20px;
+    border: thin solid #e5e5e5;
+    border-radius: 5px;
+}
+
+form.field-search input[type="text"] {}
+
+.submit-btn {
+    display: inline-block;
+    width: 120px;
+    height: 28px;
+    border: none;
+    color: #fff!important;
+    background-color: #d54937;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 28px;
+    border-radius: 5px;
+}
+
+.submit-btn:hover {
+    text-decoration: underline;
+}
+
+form.field-search input[type="submit"] {
+    margin: 0;
+}
+
+.submit-btn.add-field {
+    margin: 0 0 35px;
+}
+
+.l-contents.field-list .list-wrap {
+    height: 45px;
+    line-height: 45px;
+    border-bottom: thin solid #e5e5e5;
+}
+
+.l-contents.field-list .list-wrap.title {
+    font-weight: bold;
+}
+
+.l-contents.field-list .list-wrap ul {}
+
+.l-contents.field-list .list-wrap ul li {
+    width: 250px;
+}
+
+.l-contents.field-list .list-wrap ul li.date {
+    width: 500px;
+}
+
+.l-contents.field-list .list-wrap ul li a {
+    color: #1985d9;
+    border-bottom: thin solid #1985d9;
+}
+
+.l-contents.field-list .list-wrap ul li a:hover {
+    text-decoration: none;
+    opacity: .7;
+}
+
+
+/*Field Add Page*/
+
+.breadcrumb {
+    margin-bottom: 35px;
+}
+
+.breadcrumb a {
+    padding: 0 10px;
+}
+
+.breadcrumb a:first-child {
+    padding-right: 10px;
+    padding-left: 0;
+}
+
+.page-title {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    font-size: 18px;
+    border-bottom: thin solid #e5e5e5;
+}
+
+.l-contents.field-add {
+    min-width: 1240px;
+    padding: 0 40px;
+}
+
+.field-item {
+    padding: 10px 0;
+}
+
+.field-item-label, .field-item-input {
+    float: left;
+}
+
+.field-item-input {
+    width: 360px;
+}
+
+.address-wrap {
+    margin-bottom: 16px;
+}
+
+.address-wrap:last-child {
+    margin: 0;
+}
+
+.date-wrap {
+    margin-bottom: 10px;
+}
+
+.field-item:last-child {
+    margin-bottom: 30px;
+}
+
+.field-item label, .field-item select, .field-item input {
+    width: 360px;
+    height: 28px;
+}
+
+.field-item textarea {
+    width: 360px;
+    height: 100px;
+}
+
+.field-item select, .field-item input {
+    border: thin solid #e5e5e5;
+    border-radius: 5px;
+}
+
+.field-item label {
+    display: inline-block;
+    width: 160px;
+    font-weight: bold;
+}
+
+.field-item input.datepicker {
+    width: 112px;
+    background: url(../img/module/calendar.png) center right 7px no-repeat;
+}
+
+.field-item input.datepicker+ span {
+    padding: 0 15px;
+}
+
+.register-btn {
+    display: inline-block;
+    width: 145px;
+    height: 30px;
+    background: #f3f3f3;
+    text-align: center;
+    line-height: 30px;
+    font-weight: bold;
+    border: thin solid #e5e5e5;
+    border-radius: 5px;
+}
+
+.field-item.labels {
+    margin-bottom: 30px;
+}
+
+.label {
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    background: pink;
+    border-radius: 5px;
+}
+
+.label:hover {
+    opacity: .7;
+    cursor: pointer;
+}
+
+.label.selected {
+    border: 2px solid #000;
+}
+
+.submit-btn.next {
+    margin-right: 20px;
+}

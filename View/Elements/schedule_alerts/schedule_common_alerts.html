@@ -1,0 +1,152 @@
+<script>
+
+var uiAlertNormally=function(params,callback){
+
+		if(params["main_title"]==undefined) params["main_title"]=params["title"];
+
+		var p={};
+		p["main_title"]=params["main_title"];
+		p["title"]=params["title"];
+		p["message"]=params["message"];
+		p["yes"]=function(){ 
+
+				if($.isFunction(callback)) callback();
+		};
+
+		p["close"]=p["yes"];
+		uiAlert(p);
+}
+
+var uiAlertServerError=function(params,callback){
+
+		var message="環境エラーの為処理が完了しませんでした";
+		message+="<br /><br />※<span style='color:red;'>接続環境をお確かめの上問題が解消しない場合、管理者の方へお問い合わせ下さい</span>";
+	
+		var title=params["title"];
+		var main_title=title;
+		if(params["main_title"]) main_title=params["main_title"];
+
+		var p={};
+		p["main_title"]=main_title;
+		p["title"]=title;
+		p["message"]=message;
+		p["yes"]=function(){
+		
+				if($.isFunction(callback)) callback();
+		};
+		p["close"]=p["yes"];
+		uiAlert(p);
+}
+
+var uiAlertCompleteRegisted=function(callback){
+
+		var main_title="日程情報登録";
+		var title     ="設定済情報の登録が完了しました";
+		var message   ="<span style='color:red;'>※編集権限を解除致します</span><br />";
+
+		var p={};
+		p["main_title"]=main_title;
+		p["title"]=title;
+		p["message"]=message;
+		p["yes"]=function(){
+
+				if($.isFunction(callback)) callback();
+		};
+
+		p["close"]=p["yes"];
+		uiAlert(p);
+}
+
+var uiAlertNothingAuthorityStaff=function(callback){
+
+		var main_title="権限エラー";
+		var title     ="管理権限のあるアカウントでは有りません";
+		var message   ="お手元のアカウントではこちらの操作は行えません";
+
+		var p={};
+		p["main_title"]=main_title;
+		p["title"]=title;
+		p["message"]=message;
+		p["yes"]=function(){
+
+				if($.isFunction(callback)) callback();
+		};
+
+		p["close"]=p["yes"];
+		uiAlert(p);
+}
+
+var uiAlertScheduleNoSave=function(callback){
+
+		var main_title="お知らせ";
+		var title     ="スケジュールの内容が操作されております";
+		var message   ="操作された内容は保存されませんが他のページへ遷移しても宜しいですか？";
+
+		var p={};
+		p["main_title"]=main_title;
+		p["title"]=title;
+		p["message"]=message;
+		p["no"]=function(){ if($.isFunction(callback)) callback(false); };
+		p["yes"]=function(){
+
+				if($.isFunction(callback)) callback(true);
+		};
+
+		p["close"]=p["no"];
+		uiAlert(p);
+}
+
+var uiAlertNothingAuthority=function(callback){
+
+		var main_title="お知らせ";
+		var title     ="現在スケジュールの操作をする事が出来ません";
+		var message   ="【段取りする】ボタンを押してから編集をお願い致します";
+
+		var p={};
+		p["main_title"]=main_title;
+		p["title"]=title;
+		p["message"]=message;
+		p["yes"]=function(){
+
+				if($.isFunction(callback)) callback();
+		};
+
+		p["close"]=p["yes"];
+		uiAlert(p);
+}
+
+var uiAlertNetworkComplaint=function(callback){
+
+		var fn=arguments.callee;
+		var main_title="環境エラー";
+		var title="お使いの回線が弱い様です";
+		var message="通信環境の良い所で再度お試し下さい";
+
+		var p={};
+		p["main_title"]=main_title;
+		p["title"]=title;
+		p["message"]=message;
+		p["yes"]=function(){
+
+				var network_status=isNetworkError();
+				if(network_status["status"]==NETWORK_DISCONNECTED){
+				
+						setTimeout(function(){
+
+								$(function(){
+
+										fn(callback);
+								});
+
+						},1000);
+						return
+				}
+
+				if($.isFunction(callback)) callback();
+		};
+
+		p["close"]=p["yes"];
+		uiAlert(p);
+}
+
+</script>

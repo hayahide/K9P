@@ -1,0 +1,100 @@
+<script>
+
+apiGeoRequests.csvDl=function(data,callback){
+
+		var obj= new this();
+		obj.setBaseURL(BASE_URL);
+		obj.setURL(this.csvDl.makeURL());
+		var params=this.ajaxBaseParams;
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+		obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+		})
+}
+
+apiGeoRequests.csvDl.makeURL=function(){
+
+		var base_url='SiteDailyCsv/csvDl';
+		return base_url;
+}
+
+apiGeoRequests.informationsRegist=function(data,callback){
+
+		var obj= new this();
+		obj.setBaseURL(BASE_URL);
+		obj.setURL(this.informationsRegist.makeURL());
+		var params=this.ajaxBaseParams;
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+		obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+		})
+}
+
+apiGeoRequests.informationsRegist.makeURL=function(){
+
+		var base_url='SiteDailyManagesInformationRegists/informationsRegist';
+		return base_url;
+}
+
+//■オプションの検索項目
+apiGeoRequests.getDateApi=function(data,callback){
+
+		var obj= new this();
+		obj.setBaseURL(BASE_URL);
+		obj.setURL(this.getDateApi.makeURL());
+		var params=this.ajaxBaseParams;
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+		obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+		})
+}
+
+apiGeoRequests.getDateApi.makeURL=function(){
+
+		var base_url='SiteDaily/getDateApi';
+		return base_url;
+}
+
+apiGeoRequests.getDateRange=function(data,callback){
+
+		var obj= new this();
+		obj.setBaseURL(BASE_URL);
+		obj.setURL(this.getDateRange.makeURL());
+		var params=this.ajaxBaseParams;
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+		obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+		})
+}
+
+apiGeoRequests.getDateRange.makeURL=function(){
+
+		var base_url='SiteDaily/getDateRange';
+		return base_url;
+}
+
+apiGeoRequests.saveSchedule=function(data,callback){
+
+		var obj= new this();
+		obj.setBaseURL(BASE_URL);
+		obj.setURL(this.saveSchedule.makeURL());
+		var params=this.ajaxBaseParams;
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+		obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+		})
+}
+
+apiGeoRequests.saveSchedule.makeURL=function(){
+
+		var base_url='SiteDailyManages/saveSchedule';
+		return base_url;
+}
+
+
+</script>

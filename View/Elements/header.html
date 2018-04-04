@@ -1,0 +1,461 @@
+<?php $controller=strtolower($this->params["controller"]); ?>
+<script>
+
+var TYPE_HEADER_LOGOUT="header-logout";
+var TYPE_HEADER_ITEMS="header-items";
+var TYPE_HEADER_REPORT="header-report";
+var TYPE_HEADER_CUSTOMER="header-customer";
+var TYPE_HEADER_WORKER="header-worker";
+var TYPE_HEADER_WORKER="header-schedule";
+var TYPE_HEADER_SITE="header-site";
+var TYPE_HEADER_TOP="header-top";
+var TYPE_HEADER_PRINT="header-print";
+var TYPE_HEADER_SCHEDULE_EXCEL="header-schedule-excel";
+var TYPE_HEADER_STAFF_EXCEL="header-staff-excel";
+var TYPE_HEADER_TOP="header-top";
+var user_id='<?php echo $user_id; ?>';
+var clickEnd=deviceClickEventEnd();
+
+$(function(){
+
+		var controller="<?php echo $controller; ?>";
+		controller=controller.toLowerCase();
+		var header=$("header");
+		var header_items=header.find("div[data-type=\""+TYPE_HEADER_ITEMS+"\"]");
+
+		if(isSp()){
+
+				var start="touchstart";
+				header_items.one(start,function(e){
+
+						var target=$(this);
+						var fn=arguments.callee;
+						target.data("start_point_x",getPageX(e));
+						target.data("start_point_y",getPageY(e));
+						target.one(e.type,fn);
+						return false;
+				});
+		}
+
+		header_items.one(deviceClickEventEnd(),function(e){
+
+				var self=$(this);
+				var fn=arguments.callee;
+				var target=$(e.target);
+				if(target.prop("tagName").toLowerCase()!="a") target=target.parents("a");
+				var type=target.attr("data-type");
+				var href=target.attr("data-href");
+                var start_point_x=self.data("start_point_x");
+                var start_point_y=self.data("start_point_y");
+                self.removeData("start_point_x");
+                self.removeData("start_point_y");
+
+ 				if(isSp()){
+
+                			var allow_point=ALLOW_MOVE_TOUCH_POINT;
+                			var diff_y=Math.abs(Math.abs(start_point_y)-Math.abs(getPageY(e)));
+                			var diff_x=Math.abs(Math.abs(start_point_x)-Math.abs(getPageX(e)));
+                			if(diff_x>allow_point || diff_y>allow_point){
+
+                			        self.one(e.type,fn);
+                			        return false;
+                			}
+				}
+
+                if(type==TYPE_HEADER_STAFF_EXCEL){
+
+                        var select_date=window["select_date"];
+                        var year =select_date.getFullYear();
+                        var month=select_date.getMonth()+1;
+                        var worker_id=window["select_worker_id"];
+                        var report_flg = 1;
+                        var params={};
+                        params["worker_id"]=worker_id;
+                        params['report_flg'] = report_flg;
+      					params['month_prefix'] = month;
+                        params["y"]=year;
+                        apiGeoRequests.getRecordPath(params,function(status,res){
+
+                                location.href=res["path"];
+                                self.one(e.type,fn);
+                                return;
+                        });
+                }
+
+                if(type==TYPE_HEADER_SCHEDULE_EXCEL){
+
+                        var select_date=window["select_date"];
+                        var year =select_date.getFullYear();
+                        var month=select_date.getMonth()+1;
+                        var site_id=window["select_site_id"];
+
+                        var params={};
+                        params["site_id"]=site_id;
+                        params["y"]=year;
+                        params["m"]=month;
+                        apiGeoRequests.getRecordPath(params,function(status,res){
+
+                                location.href=res["path"];
+                                self.one(e.type,fn);
+                                return;
+                        });
+                }
+
+				if(type==TYPE_HEADER_TOP){
+
+						if(["site","sitedaily","sitemonthly"].indexOf(controller)>-1){
+
+									if(!cacheData().get(MANAGED_AUTHORITY).is_managed){
+
+												$(window).off("beforeunload");
+												var url=document.location.protocol+BASE_URL+href;
+												location.href=url;
+												return;
+									}
+
+									if(window["isScheduleEdit"]!=undefined && $.isFunction(isScheduleEdit) && isScheduleEdit()){
+
+												uiAlertScheduleNoSave(function(status){
+
+														if(!status){
+
+																self.one(e.type,fn);
+																return;
+														}
+
+														logInitializeToMove(user_id,href);
+												});
+												return;
+									}
+
+									logInitializeToMove(user_id,href);
+									return;
+						}
+
+						var url=document.location.protocol+BASE_URL+href;
+						location.href=url;
+						return;
+				}
+
+				if(type==TYPE_HEADER_TOP){
+
+                        if(["site","sitedaily","sitemonthly"].indexOf(controller)>-1){
+
+                               if(!cacheData().get(MANAGED_AUTHORITY).is_managed){
+
+                                    	$(window).off("beforeunload");
+                                    	var url=document.location.protocol+BASE_URL+href;
+                                    	location.href=url;
+                                    	return;
+                               }
+
+                               if(window["isScheduleEdit"]!=undefined && $.isFunction(isScheduleEdit) && isScheduleEdit()){
+
+                                    	uiAlertScheduleNoSave(function(status){
+
+                                    	    	if(!status){
+
+                                    	    	        self.one(e.type,fn);
+                                    	    	        return;
+                                    	    	}
+
+                                    	    	logInitializeToMove(user_id,href);
+                                    	});
+                                    	return;
+                               }
+
+                               logInitializeToMove(user_id,href);
+                               return;
+                        }
+
+                        var url=document.location.protocol+BASE_URL+href;
+                        location.href=url;
+                        return;
+                }
+
+				if(type==TYPE_HEADER_LOGOUT){
+
+                        if($.isFunction(window["changeBgScheduleAssignSite"])) changeBgScheduleAssignSite.clear(user_id);
+
+						if(["site","sitedaily","sitemonthly"].indexOf(controller)>-1){
+
+								if(!cacheData().get(MANAGED_AUTHORITY).is_managed){
+
+										$(window).off("beforeunload");
+										var url=document.location.protocol+BASE_URL+href;
+										location.href=url;
+										return;
+								}
+
+								if(window["isScheduleEdit"]!=undefined && $.isFunction(isScheduleEdit) && isScheduleEdit()){
+
+										uiAlertScheduleNoSave(function(status){
+
+												if(!status){
+
+														self.one(e.type,fn);
+														return;
+												}
+
+												logInitializeToMove(user_id,href);
+										});
+										return;
+								}
+
+								logInitializeToMove(user_id,href);
+								return;
+						}
+
+						var url=document.location.protocol+BASE_URL+href;
+						location.href=url;
+						return;
+				}
+
+				if(controller=="sitedaily"){
+
+						if(type==TYPE_HEADER_PRINT){
+
+								if($.isFunction(window["printManager"])) window["printManager"](function(){
+
+										self.one(e.type,fn);
+								});
+								return false;
+						}
+
+						if(href!=undefined){
+
+								if(!cacheData().get(MANAGED_AUTHORITY).is_managed){
+
+										$(window).off("beforeunload");
+										var url=document.location.protocol+BASE_URL+href;
+										location.href=url;
+										return;
+								}
+
+								if($.isFunction(isScheduleEdit) && isScheduleEdit()){
+
+										uiAlertScheduleNoSave(function(status){
+
+												if(!status){
+
+														self.one(e.type,fn);
+														return;
+												}
+
+												logInitializeToMove(user_id,href);
+										});
+										return;
+								}
+
+								logInitializeToMove(user_id,href);
+								return;
+						}
+				}
+
+				if(controller=="site"){
+
+						if(type==TYPE_HEADER_PRINT){
+
+								if($.isFunction(window["printManager"])) window["printManager"](function(){
+
+										self.one(e.type,fn);
+								});
+								return;
+						}
+				}
+
+				if(controller=="site" && href!=undefined){
+
+						if(!cacheData().get(MANAGED_AUTHORITY).is_managed){
+
+								$(window).off("beforeunload");
+								var url=document.location.protocol+BASE_URL+href;
+								location.href=url;
+								return;
+						}
+
+						if($.isFunction(isScheduleEdit) && isScheduleEdit()){
+
+								uiAlertScheduleNoSave(function(status){
+
+										if(!status){
+
+												self.one(e.type,fn);
+												return;
+										}
+
+										logInitializeToMove(user_id,href);
+								});
+								return;
+						}
+
+						logInitializeToMove(user_id,href);
+						return;
+				}
+
+				if(controller=="sitemonthly"){
+
+						if(type==TYPE_HEADER_PRINT){
+
+								if($.isFunction(window["printManager"])) window["printManager"](function(){
+
+										self.one(e.type,fn);
+								});
+								return;
+						}
+				}
+
+				if(controller=="sitemonthly" && href!=undefined){
+
+						if(type==TYPE_HEADER_PRINT){
+
+								if($.isFunction(window["printManager"])) window["printManager"](function(){
+
+										self.one(e.type,fn);
+								});
+								return false;
+						}
+
+						if(!cacheData().get(MANAGED_AUTHORITY).is_managed){
+
+								$(window).off("beforeunload");
+								var url=document.location.protocol+BASE_URL+href;
+								location.href=url;
+								return;
+						}
+
+						logInitializeToMove(user_id,href);
+						return;
+				}
+
+				if(controller=="worker"){
+
+						if(type==TYPE_HEADER_PRINT){
+								
+								if($.isFunction(window["printManager"])) window["printManager"](function(){
+
+										self.one(e.type,fn);
+								});
+								return false;
+						}
+				}
+
+				if(controller=="schedule"){
+
+						if(type==TYPE_HEADER_PRINT){
+
+								if($.isFunction(window["printManager"])) window["printManager"](function(){
+
+										self.one(e.type,fn);
+								});
+								return false;
+						}
+				}
+
+				if(href==undefined){
+
+						self.one(e.type,fn);
+						return;
+				}
+
+				$(window).off("beforeunload");
+				var url=document.location.protocol+BASE_URL+href;
+				location.href=url;
+				return false;
+		});
+
+});
+
+</script>
+
+<header>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+    	<div class="row-fluid top-menu text-right">
+    		<span><?= $user_name ?> としてログイン中</span>
+    	</div>
+        <div class="container-fluid" style="padding:5px 18px 0">
+
+            <div id="navbar" class="" data-type="header-items">
+                <h1 class="logo"><a class="navbar-brand" data-href="site" data-type="header-top" href="#"><img src="./assets/img/logo/header_logo.png" alt="段取り君"></a></h1>
+                <ul class="nav navbar-nav">
+
+					<?php $controller=strtolower($this->params["controller"]);?>
+					<?php $flg=(in_array(strtolower($controller), array("site","sitemonthly","sitedaily")));?>
+					<?php $class=($flg?"active":"");?>
+					<?php $img_on=($flg?"on":"off"); ?>
+					<?php $over_on=($flg?"off":"on"); ?>
+					<?php $out_on=($flg?"on":"off"); ?>
+                    <li data-type="header-site-li" class="<?php echo $class; ?>"><a href="#" data-href="site" data-type="header-site" onclick="return false;"><img src="assets/img/layout/nav/nav_01_off.png" width="137" height="19" alt="HOME"></a></li>
+
+                    <?php $view_master_header=($role AND (!in_array($authority,array("sub1_master")))); ?>
+					<?php if ($view_master_header): ?>
+					<?php $flg=($controller=="schedule");?>
+					<?php $class=(($flg)?"active":"");?>
+					<?php $img_on=($flg?"on":"off"); ?>
+					<?php $over_on=($flg?"off":"on"); ?>
+					<?php $out_on=($flg?"on":"off"); ?>
+                    <li data-type="header-schedule-id" class="<?php echo $class; ?>"><a data-href="schedule" data-type="header-schedule" href="#" onclick="return false;"><img src="assets/img/layout/nav/nav_02_off.png" width="88" height="19" alt="●●●"></a></li>
+                    <?php $flg=($controller=="worker");?>
+                    <?php $class=(($flg)?"active":"");?>
+                    <?php $img_on=($flg?"on":"off"); ?>
+                    <?php $over_on=($flg?"off":"on"); ?>
+                    <?php $out_on=($flg?"on":"off"); ?>
+                    <li data-type="header-worker-li" class="<?php echo $class; ?>"><a href="#" data-href="worker" data-type="header-worker" onclick="return false;"><img src="assets/img/layout/nav/nav_03_off.png" width="130" height="19" alt="●●●"></a></li>
+                    <?php $flg=($controller=="customer");?>
+                    <?php $class=(($flg)?"active":"");?>
+                    <?php $img_on=($flg?"on":"off"); ?>
+                    <?php $over_on=($flg?"off":"on"); ?>
+                    <?php $out_on=($flg?"on":"off"); ?>
+                    <li data-type="header-customer-li" class="<?php echo $class; ?>"><a href="#" data-href="customer" data-type="header-customer" onclick="return false;"><img src="assets/img/layout/nav/nav_04_off.png" width="93" height="19" alt="●●●"></a></li>
+                    <?php $flg=(in_array($controller, ["setting", "accounts", "trucks", "staff", "contacts", "profile"]));?>
+                    <?php $class=(($flg)?"active":"");?>
+                    <?php $img_on=($flg?"on":"off"); ?>
+                    <?php $over_on=($flg?"off":"on"); ?>
+                    <?php $out_on=($flg?"on":"off"); ?>
+                    <li data-type="header-setting-li" class="<?php echo $class; ?>"><a href="#" data-href="setting" data-type="header-setting" onclick="return false;"><img src="assets/img/layout/nav/nav_05_off.png" width="63" height="19" alt="●●●"></a></li>
+                    <?php endif; ?>
+
+                    <?php if($is_worker): ?>
+                    <?php $flg=($controller=="report");?>
+                    <?php $class=(($flg)?"active":"");?>
+                    <?php $img_on=($flg?"on":"off"); ?>
+                    <?php $over_on=($flg?"off":"on"); ?>
+                    <?php $out_on=($flg?"on":"off"); ?>
+                    <li data-type="header-report-li" class="<?php echo $class; ?>"><a href="#" data-href="report" data-type="header-report" onclick="return false;"><img src="assets/img/layout/nav/nav_07_off.png" width="88" height="19" alt="●●●"></a></li>
+                    <?php endif; ?>
+
+                    <li data-type="header-logout-li"><a data-href="/login/logout" data-type="header-logout" onclick="return false;" href="#"><img src="assets/img/layout/nav/nav_06_off.png" width="105" height="19" alt="●●●"></a></li>
+
+					<li><span data-type="header-date-range"></span></li>
+
+                </ul><!--/#navbar-->
+                <div class="header-btn" data-type="header-print">
+					<?php $controller=strtolower($this->params["controller"]);?>
+					<?php $action=strtolower($this->params["action"]);?>
+
+                    <?php $allow_pages=array("worker_detail","worker_grpdetail");?>
+                    <?php if((in_array("{$controller}_{$action}",$allow_pages)) AND in_array($device_type,array("pc"))){?>
+                    <a class="hover-img" href="#" data-type="header-staff-excel" onclick="return false;"></a>
+                    <?php } ?>
+
+                    <?php $allow_pages=array("schedule_detail");?>
+                    <?php if((in_array("{$controller}_{$action}",$allow_pages)) AND in_array($device_type,array("pc"))){?>
+                    <a class="hover-img" href="#" data-type="header-schedule-excel" onclick="return false;"></a>
+                    <?php } ?>
+
+					<?php $allow_pages=array("sitedaily_index","site_index","sitemonthly_index","schedule_detail","worker_detail","worker_grpdetail","schedule_index");?>
+					<?php if((in_array("{$controller}_{$action}",$allow_pages)) AND in_array($device_type,array("pc"))){?>
+                    	<a class="hover-img" href="#" data-type="header-print" onclick="return false;"></a>
+						<?php if($device_type=="pc" AND $controller=="sitedaily" AND in_array($authority,$master_authorities)){ ?>
+                    	<a class="csv-down-file" href="#" data-type="csv-daily" onclick="return false;"></a>
+						<?php } ?>
+					<?php } ?>
+                </div>
+                <!-- <div class="login-name">
+                	<span><?= $user_name ?> としてログイン中</span>
+                </div> -->
+            </div>
+
+        </div><!--/.container-->
+    </nav><!--nav-->
+</header><!--header-->

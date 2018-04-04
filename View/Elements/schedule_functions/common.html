@@ -1,0 +1,1132 @@
+<script>
+
+var bodyColor=function(status){
+
+		var body=window["body"];
+		var enable_color="rgba(0,0,0,0.4)";
+
+		if(parseInt(status)==1){
+
+				body.css("background-color",enable_color);
+				return;
+		}
+
+		var def=body.data("background-color");
+		if(!def) return;
+		body.css("background-color",def);
+}
+
+var cacheData=(function(){
+
+		var fn=function(){
+
+				this.cache={};
+		}
+
+		fn.prototype.set=function(key,data){
+
+				if(this.cache[key]==undefined) this.cache[key]={};
+				$.extend(this.cache[key],data);
+		}
+
+		fn.prototype.clear=function(key){
+
+				this.cache[key]={};
+		}
+
+		fn.prototype.get=function(key){
+
+				return this.cache[key];
+		}
+
+		return function(selector){
+
+				if(fn.instance instanceof fn){
+
+						return fn.instance;
+				}
+
+				var instance=new fn();
+				fn.instance=instance;
+				return instance;
+		}
+}());
+
+var localKeyTime=function(k,v){
+
+		if(window["localStorage"]==undefined) return false;
+		if($.type(v)=="boolean" && !v) return window["localStorage"].removeItem(k);
+		if(v==undefined) return window["localStorage"].getItem(k);
+
+		try{
+
+				if(!window["localStorage"].setItem(k,v)) return false;
+				return window["localStorage"].setItem(k,v);
+
+		}catch(e){
+
+				//Privacy mode for ios.
+				//QuotaExceededError or other thing.
+				return false;
+		}
+}
+
+var addOptions=function(values,key,callback){
+
+		var select=this;
+
+		if(1>Object.keys(values).length){
+
+				callback(select);
+				return;
+		}
+
+		var instance=TPL.getInstance(["select_option","select_option_selected"]);
+		var fragment=document.createDocumentFragment();
+
+		for(var i in values){
+
+				if(!values.hasOwnProperty(i)) continue;
+
+				var tpl="select_option"+(key==i?"_selected":"");
+				var html=instance["get_"+tpl];
+				var elem=$(instance.replaceTPL(html,{
+
+						"key"  :i,
+						"value":values[i]
+				}));
+
+				fragment.appendChild(elem.get(0));
+		}
+
+		select.append(fragment);
+		if(!$.isFunction(callback)) return;
+		elem.ready(function(){
+
+				callback.call(select);
+		});
+}
+
+//pref
+var setMenu=function(values,callback){
+
+		var select=this;
+		var top=select.children().eq(0);
+		top.nextAll().remove();
+		addOptions.call(select,values,null,function(){
+
+				if($.isFunction(callback)) callback();
+		});
+}
+
+//calendar
+var setCalendar=function(datas,callback){
+
+		 var elem=this;
+		 var date_format="yy-mm-dd";
+		 var instance=TPL.getInstance("schedule_calendar");
+		 var html=instance.replaceTPL(instance.get_schedule_calendar,{
+
+				"start_value":!!datas["start_value"]?datas["start_value"]:"&nbsp;",
+				"end_value"  :!!datas["end_value"]?datas["end_value"]    :"&nbsp;"
+		 });
+
+		 var html=$(html);
+		 var current_calendars=elem.children("div[data-type=\"calendar\"]");
+		 var calendars=html.children("input[data-type^=\"calendar-\"]");
+		 var start=calendars.eq(0);
+		 var end=calendars.eq(calendars.size()-1);
+		 var is_end_empty=(1>end.val().trim().length);
+		 var CALENDAR_START_TYPE="calendar-start";
+		 var CALENDAR_END_TYPE  ="calendar-end";
+
+		 calendars.datepicker({
+
+				closeText      :"閉じる",
+				currentText    :"現在日時",
+				timeOnlyTitle  :"日時を選択",
+				timeText       :"時間",
+				hourText       :"時",
+				minuteText     :"分",
+				autoclose      :true,
+				secondText     :"秒",
+				millisecText   :"ミリ秒",
+				microsecText   :"マイクロ秒",
+				timezoneText   :"タイムゾーン",
+				prevText       :"&#x3c;前",
+				nextText       :"次&#x3e;",
+				monthNames     :["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"],
+				monthNamesShort:["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"],
+				dayNames       :["日曜日","月曜日","火曜日","水曜日","木曜日","金曜日","土曜日"],
+				dayNamesShort  :["日","月","火","水","木","金","土"],
+				dayNamesMin    :["日","月","火","水","木","金","土"],
+				weekHeader     :"週",
+				yearSuffix     :"年",
+				dateFormat     :"yy-mm-dd",
+				onClose:function(val,i){},
+				onSelect:function(selectedDate){
+
+						var calendar=$(this);
+						var end_value=end.val().trim();
+						if(1>end_value.length) is_end_empty=true;
+						if(!is_end_empty) return;
+						if(calendar.attr("data-type")==CALENDAR_END_TYPE){
+
+								is_end_empty=false;
+								return;
+						}
+
+						var parent=calendar.parent();
+						var calendar_end=parent.children("input[data-type=\""+CALENDAR_END_TYPE+"\"]");
+						calendar_end.val(selectedDate);
+				},
+				beforeShow:function(calendar){
+
+						calendar=$(calendar);
+				}
+		 });
+
+		 if(1>current_calendars.size()){
+
+				elem.prepend(html);
+
+		 }else{
+
+				current_calendars.eq(current_calendars.size()-1).after(html);
+		 }
+
+		 if(!$.isFunction(callback)) return;
+
+		 html.ready(function(){
+
+				callback();
+		 });
+}
+
+var changeBgScheduleAssignSite=function(){ this.cache={}; }
+changeBgScheduleAssignSite.getInstnace=function(){
+
+		var instance=((!!this["instance"] && this.instance instanceof this)?this.instance:new this);
+		this.instance=instance;
+		return instance;
+}
+
+changeBgScheduleAssignSite.storageKey="REGISTED_SITE_IDS";
+changeBgScheduleAssignSite.separator=",";
+changeBgScheduleAssignSite.initialValue="-1";
+changeBgScheduleAssignSite.makeStorageKey=function(worker_id){
+
+		return this.storageKey+"_"+worker_id;
+};
+
+changeBgScheduleAssignSite.getSeniorSiteIDs=function(target_worker_id,is_cache,callback){
+
+		if(target_worker_id==undefined){
+
+				callback([]);
+				return;
+		}
+
+		var instance;
+		is_cache=(is_cache==undefined)?true:is_cache;
+		this.getEnableSeniorSiteIDs(target_worker_id,is_cache).done(function(site_ids){
+
+				callback(site_ids);
+		});
+}
+
+changeBgScheduleAssignSite.getSiteIDs=function(target_worker_id,is_cache,callback){
+
+		if(target_worker_id==undefined){
+
+				callback([]);
+				return;
+		}
+
+		var instance;
+		is_cache=(is_cache==undefined)?true:is_cache;
+		this.getEnableWorkerSiteIDs(target_worker_id,is_cache).done(function(site_ids){
+
+				callback(site_ids);
+		});
+}
+
+changeBgScheduleAssignSite.clear=function(worker_id){
+
+		var def_value=this.initialValue;
+		var storageKey=this.makeStorageKey(worker_id);
+		var instance=this.getInstnace();
+		if(instance.cache[storageKey]==null || instance.cache[storageKey]!=undefined) instance.cache[storageKey]=def_value;
+
+		try{
+
+				window["sessionStorage"].removeItem(storageKey);
+				window["sessionStorage"].setItem(storageKey,def_value);
+
+		}catch(e){ return false; };
+
+		return true;
+}
+
+changeBgScheduleAssignSite.isNoset=function(value){
+
+		if(value==null) return true;
+		return (($.type(value)=="string") && 0>parseInt(value));
+}
+
+changeBgScheduleAssignSite.getFrontCacheObject=function(worker_id){
+
+		var def_value=this.initialValue;
+		var storageKey=this.makeStorageKey(worker_id);
+		var instance=this.getInstnace();
+		if(this.isNoset(instance.cache[storageKey])) return def_value;
+		return instance.cache[storageKey];
+}
+
+changeBgScheduleAssignSite.getFrontCacheStorage=function(worker_id){
+
+		var data=this.getFrontCacheObject(worker_id);
+		if(data==undefined) return [];
+		return data;
+}
+
+changeBgScheduleAssignSite.getSessionStorage=function(worker_id){
+
+		if(worker_id==undefined) return undefined;
+		var storageKey=this.makeStorageKey(worker_id);
+		return window["sessionStorage"].getItem(storageKey);
+}
+
+changeBgScheduleAssignSite.getFromStorage=function(worker_id){
+
+		var data=this.getSessionStorage(worker_id);
+		if(!data || 1>data.length) return [];
+		return this.split(data);
+}
+
+changeBgScheduleAssignSite.cacheCopyToFrontObject=function(worker_id){
+
+		if(worker_id==undefined) return undefined;
+		var instance=this.getInstnace();
+		var storageKey=this.makeStorageKey(worker_id);
+		if(instance.cache[storageKey]==undefined) instance.cache[storageKey]=[];
+		var storage_cache=this.getSessionStorage(worker_id);
+		instance.cache[storageKey]=this.initialValue;
+		if(!this.isNoset(storage_cache)) instance.cache[storageKey]=this.split(storage_cache);
+}
+
+changeBgScheduleAssignSite.split=function(value){
+
+		return value.split(this.separator);
+}
+
+changeBgScheduleAssignSite.join=function(value){
+
+		return value.join(this.separator);
+}
+
+changeBgScheduleAssignSite.getEnableSeniorSiteIDs=function(worker_id,is_cache){
+
+		var self=this;
+		var separator=",";
+		var deferred=$.Deferred();
+		var storageKey=self.makeStorageKey(worker_id);
+
+		var instance=self.getInstnace();
+		self.instance=instance;
+
+		var is_registed=self.isNoset(instance.cache[storageKey]);
+		if(!is_registed && is_cache){
+
+				deferred.resolve(instance.cache[storageKey]);
+				return deferred.promise();
+		}
+
+		var params={}
+		params["worker_id"]=worker_id;
+		apiGeoRequests.getInchageSeniorSiteIDs(params,function(status,res){
+
+				if(!status) return;
+
+				var site_ids=res["data"];
+				if(self.isNoset(instance.cache[storageKey])) instance.cache[storageKey]=[];
+				$.extend(instance.cache[storageKey],site_ids);
+
+				try{
+
+						window["sessionStorage"].setItem(storageKey,self.join(instance.cache[storageKey]));
+
+				}catch(e){};
+
+				deferred.resolve(site_ids);
+		});
+
+		return deferred.promise();
+}
+
+changeBgScheduleAssignSite.getEnableWorkerSiteIDs=function(worker_id,is_cache){
+
+		var self=this;
+		var separator=",";
+		var deferred=$.Deferred();
+		var storageKey=self.makeStorageKey(worker_id);
+
+		var instance=self.getInstnace();
+		self.instance=instance;
+
+		var is_registed=self.isNoset(instance.cache[storageKey]);
+		if(!is_registed && is_cache){
+
+				deferred.resolve(instance.cache[storageKey]);
+				return deferred.promise();
+		}
+
+		var params={}
+		params["worker_id"]=worker_id;
+		apiGeoRequests.getInchageSiteIDs(params,function(status,res){
+
+				if(!status) return;
+
+				var site_ids=res["data"];
+				if(self.isNoset(instance.cache[storageKey])) instance.cache[storageKey]=[];
+				$.extend(instance.cache[storageKey],site_ids);
+
+				try{
+
+						window["sessionStorage"].setItem(storageKey,self.join(instance.cache[storageKey]));
+
+				}catch(e){};
+
+				deferred.resolve(site_ids);
+		});
+
+		return deferred.promise();
+}
+
+var scheduleMemoOpen=function(callback){
+
+		var schedule_memo_li=this;
+		var fn=arguments.callee;
+		var list_id=schedule_memo_li.attr("data-memo-id");
+
+		modalWindow.call(body,function(data){
+
+				var overlay=this;
+				var instance=TPL.getInstance("schedule_side_memo");
+				var tpl =instance.get_schedule_side_memo;
+				var ch=data["ch"];
+				var cw=data["cw"];
+				var html=$(tpl);
+				overlay.append(html);
+				html.ready(function(){
+
+						// var memos=cacheData().get(CACHE_MEMO);
+						// var memo=(!!memos[list_id])?memos[list_id]:{};
+						var memo=schedule_memo_li.text().trim();
+						var textarea=html.find("textarea[data-type=\"schedule-memo-textarea\"]");
+						var event_target=html.children("div[data-type=\"schedule-site-memo-container\"]");
+						var TYPE_CANCEL="memo-close-btn";
+						var TYPE_SEND  ="memo-post-btn";
+						var inner_h=html.height();
+						var mh=(ch/2-(inner_h/2));
+						html.css("marginTop",mh+"px");
+						// textarea.val(memo["memo"]?memo["memo"]:"");
+						textarea.val(memo?memo:"");
+
+						if(isSp()){
+
+								var start="touchstart";
+								event_target.one(start,function(e){
+
+										var self=$(this);
+										self.data("e",e);
+										self.one(e.type,arguments.callee);
+								});
+						}
+
+						event_target.one(clickEnd,function(e){
+
+								var self=$(this);
+								var target=$(e.target);
+								var type=target.attr("data-type");
+								var fn=arguments.callee;
+
+								if(isSp()){
+
+										var start_event=self.data("e");
+										if(isDiffPageXY(start_event,e,ALLOW_MOVE_TOUCH_POINT)){
+
+												self.one(e.type,arguments.callee);
+												return;
+										}
+								}
+
+								if(type==TYPE_CANCEL){
+
+										overlay.trigger("modalclose");
+										return;
+								}
+
+								if(type==TYPE_SEND){
+
+										if(isDeadlineOver(limited_second)){
+
+												var params={};
+												params["user_id"]       =user_id;
+												params["last_edit_time"]=cacheData().get(CACHE_LAST_EDIT_TIME).last_edit_time;
+												params["local_time_key"]=localKeyTime(LOCAL_STORAGE_TIMEKEY);
+
+												deadlineOverGetAuthority(params).
+												done(function(){
+
+														fn.call(self,e);
+												});
+												return;
+										}
+
+										var position=list_id;
+										var memo=textarea.val().trim();
+
+										var params={};
+										params["user_id"]   =user_id;
+										params["memo"]      =textarea.val().trim();
+										params["position"]  =position;
+										params["last_edit_time"]=cacheData().get(CACHE_LAST_EDIT_TIME).last_edit_time;
+										params["local_time_key"]=localKeyTime(LOCAL_STORAGE_TIMEKEY);
+										apiGeoRequests.saveMemoList(params,function(status,res){
+
+												var main_title="メモ情報更新";
+
+												if(!status && res["type"]==0){
+
+														uiAlertServerError({
+
+																"main_title":main_title,
+																"title"     :"処理エラー",
+
+														},function(){ overlay.trigger("modalclose"); });
+														return;
+												}
+
+												if(!status && res["type"]==1){
+
+														var params={};
+														params["main_title"]=main_title;
+														params["title"]="処理エラー";
+														params["message"]=res["message"];
+														params["yes"]=function(){
+
+																if(parseInt(res["errorNo"])==2){
+
+																		reloadUnbindUnload();
+																		return;
+																}
+
+																overlay.trigger("modalclose");
+														}
+
+														params["close"]=params["yes"];
+														uiAlert(params);
+														return;
+												}
+
+												// renewal memo list.
+												var memos=res["memo_list"];
+												var last_edit_time=res["last_edit_time"];
+												//cacheData().clear(CACHE_MEMO);
+												cacheData().set(CACHE_MEMO,memos);
+												cacheData().set(CACHE_LAST_EDIT_TIME,{ "last_edit_time":last_edit_time });
+
+												// edit text.
+												var save_memo=res["memo_list"][position];
+												schedule_memo_li.html(save_memo["memo"].trim());
+
+												var params={};
+												params["main_title"]=main_title;
+												params["title"]     ="◯登録完了";
+												params["message"]   ="設定された内容で登録が完了しました";
+												params["yes"]=function(){
+
+														overlay.trigger("modalclose");
+														if($.isFunction(callback)) callback();
+												};
+
+												params["close"]=params["yes"];
+												uiAlert(params);
+										});
+										return;
+								}
+
+								self.one(e.type,arguments.callee);
+						});
+				});
+		});
+}
+
+var geoCorder=function(APIKEY,address,callback){
+
+		var load=function(){
+
+				new google.maps.Geocoder().geocode({"address":address},function(results,status){
+
+						if(status!=google.maps.GeocoderStatus.OK){
+
+								callback(false);
+								return;
+						}
+
+						callback(true,results);
+				});
+		}
+
+		if(typeof(google)=="undefined"){
+
+				var body=$("body");
+				var i=loading(body);
+				i.show();
+
+				var path="https://maps.googleapis.com/maps/api/js?key="+APIKEY+"&v=3.exp";
+				path+=".js";
+				loadScript(path,function(){
+
+						i.hide();
+
+						load();
+				});
+				return;
+		}
+
+		load();
+}
+
+var checkRange=function(start_ymd,end_ymd,date_range){
+
+		var information_start=parseInt(date_range[0]);
+		var information_end=parseInt(date_range[date_range.length-1]);
+		start_ymd=parseInt(new Date(Number(start_ymd).addMinutesZero()).getYmdByMs().join(""));
+		end_ymd  =parseInt(new Date(Number(end_ymd).addMinutesZero()).getYmdByMs().join(""));
+		var is_start_over=(start_ymd>=information_start && information_end>=start_ymd);
+		var is_end_over  =(end_ymd>=information_start && information_end>=end_ymd);
+
+		var res={"data":{}};
+		res["status"]=true;
+		res["data"]["is"]=information_start;
+		res["data"]["ie"]=information_end
+		res["data"]["as"]=start_ymd;
+		res["data"]["ae"]=end_ymd
+		if(is_start_over && is_end_over) return res;
+		res["status"]=false;
+		return res;
+}
+
+var googlemapOpen=function(APIKEY,location,callback){
+
+		var load=function(callback){
+
+				var body=$("body");
+				modalWindow.call(body,function(data){
+
+						var overlay=this;
+						var instance=TPL.getInstance("schedule_gmap_layout");
+						var tpl =instance.get_schedule_gmap_layout;
+						var html=$(tpl);
+						var ch=data["ch"];
+						var cw=data["cw"];
+						overlay.append(html);
+
+						var end="mousedown";
+						if(is_sp) end="touchstart";
+
+						html.ready(function(){
+
+								var inner_h=html.height();
+								var mh=(ch/2-(inner_h/2));
+								html.css("marginTop",mh+"px");
+
+								var gmap_container=html.find("div[data-type=\"google-map-container\"]");
+								var address=location["pref"]+location["town"]+location["address"];
+								var close=html.find("span[data-type=\"schedule-gmap-close\"]");
+								var open_gmap=html.find("span[data-type=\"schedule-gmap-open\"]");
+								geoCorder(APIKEY,address,function(status,results){
+
+										if(!status || !results){
+
+												callback.call(overlay,false);
+												return;
+										}
+
+										var options={
+
+												zoom:13,
+												center:results[0].geometry.location,
+												mapTypeId:google.maps.MapTypeId.ROADMAP,
+										}
+
+										//maybe this event is best to use on this situation.
+										//http://www.doe.co.jp/hp-tips/2016/10/07/google-maps-options/
+										var gmap=new google.maps.Map(gmap_container.get(0),options);
+										var marker=new google.maps.Marker({map:gmap,position:results[0].geometry.location});
+										google.maps.event.addListener(gmap,"tilesloaded",function(){
+
+												var span=html.find("span[data-type=\"schedule-gmap-close\"]");
+												span.show();
+											/** Edward edited on 2017-05-04 */
+											open_gmap.show();
+										});
+
+										close.one(end,function(e){
+
+												callback.call(overlay,true);
+										});
+
+										/**
+										 * Open map from Schedule Map popup
+										 *
+										 * @author Edward;
+										 * @date 2017-05-04
+										 *
+										 */
+										open_gmap.on(end, function(e){
+
+												getSiteAddressMapUrl(address,function(status,map_base_url,params) {
+
+														if(isIos()){
+
+																var url="http://maps.apple.com/maps?q="+address;
+																window.location.href=url;
+																return;
+														}
+
+														/*
+														if(isSp()){
+
+																var scheme="comgooglemaps://";
+																var q=params["lat"]+","+params["lng"];
+																var zoom=13;
+																var span=1;
+																var url=scheme+"?q="+q+"&zoom="+zoom+"&span="+span;
+																window.location.href=url;
+																return;
+														}
+														*/
+
+														window.open(map_base_url,'_blank');
+														//window.location.target="_blank";
+														//window.location.href=map_base_url;
+														return;
+												});
+										});
+										/** End of Edward */
+								});
+						});
+
+						overlay.one(end,function(e){
+
+								var self=$(this);
+								var target=$(e.target);
+								var type=target.attr("data-type");
+								if(type!=TYPE_SCHEDULE_MODAL){
+
+										self.one(e.type,arguments.callee);
+										return;
+								}
+
+								callback.call(overlay,true);
+						});
+				});
+		}
+
+		var self=this;
+		if(typeof(google)=="undefined"){
+
+				var body=$("body");
+				var i=loading(body);
+				i.show();
+
+				var path="https://maps.googleapis.com/maps/api/js?key="+APIKEY+"&v=3.exp";
+				path+=".js";
+				loadScript(path,function(){
+
+						i.hide();
+
+						load(function(status){
+
+								callback.call(this,status);
+						});
+				});
+				return;
+		}
+
+		load(function(status){
+
+				callback.call(this,status);
+		});
+}
+
+//var setCenterHight=function(par,ch,cw){
+var setCenterHight=function(ch,cw){
+
+		var html=this;
+		var inner_h=html.height();
+		var mh=(ch/2-(inner_h/2));
+		html.css("marginTop",mh+"px");
+		html.css("marginBottom",mh+"px");
+		html.css("max-height",inner_h+"px");
+
+		/*
+		var elem=this;
+		par=floatFormat(par==undefined?(is_sp?0.95:0.8):par,1);
+
+		var window_height=parseInt($(window).height());
+		var html_height=parseInt(elem.height());
+		var max_height=window_height*par;
+		var margin_top=((window_height-html_height)/2);
+		if(html_height>max_height) margin_top=((window_height-max_height)/2);
+		elem.css("margin-top",margin_top+"px");
+		elem.css("margin-bottom",margin_top+"px");
+		elem.css("max-height",max_height+"px");
+		*/
+}
+
+var logInitializeToMove=function(user_id,href){
+
+		var params={};
+		params["user_id"]=user_id;
+		params["last_edit_time"]=cacheData().get(CACHE_LAST_EDIT_TIME).last_edit_time;
+		params["local_time_key"]=localKeyTime(LOCAL_STORAGE_TIMEKEY);
+		apiGeoRequests.initScheduleLog(params,function(status,res){
+
+				$(window).off("beforeunload");
+				var url=document.location.protocol+BASE_URL+href;
+				location.href=url;
+		});
+}
+
+var isDeadlineOver=function(limited_second){
+
+		var current_time=new Date().getTime();
+		var time_key=localKeyTime(LOCAL_STORAGE_TIMEKEY);
+		var t="";
+		if(time_key!=undefined) t=parseInt(time_key)*1000;
+		if((!t) && (cacheData().get(MANAGED_LIMITED_TIMER)!=undefined)) t=parseInt(cacheData().get(MANAGED_LIMITED_TIMER).timer);
+		if(!t) return false;
+		if(current_time>(t+(limited_second*1000))) return true;
+		return false;
+}
+
+var isAuthority=function(limited_second){
+
+		//is_authority : from server.
+		if(!is_authority) return false;
+		if(1>parseInt(window["schedule_log"]["edit_time_expired_ms"])) return false;
+		if(user_id!=window["schedule_log"]["last_start_user"]) return false;
+		if(isDeadlineOver(limited_second)) return false;
+		return true;
+}
+
+var deadlineOverGetAuthority=function(args){
+
+		var deferred=$.Deferred();
+		var user_id       =args["user_id"];
+		var last_edit_time=args["last_edit_time"];
+		var local_time_key=args["local_time_key"];
+
+		var params={};
+		params["user_id"]=user_id;
+		params["last_edit_time"]=last_edit_time;
+		params["local_time_key"]=local_time_key;
+		apiGeoRequests.editStart(params,function(status,res){
+
+				if(!status && res["type"]==0){
+
+						var params={};
+						params["main_title"]="現場情報更新";
+						params["title"]="処理エラー";
+						params["message"]=res["message"];
+						params["close"]=function(){};
+						params["yes"]=function(){ reloadUnbindUnload(); }
+						params["close"]=params["yes"];
+						uiAlert(params);
+						deferred.fail();
+						return;
+				}
+
+				if(!status && res["type"]==1){
+
+						var params={};
+						params["main_title"]="現場情報更新";
+						params["title"]  =res["title"];
+						params["message"]=res["message"];
+						params["close"]=function(){};
+						params["yes"]=function(){ reloadUnbindUnload(); }
+						params["close"]=params["yes"];
+						uiAlert(params);
+						deferred.fail();
+						return;
+				}
+
+				//■タイマー基準時間更新
+				var time_key=res["time_key"];
+				var current_time_ms=res["last_modified_ms"];
+				var last_edit_time=res["last_edit_time"];
+				localKeyTime(LOCAL_STORAGE_TIMEKEY,time_key);
+				cacheData().set(MANAGED_LIMITED_TIMER,{"timer":current_time_ms});
+				cacheData().set(MANAGED_AUTHORITY ,{"is_managed":true});
+				cacheData().set(CACHE_LAST_EDIT_TIME,{ "last_edit_time":last_edit_time });
+				console.log("再認証OK");
+				deferred.resolve();
+		});
+
+		return deferred.promise();
+}
+
+var scheduleRefreshOvertime=function(limited_second){
+
+		/*
+		$(window).off("focus").bind("focus",function(){　
+
+				if(!is_edit) return false;
+				if(!cacheData().get(MANAGED_AUTHORITY).is_managed) return false;
+				var edit_time_expired_ms=parseInt(cacheData().get(MANAGED_LIMITED_TIMER).timer);
+				var limited_ms=(edit_time_expired_ms+(limited_second*1000));
+				var current_ms=new Date().getTime();
+				if(limited_ms>=current_ms) return;
+
+				var params={};
+				params["user_id"]       =user_id;
+				params["last_edit_time"]=cacheData().get(CACHE_LAST_EDIT_TIME).last_edit_time;
+				params["local_time_key"]=localKeyTime(LOCAL_STORAGE_TIMEKEY);
+				deadlineOverGetAuthority(params).
+				done(function(){
+
+						var main_title="段取権限期限切れ";
+						var title     ="段取時間を超えている為スケジュールの変更は保存出来ません";
+						var __uiAlertViewMessage=function(){
+
+								var message="<span style='color:red;'>※段取を継続致します</span>";
+								return message;
+						}
+
+						var params={};
+						params["main_title"]=main_title;
+						params["title"]="◯&nbsp;段取可能時間を超えておりますが継続致します";
+						params["message"]=__uiAlertViewMessage();
+						params["yes"]=function(){};
+						params["close"]=params["yes"];
+						uiAlert(params);
+				});
+		});
+		*/
+}
+
+var reloadUnbindUnload=function(){
+
+		$(window).off("beforeunload");
+		location.reload();
+}
+
+var getSiteAddressMapUrl=function(siteAddress,callback){
+
+		if(1>siteAddress.length){
+
+					 callback(false);
+					 return;
+			}
+
+		geoCorder(GOOGLE_API_KEY,siteAddress,function(status,results){
+
+				if(!status){
+
+						callback(false);
+						return;
+				}
+
+				var lat=results[0]["geometry"]["location"]["lat"]();
+				var lng=results[0]["geometry"]["location"]["lng"]();
+				var zoom="13";
+				var span="1,1";
+				span="1,1";
+				var q=encodeURIComponent(siteAddress);
+				var map_base_url="http://maps.google.co.jp/maps?f=q&hl=ja&geocode=&q=<<marker>>&ie=UTF8&ll=<<lat>>,<<lng>>&spn=<<span>>&z=<<zoom>>";
+				var instance=new TPL([]);
+				var obj={
+
+						"lat":lat,
+						"lng":lng,
+						"zoom":zoom,
+						"span":span,
+						"marker":q
+				};
+
+				var url=instance.replaceTPL(map_base_url,obj);
+				callback(true,url,obj);
+		});
+}
+
+
+var getCheckSendTypes=function(){
+
+		var __parent=$(this);
+		var targets=__parent.children("div");
+		var black_type_list=[];
+		targets.each(function(){
+
+				var target=$(this);
+				var checkbox=target.find("input[type=checkbox]");
+				if(1>checkbox.size()) return;
+				var type=target.attr("data-title");
+				if(checkbox.is(":checked")) return;
+				black_type_list.push(type);
+		});
+
+		return black_type_list;
+}
+
+var clipboardTemplate=function(information,black_list,nr){
+
+		nr=(nr==undefined)?"\n":nr;
+		var __getMessage=function(key){
+
+				var __key=key+"_value";
+				if(information[__key]==undefined) return "";
+				return information[__key].trim();
+		}
+
+		var __getRemarkMessage=function(key){
+
+				var title=information[key+"_title"];
+				var value=information[key+"_value"].trim();
+				if(1>value.trim().length) value="未設定";
+				var message=(title+nr+value);
+				return message;
+		}
+
+		var main_messages=[];
+		var remark_messages=[];
+		if(0>black_list.indexOf("siteName")){
+
+				var val=__getMessage("siteName");
+				if(val.length>0) main_messages.push("【"+val+"】");
+		}
+
+		if(0>black_list.indexOf("customerName")){
+
+				var val=__getMessage("customerName");
+				if(val.length>0) main_messages.push(val);
+		}
+
+		if(0>black_list.indexOf("scheduleWorker")){
+
+				var val=__getMessage("scheduleWorker");
+				if(val.length>0) main_messages.push(val);
+		}
+
+		if(0>black_list.indexOf("scheduleTruck")){
+
+				var val=__getMessage("scheduleTruck");
+				if(val.length>0) main_messages.push(val);
+		}
+
+		if(0>black_list.indexOf("siteAddress")){
+
+				var val=__getMessage("siteAddress");
+				if(val.length>0) main_messages.push(val);
+		}
+
+		if(0>black_list.indexOf("siteAddressMapUrl")){
+
+				var val=__getMessage("siteAddressMapUrl");
+				if(val.length>0) main_messages.push(val);
+		}
+
+		if(0>black_list.indexOf("siteRemark")){
+
+				var val=__getRemarkMessage("siteRemark");
+				if(val.length>0) remark_messages.push(val);
+		}
+
+		if(0>black_list.indexOf("scheduleRemark1")){
+
+				var val=__getRemarkMessage("scheduleRemark1");
+				if(val.length>0) remark_messages.push(val);
+		}
+
+		if(0>black_list.indexOf("scheduleRemark2")){
+
+				var val=__getRemarkMessage("scheduleRemark2");
+				if(val.length>0) remark_messages.push(val);
+		}
+
+		if(0>black_list.indexOf("scheduleRemark3")){
+
+				var val=__getRemarkMessage("scheduleRemark3");
+				if(val.length>0) remark_messages.push(val);
+		}
+
+		var messages=[];
+		if(main_messages.length>0)   messages.push(main_messages.join(nr));
+		if(remark_messages.length>0) messages.push(remark_messages.join(nr));
+		var message=messages.join(nr);
+		return message;
+}
+
+var update_txt_time = function(dateOb, div_name){
+
+		var txt_time='';
+		var first_string=dateOb.getFullYear().toString()+'年'+(dateOb.getMonth()+1).toString().strpad(2)+'月01日';
+		var last_day_of_month=new Date(dateOb.getFullYear(),dateOb.getMonth()+1,0);
+		var last_string=(dateOb.getMonth()+1).toString().strpad(2)+'月'+last_day_of_month.getDate().toString()+'日';
+		$(div_name).html(first_string+'~'+last_string);
+}
+
+var getName=function(data, model, col) {
+
+		var res=[];
+		$.each(data, function(item, val){
+
+			var name="";
+			name = " "+ val[model][col];
+			res.push(name);
+		});
+
+		return res;
+}
+
+// var insertLineQue=function(){ this.queue=[]; }
+var insertLineQue=function(){ this.queue=[]; }
+insertLineQue.getInstance=function(){
+
+		if(!!this.instance && this.instance instanceof this) return this.instance;
+		this.instance=new this();
+		return this.instance;
+}
+
+insertLineQue.push=function(type,position,dates){
+
+		var cache={};
+		cache[position]=dates;
+		cache["type"]=type;
+		var instance=this.getInstance();
+		instance.queue.push(cache);
+};
+
+insertLineQue.getQueuePositions=function(position,dates){
+
+		var instance=this.getInstance();
+		var queue=instance.queue;
+		var positions=[];
+		if(1>queue.length) return positions;
+
+		for(var i in queue){
+
+				if(!queue.hasOwnProperty(i)) continue;
+				var __queue=queue[i];
+				for(var position in __queue) break;
+				positions.push(position);
+		};
+
+		return positions;
+};
+
+
+</script>

@@ -1,0 +1,85 @@
+/*~~ login page ~~*/
+#login-page {
+  margin-top: 0
+}
+.content {
+  padding: 0px 20px;
+}
+.login {
+  margin: 0 auto;
+  max-width: 400px;
+  width: 400px;
+  text-align: left;
+}
+.login h1 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  text-align: center;
+}
+@media only screen and  (max-width:440px) {
+  .login {
+    max-width: 380px;
+    width: 100%;
+    margin: 10% auto 0px;
+  }
+  .login h1.login-logo img {
+
+    /*width: 100%;*/
+  }
+  .form-signin {
+    padding: 40px 20px !important;
+  }
+}
+.login .sr-only {
+  position: static !important;
+  overflow: inherit;
+  width: auto;
+}
+.login label.sr-only {
+  font-size: 14px;
+  font-weight: normal;
+  margin-bottom: 40px;
+}
+.login .btn-block {
+  margin: 30px 0px 15px;
+}
+label.sr-only.error-text {
+  color: red;
+  font-weight: bold;
+  margin-top: 8px;
+  margin-bottom: -20px;
+}
+.login .btn-primary {
+  background-color: #0097e0;
+  border-color: transparent;
+}
+.form-signin {
+  background-color: #FFF;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .13);
+  padding: 40px;
+}
+.form-signin .form-signin-heading, .form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 30px;
+  box-shadow: none
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: 20px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+}

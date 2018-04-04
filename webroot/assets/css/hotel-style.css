@@ -1,0 +1,201 @@
+/* style for booking.html, style for element */
+/*
+===================================
+Author: Hien Pham-SPCV
+Company: SPCV
+===================================
+-- CSS Reset: reset.scss
+-- Bootstrap
+-- Font Awesome
+-- COMPONENT
+         --Variable: hotel-component.scss
+- LAYOUT:
+        -Booking: hotel-layout.scss
+        
+- STYLE:
+        -Booking: hotel-book.scss
+       
+        
+*/
+/* layout style  */
+.book-room .btn, .guest .btn {
+  border-radius: 0px; }
+.book-room input[type="number"].in-num::-webkit-outer-spin-button, .guest input[type="number"].in-num::-webkit-outer-spin-button,
+.book-room input[type="number"].in-num::-webkit-inner-spin-button,
+.guest input[type="number"].in-num::-webkit-inner-spin-button {
+  opacity: 1; }
+.book-room .row, .guest .row {
+  padding: 15px; }
+  .book-room .row form > div, .guest .row form > div {
+    padding: 0px; }
+.book-room form, .guest form {
+  padding: 15px 5px; }
+.book-room .form-group, .guest .form-group {
+  margin-bottom: 5px; }
+  .book-room .form-group > div > *, .guest .form-group > div > * {
+    height: 22px;
+    width: 100%;
+    padding: 0px 5px; }
+    .book-room .form-group > div > *.w3-check, .guest .form-group > div > *.w3-check, .book-room .form-group > div > * .w3-radio, .guest .form-group > div > * .w3-radio {
+      width: 15px;
+      height: 15px;
+      position: relative;
+      top: 2px; }
+    .book-room .form-group > div > *.btn, .guest .form-group > div > *.btn {
+      padding: 0px; }
+      .book-room .form-group > div > *.btn.btn-click, .guest .form-group > div > *.btn.btn-click {
+        width: 30px; }
+  .book-room .form-group > div textarea, .guest .form-group > div textarea {
+    height: auto; }
+.book-room .form-border, .guest .form-border {
+  border: solid 1px #e5e5e5;
+  padding: 20px 10px 0px; }
+.book-room .form-info, .guest .form-info {
+  padding-left: 5px;
+  padding-right: 5px;
+  position: relative;
+  margin: 5px 0px; }
+  .book-room .form-info h5, .guest .form-info h5 {
+    position: absolute;
+    display: inline-block;
+    margin-left: 30px;
+    background-color: #fff;
+    padding: 0px 10px;
+    margin-top: -5px; }
+.book-room p, .guest p {
+  margin: 0px; }
+.book-room .btn-group .form-group, .guest .btn-group .form-group {
+  margin-bottom: 0px; }
+  .book-room .btn-group .form-group div, .guest .btn-group .form-group div {
+    padding: 2px; }
+.book-room .btn-click, .guest .btn-click {
+  width: 30px; }
+.book-room .btn-tooltip, .guest .btn-tooltip {
+  display: -webkit-box; }
+  .book-room .btn-tooltip .title-tooltip, .guest .btn-tooltip .title-tooltip {
+    position: relative; }
+    .book-room .btn-tooltip .title-tooltip .tooltip-af, .guest .btn-tooltip .title-tooltip .tooltip-af {
+      padding: 0px 15px 0px 5px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      display: table; }
+.book-room .btn-default, .guest .btn-default {
+  background-color: #e5e5e5;
+  border: solid 1px #a9a9a9; }
+.book-room .btn:hover, .guest .btn:hover {
+  background-color: #ef5350;
+  color: #fff;
+  transition: background 0.8s; }
+.book-room .pd-zero, .guest .pd-zero {
+  padding: 0px; }
+.book-room .btn-item, .guest .btn-item {
+  margin-left: -15px;
+  padding-left: 5px;
+  padding-right: 0px; }
+.book-room .bdr, .guest .bdr {
+  border: solid 1px #a9a9a9; }
+.book-room .radio-inline, .guest .radio-inline {
+  display: inline; }
+.book-room .btn-group, .guest .btn-group {
+  display: inline; }
+.book-room .btn-bottom, .guest .btn-bottom {
+  padding: 5px 0px; }
+  .book-room .btn-bottom > div, .guest .btn-bottom > div {
+    padding: 0px; }
+  .book-room .btn-bottom span, .guest .btn-bottom span {
+    padding: 0px 10px; }
+  .book-room .btn-bottom .btn-group .btn:first-child, .guest .btn-bottom .btn-group .btn:first-child {
+    border-radius: 0px; }
+  .book-room .btn-bottom .btn-group .btn:last-child, .guest .btn-bottom .btn-group .btn:last-child {
+    border-radius: 0px; }
+.book-room .btn-group-justified .btn-group, .guest .btn-group-justified .btn-group {
+  padding-right: 5px; }
+  .book-room .btn-group-justified .btn-group:last-child, .guest .btn-group-justified .btn-group:last-child {
+    padding-right: 0px; }
+.book-room .btn, .guest .btn {
+  height: 22px;
+  padding: 0px 10px; }
+.book-room .modal-body, .guest .modal-body {
+  padding: 0px; }
+.book-room .form-scroll, .guest .form-scroll {
+  max-height: 500px;
+  overflow: auto;
+  padding: 0px 5px; }
+
+.guest {
+  background-color: #fff;
+  color: #000; }
+  .guest #guest-show-info .personal .radio-group {
+    padding-left: 15px; }
+  .guest .form-info .form-group label {
+    padding: 0px 3px 0px 10px; }
+  .guest .form-info .form-group div {
+    padding: 0px 10px 0px 3px; }
+  .guest #guest-list ul {
+    list-style: none;
+    padding-left: 0px;
+    border: solid 1px #a9a9a9;
+    height: 250px;
+    overfloat: scroll;
+    padding: 5px; }
+  .guest .btn-group-justified > .btn-group {
+    display: table-cell; }
+
+@media screen and (min-width: 768px) {
+  .btn-tooltip {
+    padding-left: 0px;
+    margin-left: -10px; } }
+@media screen and (max-width: 767px) {
+  .book-room .form-group div:nth-child(n+1), .guest .form-group div:nth-child(n+1) {
+    margin-bottom: 5px; }
+  .book-room .form-group > div > input, .guest .form-group > div > input {
+    border: solid 1px #a9a9a9; }
+  .book-room .form-group > div > select, .guest .form-group > div > select {
+    border: solid 1px #a9a9a9; }
+  .book-room .form-group > div > textarea, .guest .form-group > div > textarea {
+    border: solid 2px #a9a9a9; }
+  .book-room .col-xs-12.btn-tooltip, .guest .col-xs-12.btn-tooltip {
+    margin-left: 0px;
+    padding-left: 15px; }
+  .book-room .btn-group-justified, .guest .btn-group-justified {
+    display: inline-block; }
+    .book-room .btn-group-justified > .btn-group, .guest .btn-group-justified > .btn-group {
+      display: inline-table;
+      padding: 50x 0px; }
+      .book-room .btn-group-justified > .btn-group .btn, .guest .btn-group-justified > .btn-group .btn {
+        margin: 3px 0px; }
+  .book-room .btn-item, .guest .btn-item {
+    padding: 0px 15px;
+    margin-left: 0px; }
+  .book-room .form-info .form-group label, .guest .form-info .form-group label {
+    padding: 0px 15px; }
+  .book-room .form-info .form-group div, .guest .form-info .form-group div {
+    padding: 0px 15px; }
+
+  .guest .form-info .form-group div {
+    padding: 0px 10px; }
+  .guest .btn-group-justified > .btn-group {
+    display: table-cell; } }
+@media screen and (max-width: 480px) {
+  .book-room .btn-group-justified, .guest .btn-group-justified {
+    display: inline-block; }
+    .book-room .btn-group-justified .btn-group, .guest .btn-group-justified .btn-group {
+      display: inline-table;
+      padding: 50x 0px; }
+      .book-room .btn-group-justified .btn-group .btn, .guest .btn-group-justified .btn-group .btn {
+        margin: 3px 0px; }
+  .book-room .form-group > div > input, .guest .form-group > div > input {
+    border: solid 1px #a9a9a9; }
+  .book-room .form-group > div > select, .guest .form-group > div > select {
+    border: solid 1px #a9a9a9; }
+  .book-room .modal-dialog, .guest .modal-dialog {
+    width: 92% !important; }
+
+  .guest .form-info .form-group div {
+    padding: 0px 10px; }
+  .guest .btn-group-justified > .btn-group {
+    display: table-cell; } }
+/* component: class public*/
+
+/*# sourceMappingURL=hotel-style.css.map */

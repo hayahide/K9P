@@ -1,0 +1,41 @@
+/* =================================
+   TopPage
+==================================== */
+.cf {
+  *zoom: 1;
+}
+.cf:after {
+  content: "";
+  display: block;
+  clear: both;
+  height: 0;
+}
+
+form ::-webkit-input-placeholder {
+  color: #C6C6C6;
+}
+form :-moz-placeholder {
+  opacity: 1;
+  color: #C6C6C6;
+}
+form ::-moz-placeholder {
+  opacity: 1;
+  color: #C6C6C6;
+}
+form :-ms-input-placeholder {
+  color: #C6C6C6;
+}
+
+::-moz-selection {
+  color: #FFF;
+  background: rgba(31, 127, 194, 0.7);
+}
+
+::selection {
+  color: #FFF;
+  background: rgba(31, 127, 194, 0.7);
+}
+
+/*==============================
+TOP contents
+==============================*/

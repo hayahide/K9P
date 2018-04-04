@@ -1,0 +1,432 @@
+<script>
+
+apiGeoRequests.getAllWorkersFree=function(data,callback){
+
+        var obj= new this();
+        obj.setBaseURL(BASE_URL);
+        obj.setURL(this.getAllWorkersFree.makeURL());
+    var params=this.ajaxBaseParams;
+    var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+        obj.request(data,params,function(status,res){
+
+        if(responseHandler) responseHandler(status,res,callback);
+        });
+}
+
+apiGeoRequests.getAllWorkersFree.makeURL=function(){
+
+        var base_url='SiteManagesWorker/getAllWorkersFree';
+        return base_url;
+}
+
+apiGeoRequests.getInchageSeniorSiteIDs=function(data,callback){
+
+        var obj= new this();
+        obj.setBaseURL(BASE_URL);
+        obj.setURL(this.getInchageSeniorSiteIDs.makeURL());
+		var params=this.ajaxBaseParams;
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+        obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+        });
+}
+
+apiGeoRequests.getInchageSeniorSiteIDs.makeURL=function(){
+
+        var base_url='SiteManagesRegistedSites/getInchageSeniorSiteIDs';
+        return base_url;
+}
+
+apiGeoRequests.getInchageSiteIDs=function(data,callback){
+
+        var obj= new this();
+        obj.setBaseURL(BASE_URL);
+        obj.setURL(this.getInchageSiteIDs.makeURL());
+		var params=this.ajaxBaseParams;
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+        obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+        });
+}
+
+apiGeoRequests.getInchageSiteIDs.makeURL=function(){
+
+        var base_url='SiteManagesRegistedSites/getInchageSiteIDs';
+        return base_url;
+}
+
+apiGeoRequests.updateSite=function(data,callback){
+
+        var obj= new this();
+        obj.setBaseURL(BASE_URL);
+        obj.setURL(this.updateSite.makeURL());
+		var params=this.ajaxBaseParams;
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+        obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+        })
+}
+
+apiGeoRequests.updateSite.makeURL=function(){
+
+        var base_url='Schedule/updateSite';
+        return base_url;
+}
+
+apiGeoRequests.getWorkerReportBySchedule=function(data,callback){
+
+        var obj= new this();
+        obj.setBaseURL(BASE_URL);
+        obj.setURL(this.getWorkerReportBySchedule.makeURL());
+		var params=this.ajaxBaseParams;
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+        obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+        });
+}
+
+apiGeoRequests.getWorkerReportBySchedule.makeURL=function(){
+
+        var base_url='Schedule/getWorkerReportBySchedule';
+        return base_url;
+}
+
+apiGeoRequests.getManHourBySchedule=function(data,callback){
+
+        var obj= new this();
+        obj.setBaseURL(BASE_URL);
+        obj.setURL(this.getManHourBySchedule.makeURL());
+		var params=this.ajaxBaseParams;
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+        obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+        });
+}
+
+apiGeoRequests.getManHourBySchedule.makeURL=function(){
+
+        var base_url='Schedule/getManHourBySchedule';
+        return base_url;
+}
+
+apiGeoRequests.updateWorkerManHour=function(data,callback){
+
+        var obj= new this();
+        obj.setBaseURL(BASE_URL);
+        obj.setURL(this.updateWorkerManHour.makeURL());
+		var params=this.ajaxBaseParams;
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+        obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+        });
+}
+
+apiGeoRequests.updateWorkerManHour.makeURL=function(){
+
+        var base_url='Schedule/updateWorkerManHour';
+        return base_url;
+}
+
+apiGeoRequests.deleteSchedule=function(data,callback){
+
+        var obj= new this();
+        obj.setBaseURL(BASE_URL);
+        obj.setURL(this.deleteSchedule.makeURL());
+
+		var params=this.ajaxBaseParams;
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+        obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+        });
+}
+
+apiGeoRequests.deleteSchedule.makeURL=function(){
+
+        var base_url='SiteManages/deleteSchedule';
+        return base_url;
+}
+
+apiGeoRequests.registScheduleInformations=function(data,callback){
+
+        var obj= new this();
+        obj.setBaseURL(BASE_URL);
+        obj.setURL(this.registScheduleInformations.makeURL());
+		var params=this.ajaxBaseParams;
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+        obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+        })
+}
+
+apiGeoRequests.registScheduleInformations.makeURL=function(){
+
+        var base_url='Schedule/registScheduleInformations';
+        return base_url;
+}
+
+apiGeoRequests.deleteSite=function(data,callback){
+
+        var obj= new this();
+        obj.setBaseURL(BASE_URL);
+        obj.setURL(this.deleteSite.makeURL());
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+		var params=this.ajaxBaseParams;
+        obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+        });
+}
+
+apiGeoRequests.deleteSite.makeURL=function(){
+
+        var base_url='SiteManages/deleteSite';
+        return base_url;
+}
+
+apiGeoRequests.searchCustomer=function(data,callback){
+
+        var obj= new this();
+        obj.setBaseURL(BASE_URL);
+        obj.setURL(this.searchCustomer.makeURL());
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+        obj.request(data,{"type":"POST"},function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+        });
+}
+
+apiGeoRequests.searchCustomer.makeURL=function(){
+
+        var base_url='Schedule/searchCustomerByConditions';
+        return base_url;
+}
+
+apiGeoRequests.getScheduleBySiteId=function(data,callback){
+
+        var obj= new this();
+        obj.setBaseURL(BASE_URL);
+        obj.setURL(this.getScheduleBySiteId.makeURL());
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+		var params=this.ajaxBaseParams;
+        obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+        });
+}
+
+apiGeoRequests.getScheduleBySiteId.makeURL=function(){
+
+        var base_url='Schedule/getScheduleBySiteId';
+        return base_url;
+}
+
+//■add starff for site
+apiGeoRequests.sendDataStaff=function(data,callback){
+
+        var obj= new this();
+        obj.setBaseURL(BASE_URL);
+        obj.setURL(this.sendDataStaff.makeURL());
+
+		var params=this.ajaxBaseParams;
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+        obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+        });
+}
+
+apiGeoRequests.sendDataStaff.makeURL=function(){
+
+        var base_url='Staff/addStaff';
+        return base_url;
+}
+
+apiGeoRequests.getCustomerInformations=function(data,callback){
+
+		var obj= new this();
+		obj.setBaseURL(BASE_URL);
+		obj.setURL(this.getCustomerInformations.makeURL());
+		var params=this.ajaxBaseParams;
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+		obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+		});
+}
+
+apiGeoRequests.getCustomerInformations.makeURL=function(){
+
+		var base_url='SiteManagesCustomers/getCustomerInformations';
+		return base_url;
+}
+
+apiGeoRequests.getSiteNinkuSituations=function(data,callback){
+
+		var obj= new this();
+		obj.setBaseURL(BASE_URL);
+		obj.setURL(this.getSiteNinkuSituations.makeURL());
+		var params=this.ajaxBaseParams;
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+		return obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+		});
+}
+
+apiGeoRequests.getSiteNinkuSituations.makeURL=function(){
+
+		var base_url='SiteManagesNinku/getSiteNinkuSituations';
+		return base_url;
+}
+
+//■get information for area.
+apiGeoRequests.getArea=function(data,callback){
+
+        var obj= new this();
+        obj.setBaseURL(BASE_URL);
+        obj.setURL(this.getArea.makeURL());
+		var params=this.ajaxBaseParams;
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+        obj.request(data,params,function(status,res){
+
+				if(!status){
+
+						callback.call(obj,false,{});
+						return;
+				}
+
+				callback.call(obj,true,res);
+        });
+}
+
+apiGeoRequests.getArea.makeURL=function(){
+
+        var base_url='Schedule/getAreas';
+        return base_url;
+}
+
+apiGeoRequests.initScheduleLog=function(data,callback){
+
+		var obj= new this();
+		obj.setBaseURL(BASE_URL);
+		obj.setURL(this.initScheduleLog.makeURL());
+		var params=this.ajaxBaseParams;
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+		obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+		})
+}
+
+apiGeoRequests.initScheduleLog.makeURL=function(){
+
+		var base_url='SiteManagesInitialEditTimes/initScheduleLog';
+		return base_url;
+}
+
+apiGeoRequests.editStart=function(data,callback){
+
+		var obj= new this();
+		obj.setBaseURL(BASE_URL);
+		obj.setURL(this.editStart.makeURL());
+		var params=this.ajaxBaseParams;
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+		obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+		})
+}
+
+apiGeoRequests.editStart.makeURL=function(){
+
+		var date=new Date().getTime();
+		var base_url='SiteManagesEditAuthorities/editStart?'+date;
+		return base_url;
+}
+
+apiGeoRequests.getSiteDetails=function(data,callback){
+
+		var obj= new this();
+		obj.setBaseURL(BASE_URL);
+		obj.setURL(this.getSiteDetails.makeURL());
+		var params=this.ajaxBaseParams;
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+		obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+		})
+}
+
+apiGeoRequests.getSiteDetails.makeURL=function(){
+
+		var base_url='SiteManages/getSiteDetails';
+		return base_url;
+}
+
+apiGeoRequests.getInformations=function(data,callback){
+
+		var obj= new this();
+		obj.setBaseURL(BASE_URL);
+		obj.setURL(this.getInformations.makeURL());
+		var params=$.extend(true,{},this.ajaxBaseParams);
+		params["loadingOff"]=((data["loadingOff"]==undefined)?false:data["loadingOff"]);
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+		obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+		})
+}
+
+apiGeoRequests.getInformations.makeURL=function(){
+
+		var base_url='SiteManagesRegistedInfomations/getInformations';
+		return base_url;
+}
+
+apiGeoRequests.saveMemoList=function(data,callback){
+
+		var obj= new this();
+		obj.setBaseURL(BASE_URL);
+		obj.setURL(this.saveMemoList.makeURL());
+		var params=this.ajaxBaseParams;
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+		obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+		})
+}
+
+apiGeoRequests.saveMemoList.makeURL=function(){
+
+		var base_url='SiteManagesMemo/saveMemoList';
+		return base_url;
+}
+
+apiGeoRequests.tmpAddSite=function(data,callback){
+
+		var obj= new this();
+		obj.setBaseURL(BASE_URL);
+		obj.setURL(this.tmpAddSite.makeURL());
+		var params=this.ajaxBaseParams;
+		var responseHandler=(!!this["responseHandler"]&&$.isFunction(this["responseHandler"]))?this["responseHandler"]:false;
+		obj.request(data,params,function(status,res){
+
+				if(responseHandler) responseHandler(status,res,callback);
+		})
+}
+
+apiGeoRequests.tmpAddSite.makeURL=function(){
+
+		var base_url='SiteManagesSiteTmpSaves/tmpAddSite';
+		return base_url;
+}
+
+</script>

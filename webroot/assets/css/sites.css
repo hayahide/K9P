@@ -1,0 +1,129 @@
+/*
+ * Copyright 2015 SPCVN Co., Ltd.
+ * All right reserved.
+*/
+
+/**
+ * @Author: Nguyen Chat Hien
+ * @Date:   2016-09-09 11:35:55
+ * @Last Modified by:   LENOVO-PC
+ * @Last Modified time: 2017-02-20 15:21:47
+ */
+
+#btn_group .btn_send_data{display:none;float:left;}
+.day-worker .title{font-size:16px;float:left;font-weight:bold;width:100%;padding:5px 0px;border-bottom:1px solid #666;}
+#btn_group{float:left;}
+#btn_group a#btn_cancel{margin-top:0px;}
+.modal-body .main{width:100%;padding:40px 0px 20px 0px;}
+a.btn_cancel{background-image:none;border:1px solid transparent;border-radius:4px;margin-top:0px;color:#333;background-color:#fff;border-color:#ccc;display:inline-block;padding:6px 12px;margin-bottom:0;font-size:14px;font-weight:400;line-height:1.42857143;text-align:center;white-space:nowrap;vertical-align:middle;-ms-touch-action:manipulation;touch-action:manipulation;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;background-image:none;border:1px solid #ccc;border-radius:4px;}
+a.btn-danger{margin-top:0px;color:#fff;background-color:#d9534f;border-color:#d43f3a;display:inline-block;padding:6px 12px;margin-bottom:0;font-size:14px;font-weight:400;line-height:1.42857143;text-align:center;white-space:nowrap;vertical-align:middle;-ms-touch-action:manipulation;touch-action:manipulation;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;background-image:none;border:1px solid transparent;border-radius:4px;}
+.checkbox-inline{min-width:100px;}
+.radio-inline + .radio-inline,.checkbox-inline + .checkbox-inline{margin-top:0;margin-left:0px!important;}
+.day-worker .contains{width:100%;margin:20px 0px;float:left;}
+.day-worker .contains .datas{padding:5px 0px;}
+.day-worker .contains .datas p{display:inline-block;}
+.day-worker .contains .datas p.date{width:50px;}
+.add_worker{position:fixed;top:25%;left:25%;width:50%;padding:25px;border:1px solid #ccc;background-color:white;z-index:1002;overflow:auto;}
+.add_worker .btn_cancel{position:absolute;bottom:20px;left:180px;}
+.add_worker .btn_create{position:absolute;bottom:20px;left:20px;background-color:#d54937;color:white;}
+.site_modal_container{height:auto;margin-left:auto;margin-right:auto;background-color:rgba(255,255,255,1);}
+#div_overlay .modal-header .close{margin-top:-23px;}
+.add_worker .site_modal_container .title{padding:10px 0px;font-size:16px;font-weight:bold;}
+.black_overlay{width:100%;height:100%;background-color:rgba(0,0,0,0.5);position:fixed;z-index:2;top:0px;left:0px;}
+.day-worker{width:100%;float:left;-webkit-transition:all 1s ease-in-out;-moz-transition:all 1s ease-in-out;-o-transition:all 1s ease-in-out;transition:all 1s ease-in-out;}
+.table_worker a#btn_reload{float:right;width:30px;height:30px;background:#f2f2f2 url("/assets/img/logo/reload.png") no-repeat center center;}
+.schedule-contents .table_worker{width:305px;float:left;display:inline-block;}
+.schedule-contents .table_worker table.table{margin-bottom:5px;}
+.schedule-contents .table_worker .table th{padding-top:11px;padding-bottom:11px;background-color:#373a3c;color:white;}
+.schedule-contents .table_worker .table thead tr th:first-child{width:50px;}
+.schedule-contents .table_worker .table thead tr th:last-child{width:80px;text-align:center!important;}
+.schedule-contents .table_worker .table tbody tr.tr_calcultor td{background-color:#fff;}
+.schedule-contents .table_worker .table tbody tr.tr_calcultor td:last-child{text-align:center!important;font-weight:bold;}
+.schedule-contents .table_worker .table tbody tr.tr_button td{background:none;border:none;}
+.schedule-contents .table_worker .table tbody{font-weight:bold;}
+.schedule-contents .table_worker .table tbody tr td.td_under{background:none;border:none;}
+.schedule-contents .table_worker .table tbody tr td{background-color:#f2f2f2;}
+.schedule-contents .table_worker .table tr td input{width:40px;margin-left:10px;text-align:center;}
+.schedule-contents .table_worker .table th,.schedule-contents .table_worker .table tr td{border:1px solid #ddd;text-align:left;padding:8px;}
+.schedule-contents{float:left;width:100%;}
+.schedule-contents .schedule-row{float:left;width:100%;margin-bottom:20px;}
+.schedule-contents .div_schedule{padding-bottom:5px;}
+.schedule-contents .div_schedule .date_schedule{width:150px;margin-top:5px;font-weight:bold;float:left;}
+.schedule-contents .div_schedule a.btn_add{margin-top:0px!important;margin-left:10px;}
+.add_worker .contents .top{margin-bottom:20px;}
+.form-control.group_worker{width:200px;height:auto;padding:5px 0px;}
+.field-item-input span.label{width:30px;height:30px;float:left;list-style:none;margin-right:6px;margin-bottom:6px;border-radius:5px;}
+table.dataTable tbody tr{background-color:auto!important;background-color:transparent!important;}
+#tbl_schedule_length.dataTables_length{display:none;}
+table.dataTable thead .sorting_asc{background:none!important;}
+ul#list-car{clear:both;}
+input.submit-btn.back.pull-right{margin-right:10px;background-color:transparent!important;color:#000!important;border:1px solid #ccc;}
+input.submit-btn.back.pull-right:hover{background-color:#ccc!important;}
+div#schedule-site-detail-edit-info{height:535px;max-height:calc(100% - 100px);overflow-y:hidden!important;margin:50px auto;}
+div#schedule-worker-right .modal-header{border-bottom:none;}
+div#schedule-worker-right .modal-header h4{font-size:12px;font-weight:bold;}
+div#schedule-worker-right .modal-header-top h4{display:inline-block;}
+#schedule-worker-right .modal-body .modal-left-block .worker-block label.workers{width:auto;display:inline-block;}
+#schedule-worker-right .modal-body .modal-left-block .worker-block .schedule_check_all_mem{width:auto;display:inline-block;text-align:right;}
+#schedule-worker-right .modal-body .modal-left-block .worker-block .schedule_check_all_mem label{display:inline-block;width:auto;}
+
+/* loading*/
+#loader-bg{display:table;position:fixed;width:100%;height:100%;top:0px;left:0px;background:rgba(0,0,0,0.0);opacity:0;z-index:100;}
+#loader{display:table;position:fixed;top:50%;left:50%;width:200px;height:200px;margin-top:-100px;margin-left:-100px;text-align:center;color:#fff;z-index:2;}
+
+/* kiyosawa added. */
+
+/*
+div[data-type=schedule-site-modal]{width:100%;height:100%;background-color:rgba(0,0,0,0.5);position:fixed;display:none;z-index:9999;top:0px;left:0px;}
+*/
+
+div[data-type=schedule-site-modal]{width:100%;height:100%;background-color:rgba(0,0,0,0.5);position:fixed;display:none;z-index:100;top:0px;left:0px;}
+div[data-type=schedule-site-modal] > div{max-height:-moz-calc(100% - 100px);max-height:-webkit-calc(100% - 100px);max-height:calc(100% - 100px);margin-left:auto;margin-right:auto;overflow-x:hidden;overflow-y:auto;background:#fff}
+@media screen and (min-width:768px){.modal-sm{min-width:400px}}
+
+/*
+div[data-type=schedule-site-modal]{width:100%;height:100%;background-color:rgba(0,0,0,0.5);position:fixed;display:none;z-index:2;top:0px;left:0px;}
+div[data-type=schedule-site-modal] > div{max-height:-moz-calc(100% - 100px);max-height:-webkit-calc(100% - 100px);max-height:calc(100% - 100px);margin-left:auto;margin-right:auto;background-color:rgba(255,255,255,1);overflow-x:hidden;overflow-y:auto;}
+@media screen and (min-width:768px){.modal-sm{min-width:400px}}
+*/
+
+/* kiyosawa added. for site,sitedaily,sitemonthly */
+body[id=site],
+body[id=sitedaily],
+body[id=sitemonthly]{
+
+	user-select:none;
+	-moz-user-select:none;
+	-webkit-user-select:none;
+	-ms-user-select:none;
+	-o-user-select:none;
+	-ms-user-select:element;
+}
+
+div[data-type=loading-img]{
+
+	display:table;
+	position:fixed;
+	width:100%;
+	height:100%;
+	top:0px;
+	left:0px;
+	background:rgba(0,0,0,0.0);
+	opacity:0;
+	z-index:1300;
+}
+
+div[data-type=loading-img] > #loader{
+
+	display:table;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	width: 200px;
+	height: 200px;
+	margin-top: -100px;
+	margin-left: -100px;
+	text-align: center;
+	color: #fff;
+	z-index: 2;
+}

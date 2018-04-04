@@ -1,0 +1,17 @@
+msgid "normal"
+msgstr "Normal"
+
+msgid "sub_master"
+msgstr "Sub Master"
+
+msgid "sub1_master"
+msgstr "Sub1 Master"
+
+msgid "master"
+msgstr "Master"
+
+msgid "senior"
+msgstr "Senior"
+
+msgid "hoge"
+msgstr "HOGE";

@@ -1,0 +1,11 @@
+<?php 
+
+	$controller=strtolower($this->params["controller"]); 
+
+?>
+
+<div id="time-btn" class="time-btn-mb">
+    <a href="#"><span>日</span></a>
+	<a href="Site/index"><span <?php echo (($controller=="site")?"class=\"current\"":""); ?>>週</span></a>
+    <a href="SiteMonthly/index"><span <?php echo (($controller=="sitemonthly")?"class=\"current\"":""); ?>>月</span></a>
+</div><!--.time-btn-->

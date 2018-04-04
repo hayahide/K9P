@@ -1,0 +1,307 @@
+@charset "utf-8";
+/*
+------------------------------------------------------------------------------
+フォント定義クラス
+------------------------------------------------------------------------------
+*/
+
+/*  カラー設定
+-----------------------------------------------*/
+.blue{color: #3F83B1;}
+.green{color: #1A9239;}
+.orange{color: #F7521D;}
+
+.red,
+.err,
+.error{color : #DB1A0B;}
+
+.s-red{font-weight:bolder;color:#DB1A0B;}
+.s-blue{font-weight:bolder;color:blue;}
+
+.err_box,
+.err-box,
+.error_box,
+.error-box{
+    border:1px solid red;
+    padding:5px;
+    color:red;
+    margin:10px 0;
+}
+
+
+/*  フォントサイズ設定
+-----------------------------------------------*/
+.f12{font-size:12px;}
+.f13{font-size:13px;}
+.f14{font-size:14px;}
+.f15{font-size:15px;}
+
+.b{font-weight:bold;}
+
+
+/*
+------------------------------------------------------------------------------
+フォーム設定クラス
+------------------------------------------------------------------------------
+*/
+
+form img,form input,form select
+	{vertical-align: middle;}
+form input,form select
+	{line-height: 1;}
+input
+	{margin: 0;}
+.formfield
+	{ border: 1px solid #999; border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding:3px;}
+
+
+
+@charset "utf-8";
+
+/*
+------------------------------------------------------------------------------
+アイコン設定クラス
+------------------------------------------------------------------------------
+*/
+
+
+/*  アイコン設定
+-------------------------------------------------------------*/
+.csv{
+	background: url(./img/icon/icon_csv.gif) no-repeat center left !important;
+	padding-left:20px !important;
+}
+
+.blacklist{
+	background: url(./img/icon/icon_blacklist.gif) no-repeat center left !important;
+	padding-left:20px !important;
+}
+.user{
+	background: url(./img/icon/icon_user.gif) no-repeat center left !important;
+	padding-left:20px !important;
+}
+/*
+.delete,
+.del{
+	background: url(./img/icon/icon_delete.gif) no-repeat center left !important;
+	padding-left:20px !important;
+}
+*/
+.add{
+	background: url(./img/icon/icon_add.gif) no-repeat center left !important;
+	padding-left:20px !important;
+}
+/*
+.edit{
+	background: url(./img/icon/icon_edit.gif) no-repeat center left !important;
+	padding-left:20px !important;
+	
+}
+*/
+.commnet,
+.chat{
+	background: url(./img/icon/icon_chat.gif) no-repeat center left !important;
+	padding-left:20px !important;
+}
+
+.google	{
+	background: url(./img/icon/icon_google.gif) no-repeat center left !important;
+	padding-left:20px !important;
+}
+.yahoo{
+	background: url(./img/icon/icon_yahoo.gif) no-repeat center left !important;
+	padding-left:20px !important;
+}
+.email,
+.mail{
+	background: url(./img/icon/icon_mail.gif) no-repeat center left !important;
+	padding-left:20px !important;
+}
+.dir{
+	background: url(./img/icon/icon_dir.gif) no-repeat top left !important;
+	padding-left:22px!important;
+}
+.pr{
+	background: url(./img/icon/icon_pr.gif) no-repeat center left !important;
+	padding-left:27px !important;
+}
+.new{
+	background: url(./img/icon/icon_new.gif) no-repeat center left !important;
+	padding-left:29px!important;
+}
+.search{
+	background: url(./img/icon/icon_search.gif) no-repeat center left !important;
+	padding-left:19px !important;
+}
+.mobile{
+	background: url(./img/icon/icon_mobile.gif) no-repeat center left !important;
+	padding-left:10px !important;
+}
+.ie{
+	background: url(./img/icon/icon_ie.jpg) no-repeat center left !important;
+	padding-left:21px !important;
+}
+.ie2{
+	background: url(./img/icon/icon_ie.jpg) no-repeat center left !important;
+	padding-left:18px !important;
+}
+.tel{
+	background: url(./img/icon/icon_call.gif) no-repeat center left !important;
+	padding-left:20px !important;
+}
+.url{
+	background: url(./img/icon/icon_application_go.gif) no-repeat center left !important;
+	padding-left:20px !important;
+}
+.rss,
+.feed{
+	background: url(./img/icon/icon_feed.gif) no-repeat center left !important;
+	padding-left:20px !important;
+}
+.flash{
+	background: url(./img/icon/icon_flash.gif) no-repeat center left !important;
+	padding-left:20px !important;
+}
+.doc{
+	background: url(./img/icon/icon_doc.gif) no-repeat center left !important;
+	padding-left:20px !important;
+}
+
+.txt{
+	background: url(./img/icon/icon_txt.gif) no-repeat 2px left !important;
+	padding-left:20px !important;
+}
+.xls{
+	background: url(./img/icon/icon_xls.gif) no-repeat center left !important;
+	padding-left:20px !important;}
+
+.plugin{
+	background: url(./img/icon/icon_plugin.gif) no-repeat center left !important;
+	padding-left:20px !important;}
+
+.aim{
+	background: url(./img/icon/icon_aim.gif) no-repeat center left !important;
+	padding-left:20px !important;
+}
+.chk{
+	background: url(./img/icon/icon_chk.gif) no-repeat center left !important;
+	padding-left:23px !important;
+}
+
+
+/*  アイコン(Arrrow)
+-------------------------------------------------------------*/
+.arrow_blue{
+	background:  url(./img/menu_list/list.gif) center left no-repeat;
+	padding-left:11px;
+}
+.arrow_red{
+	background:url(./img/menu_list/list_red.gif) center left no-repeat;
+	padding-left:11px;
+}
+.arrow_green{background:url(./img/menu_list/list_green.gif) center left no-repeat;
+	padding-left:11px;
+}
+
+/* ページトップ
+-------------------------------------------------------------*/
+.pagetop a,
+#pagetop a{
+	display:block !important;
+	width:102px !important;
+	height:20px !important;
+	background:url(./img/pagetop.gif) no-repeat center left !important;
+	text-indent:-9999px !important;
+	float:right;
+}
+
+@charset "utf-8";
+
+/*
+------------------------------------------------------------------------------
+テーブル定義クラス
+------------------------------------------------------------------------------
+*/
+
+/* 汎用的なテーブル */
+table.sheet{ background:#FFF;border-collapse:collapse; border-spacing:0px; margin:0;}
+	.sheet th,.sheet td{ padding:3px; border:1px solid #BBB;}
+
+	.sheet th{ font-weight:normal; background-color: #ddd; text-align:left; vertical-align:top;white-space: nowrap;color:#444;}
+	.sheet td{ }
+	.sheet td ul{ margin:0px;}
+	.sheet td ul li{ float:left; width:100px; list-style:none;margin:0;padding:0;}
+
+
+/* テーブルを初期化 */
+table.style{ background:#FFF;border-collapse:collapse; border-spacing:0px; margin:0;}
+	.style th,.style td{ padding:0px; vertical-align:top;}
+	.style th{ font-weight:normal; text-align:left; vertical-align:top;white-space: nowrap;}
+	.style td{ }
+
+
+/* Cake エラー用 */
+table.cake-sql-log{
+	background:#fff;
+	border-collapse:collapse; border-spacing:0px; margin:0;
+}
+table.cake-sql-log th{
+	vertical-align:top;white-space: nowrap;
+	background:#333;
+	color:#fff;
+	font-weight:normal;
+}
+.cake-sql-log th,.cake-sql-log td{ padding:5px; border:1px solid #CCC;}
+
+
+/*  初期化設定/汎用的な設定
+-------------------------------------------------------------*/
+#container,.container
+	{text-align:left;}
+table,img,html,body,form
+	{margin: 0; padding: 0;}
+h1,h2,h3,h4,h5,h6
+	{margin:0px;padding:0px;font-size:16px;}
+a img
+	{border:none;}
+#header,#footer
+	{clear:both;}
+#logo a
+	{ text-indent:-7700px; display:block; overflow:hidden;}
+div#footer ul
+	{margin:0px;padding:0;}
+
+/*  Utility
+-------------------------------------------------------------*/
+.alignt
+	{vartical-align:top !important;}
+.alignr
+	{text-align:right !important;}
+.alignl
+	{text-align:left !important;}
+.alignc
+	{text-align:center !important;}
+
+.floatr
+	{float:right !important;}
+
+.floatl
+	{float:left !important;}
+
+	/* update 2007/05/03*/
+	img.floatl{
+		margin-right:5px;
+	}
+	img.floatr{
+		margin-left:5px;
+	}
+
+.bold
+	{font-weight:bold !important;}
+.clear
+	{clear:both !important;}
+.underline
+	{text-decoration:underline !important;}
+ul.underline li a
+	{text-decoration:underline !important;}
+

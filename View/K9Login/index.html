@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.contextmenu.r2.js"></script>
+    <script type="text/javascript" src="assets/js/spc_tpl.js"></script>
+    <script type="text/javascript" src="assets/js/spc_api_request.js"></script>
+    <script type="text/javascript" src="assets/js/spc_number.js"></script>
+    <script type="text/javascript" src="assets/js/spc_element.function.js"></script>
+    <script type="text/javascript" src="assets/js/spc_functions.js"></script>
+    <!--<link rel="stylesheet" type="text/css" media="all" href="assets/css/style.css" />-->
+    <!--<link rel="stylesheet" type="text/css" media="all" href="assets/css/common.css" />-->
+    <link rel="shortcut icon" href="dandori.ico">
+
+    <!--Yen start-->
+    <!-- Bootstrap core CSS -->
+	<link href="./assets/css/php/bootstrap.min.php" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="./assets/css/php/ie10-viewport-bug-workaround.php" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="./assets/css/php/style.php" rel="stylesheet">
+    <link href="./assets/css/php/login.php" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="./assets/js/ie-emulation-modes-warning.js"></script>
+    <script src="./assets/js/bootstrap.min.js"></script>
+    <!--Yen end-->
+</head>
+
+<body id="body">
+
+<div class="content" id="login-page">
+      <div class="container">
+        <div class="row">
+            <div class="login">
+                <h1 class="login-logo"><img src="./assets/img/logo/login_logo_02.png" alt="" /></h1>
+                <form method="post" name="login_form" class="form-signin" action="" >
+
+					<?php
+
+					$login_ability=["type"       =>"text",
+								    "class"      =>"form-control",
+							  	    "id"         =>"inputId",
+							  	    "placeholder"=>"メールアドレス",
+							  	    "autofocus"  =>"autofocus",
+							  	    "required"   =>true,
+							  	    "div"        =>false,
+							  	    "label"      =>[
+							  	      "class"    =>"sr-only",
+							  	    	"text"     =>"ID（メールアドレス）"
+							  	    ]
+					];
+
+					$pass_ability =["type"       =>"password",
+								    "class"      =>"form-control",
+							  	    "id"         =>"inputPassword",
+							  	    "placeholder"=>"パスワード",
+							  	    "required"   =>true,
+							  	    "div"        =>false,
+							  	    "label"      =>[
+							  	      "class"    =>"sr-only",
+							  	      "text"     =>"パスワード"
+							  	    ]
+					];
+
+
+					echo $this->Form->input('username',$login_ability);
+					echo $this->Form->input('password',$pass_ability);
+
+					?>
+
+                    <label class="sr-only error-text"><?php print_r( $this->Session->flash())?></label>
+                    <button class="btn btn-lg btn-primary btn-block hover-img" type="submit">ログイン</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="./assets/js/ie10-viewport-bug-workaround.js"></script>
+</body>
+</html>
