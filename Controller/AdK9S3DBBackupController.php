@@ -249,6 +249,7 @@ class AdK9S3DBBackupController extends AppController {
 	public function s3DbBackup($client)
 	{
 		if(!defined("S3_DB_CLIENT_BACKUP_DIR")) define("S3_DB_CLIENT_BACKUP_DIR",S3_DB_BACKUP_DIR.$client.DS);
+		if(!is_dir(S3_DB_CLIENT_BACKUP_DIR)) mkdir(S3_DB_CLIENT_BACKUP_DIR);
 
 		$this->__deleteObjects();
 
